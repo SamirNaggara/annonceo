@@ -76,9 +76,9 @@
     window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
 
 </script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<script src="../js/sb-admin.min.js"></script>
-<script src="../js/monScript.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/sb-admin.min.js"></script>
+<script src="js/monScript.js"></script>
 </body>
 
 </html>
