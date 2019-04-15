@@ -13,25 +13,17 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Espace membres</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalInscription">Inscription</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalConnexion">Connexion</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal">Inscription</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal">Connexion</a>
                         <a class="dropdown-item" href="#">Profil</a>
                     </div>
                 </li>
                 <!-- adminstration -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Gestion des annonces</a>
-                        <a class="dropdown-item" href="#">Gestion des catégories</a>
-                        <a class="dropdown-item" href="#">Gestion des membres</a>
-                        <a class="dropdown-item" href="#">Gestion des commentaires</a>
-                        <a class="dropdown-item" href="#">Gestion des notes</a>
-                        <a class="dropdown-item" href="#">Statistiques</a>
-                    </div>
+                    <a class="nav-link" href="<? echo 'URL'?> 'admin/templateAdmin.php'" id="dropdown02" aria-haspopup="true" aria-expanded="false">Administration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="contact.php">Contact</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
