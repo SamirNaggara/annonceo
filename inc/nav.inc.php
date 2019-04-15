@@ -12,7 +12,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal">Inscription</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal">Connexion</a>
-                        <a class="dropdown-item" href="#">Profil</a>
+                        <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
                     </div>
                 </li>
                 <!-- adminstration -->
