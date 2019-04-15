@@ -1,3 +1,25 @@
+<<<<<<< .mine
+body {
+  background-color: grey; }
+
+#contactForm {
+  margin-top: 150px; }
+
+.footerMembre {
+  width: 100% !important; }
+
+/*# sourceMappingURL=style.css.map */
+||||||| .r23
+body {
+
+}
+
+#contactForm {
+  margin-top: 150px;
+}
+
+/*# sourceMappingURL=style.css.map */
+=======
 body {
   background-color: grey;
 }
@@ -7,3 +29,4 @@ body {
 }
 
 /*# sourceMappingURL=style.css.map */
+>>>>>>> .r24
