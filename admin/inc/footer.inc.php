@@ -1,7 +1,9 @@
 <footer class="sticky-footer">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
+            <span>Copyright © Annonceo 2019 </span>
+            <span><a href="<?php echo URL ?>mentions-legales.php">Mentions légales </a></span>
+            <span><a href="<?php echo URL ?>conditions-generales-de-ventes.php">Conditions générales de ventes </a></span>
         </div>
     </div>
 </footer>
