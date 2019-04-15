@@ -36,9 +36,9 @@ include_once('inc/nav.inc.php');
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">Tableau de bord</a>
+            <a href="#">Membres</a>
           </li>
-          <li class="breadcrumb-item active">Vue globale</li>
+          <li class="breadcrumb-item active">Gestions des membres</li>
         </ol>
 
         

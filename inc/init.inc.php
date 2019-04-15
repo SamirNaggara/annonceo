@@ -12,6 +12,6 @@ $msg = '';
 
 session_start();
 include_once('function.inc.php');
-define('URL', 'http://localhost/teamRocket.git/trunk/');
+define('URL', 'http://localhost/teamRocket/trunk/');
 
 define('RACINE_SERVEUR', $_SERVER['DOCUMENT_ROOT'] . 'teamRocket.git/trunk/'); 
