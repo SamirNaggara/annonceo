@@ -14,6 +14,8 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     
+
+    
         <!-- Notre propre style -->
     <link href="css/style.css" rel="stylesheet">
     
