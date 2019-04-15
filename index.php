@@ -1,4 +1,23 @@
 <?php
+include_once('inc/init.inc.php');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 
