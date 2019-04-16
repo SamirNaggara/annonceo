@@ -80,7 +80,7 @@ if(isset($_POST['id_membre']) && isset($_POST['pseudo']) && isset($_POST['nom'])
         
         //message que les informations ont été modifiées
 
-        msg .= '<div class="alert alert-succes mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
+        $msg .= '<div class="alert alert-succes mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
 
         
     }
@@ -97,12 +97,28 @@ include_once('inc/nav.inc.php');
 
 ?>
 
+<!--Titre et boutons de navigations-->
+
+<div class="starter-template">
+    <h1>Profil</h1>
+    <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
+    <hr>
+    <a href="?action=informationsPersonnels" class="btn btn-warning text-white">Informations personnels</a> 
+    <a href="?action=mesCommentaires" class="btn btn-primary">Mes commentaires</a>
+    <a href="?action=mesNotes" class="btn btn-primary">Mes notes</a>
+    <hr>
+</div>
 
 
+<!--Formulaires des informations personnels-->
 
+<?php
 
-
-
+// Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !isset($_GET['action'])){    
+    
+    
+?>
 <div class="col-6 mx-auto">
 
     <div class="form-group">
@@ -147,7 +163,15 @@ include_once('inc/nav.inc.php');
         <label for="date_enregistrement">Date d'inscription</label>
         <input type="text" disabled="disabled" class="form-control" id="date_enregistrement" name="date_enregistrement" value="<?php echo $date_enregistrement; ?>">
     </div>
-    <?php
+
+</div>
+
+<?php
+    //Fermeture du if de l'onglet informations personnels
+}
+?>
+
+<?php
 include_once('inc/footer.inc.php');
 
 ?>
