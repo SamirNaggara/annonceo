@@ -12,12 +12,7 @@
             <ul class="navbar-nav mr-auto">
                 <!-- espace membres -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Espace membres</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">Connexion</a>
-                        <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
-                    </div>
+                    <a class="nav-link" href="nouvelle-annonce.php">Déposer une annonce</a>
                 </li>
                 <!-- adminstration -->
                 <li class="nav-item dropdown">
@@ -47,6 +42,12 @@
                         <a class="dropdown-item" href="<?php echo URL ?>">Accueil site</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">Connexion</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
                     </div>
                 </li>
             </ul>

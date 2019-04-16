@@ -20,7 +20,6 @@ include_once('inc/modal.inc.php');
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
-include_once('inc/footer.inc.php');
 ?>
 
 
@@ -90,6 +89,5 @@ include_once('inc/footer.inc.php');
     </div>
 </div>
 <?php
-
-
+include_once('inc/footer.inc.php');
 ?>
