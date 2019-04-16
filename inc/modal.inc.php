@@ -17,6 +17,8 @@ $prenom = "";
 $email = "";
 $civilite = "";
 $telephone ="";
+$pseudo_connexion="";
+$mdp_connexion="";
 
 echo '<pre>'; print_r($_POST);echo '</pre>';
 
@@ -98,38 +100,39 @@ if(isset($_GET['action']) && $_GET['action'] == 'deconnexion') {
     header('location:index.php');
 	// unset($_SESSION);
 }
-
-$pseudo = '';
-if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
-	$pseudo = trim($_POST['pseudo']);
-	$mdp = trim($_POST['mdp']);
+if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
+	$pseudo_connexion = trim($_POST['pseudo_connexion']);
+    $mdp_connexion = trim($_POST['mdp_connexion']);
+    echo 'je suis dans le 1er if';
 	
     // on demande à la BDD de nous renvoyer les informations d'un utilisateur sur la base du pseudo saisie dans le champ.
 	$connexion = $pdo->prepare("SELECT * FROM membre WHERE pseudo = :pseudo");
-	$connexion->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-	$connexion->execute();
+	$connexion->bindParam(':pseudo', $pseudo_connexion, PDO::PARAM_STR);
+    $connexion->execute();
+    
 	
 	// s'il y a une ligne alors le pseudo existe en BDD
 	if($connexion->rowCount() > 0) {
-		
+		echo 'je suis dans le 2eme if';
 		// si le pseudo est ok, on vérifie le mot de passe
-		$utilisateur = $connexion->fetch(PDO::FETCH_ASSOC);
-		// echo '<pre>'; print_r($utilisateur); echo '</pre>';
-		if(password_verify($mdp, $utilisateur['mdp'])) {
+        $utilisateur = $connexion->fetch(PDO::FETCH_ASSOC);
+		//echo '<pre>'; print_r($utilisateur); echo '</pre>';
+		if(password_verify($mdp_connexion, $utilisateur['mdp'])) {
 			
 			// on place les informations utilisateur dans la $_SESSION afin de les conserver tant que l'utilisateur est connecté.
 			$_SESSION['utilisateur'] = array();
 			foreach($utilisateur AS $indice => $valeur) {		
 				if($indice != 'mdp') {
-					$_SESSION['utilisateur'][$indice] = $valeur;
-				}
+                    $_SESSION['utilisateur'][$indice] = $valeur;
+                }
+                echo '<pre>'; print_r($_SESSION); echo '</pre>';
 			}
 			header("location:profil.php");
 		} else {
 			$msg .= 'Erreur sur le pseudo ou le mot de passe. Veuillez recommencer';
 		}
 	} else {
-		$msg .= 'Erreur sur le pseudo ou le mot de passe. Veuillez recommencer';
+		$msg .= 'Erreur sur le pseudo ou le mot de passe';
 	}
 }
 echo '<pre>'; print_r($_SESSION); echo '</pre>';

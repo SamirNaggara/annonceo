@@ -58,10 +58,10 @@ include_once('inc/modal.inc.php');
                 <div class="modal-body">
                     <form method="post" action="">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="connecxionInputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo">
+                            <input type="text" class="form-control" id="connecxionInputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo" name="pseudo_connexion">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="connexionInputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe">
+                            <input type="text" class="form-control" id="connexionInputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp_connexion">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Connexion</button>
                     </form>
