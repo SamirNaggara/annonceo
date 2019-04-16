@@ -3,6 +3,7 @@
 // Modal d'inscription
 //***********************
 // restriction d'acces
+
 if(user_is_connected()) {
 
 // si l'utilisateur est connecté, on l'envoie vers profil.php
@@ -20,7 +21,7 @@ $telephone ="";
 $pseudo_connexion="";
 $mdp_connexion="";
 
-echo '<pre>'; print_r($_POST);echo '</pre>';
+
 
 // vérification si les champs existe deja
 if(isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['nom']) && isset($_POST['prenom']) && 
@@ -46,9 +47,19 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 		$msg .= 'Le pseudo doit avoir entre 4 et 14 caractères inclus. Veuillez recommencer';
 	}
 
-// vérification des caractères présent dans le pseudo
+    // vérification des caractères présent dans le pseudo
 	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $pseudo)) {
-		$msg .= 'Attention votre pseudo est incorrect, les caractères autorisés sont: a-z 0-9. Veuillez recommencer';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre pseudo est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
+	}
+    
+    // vérification des caractères présent dans le prenom
+	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $prenom)) {
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre prenom est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
+	}
+    
+    // vérification des caractères présent dans le nom
+	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $nom)) {
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre nom est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
 	}
 
 // verification si le pseudo est disponible en BDD car unique
@@ -125,7 +136,6 @@ if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
 				if($indice != 'mdp') {
                     $_SESSION['utilisateur'][$indice] = $valeur;
                 }
-                echo '<pre>'; print_r($_SESSION); echo '</pre>';
 			}
 			header("location:profil.php");
 		} else {
@@ -135,4 +145,3 @@ if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
 		$msg .= 'Erreur sur le pseudo ou le mot de passe';
 	}
 }
-echo '<pre>'; print_r($_SESSION); echo '</pre>';
