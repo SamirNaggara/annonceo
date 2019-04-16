@@ -12,11 +12,11 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/starter-template/">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/sb-admin.css" >
+    <link rel="stylesheet" href=<?php echo URL ?>"css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo URL ?>css/sb-admin.css" >
     
         <!-- Notre propre style -->
-    <link rel="stylesheet" href="css/style.css" >
+    <link rel="stylesheet" href="<?php echo URL ?>css/style.css" >
     
 <!--    Font-awesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">   
