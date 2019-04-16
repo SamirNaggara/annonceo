@@ -73,14 +73,28 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 	}
     
     // verification si le pseudo est disponible en BDD car unique
-	$verif_pseudo_profil = $pdo->prepare("SELECT * FROM membre WHERE pseudo = :pseudo");
+	$verif_pseudo_profil = $pdo->prepare("SELECT * FROM membre WHERE pseudo = :pseudo AND id_membre != :id_membre_profil");
+	$verif_pseudo_profil->bindParam(':id_membre_profil', $id_membre_profil, PDO::PARAM_STR);
 	$verif_pseudo_profil->bindParam(':pseudo', $pseudo_profil, PDO::PARAM_STR);
 	$verif_pseudo_profil->execute();
 
 	if($verif_pseudo_profil->rowCount() > 0) {
-		// s'il y a au moins une ligne alors le pseudo existe en BDD
+		// s'il y a plus de 1 ligne alors le pseudo existe en plus de celui de l'identifiant en cours
 		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention ce pseudo est deja utilisé.<br>Veuillez en choisir un autre</div>';
 	}
+    
+    
+    // vérification du format de l'email
+	if(!filter_var($email_profil, FILTER_VALIDATE_EMAIL)) {
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
+	}
+    
+    // vérification du format telephone
+    if (!preg_match("#(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)#", $telephone_profil)) {
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du téléphone n\'est pas valide.<br>Veuillez recommencer</div>';
+    }  
+
+	
     
    
     // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations

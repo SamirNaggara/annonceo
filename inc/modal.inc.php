@@ -69,17 +69,17 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 
 	if($verif_pseudo->rowCount() > 0) {
 		// s'il y a au moins une ligne alors le pseudo existe en BDD
-		$msg .= 'Attention pseudo déjà utilisé. Veuillez choisir un autre pseudo';
+		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention ce pseudo est deja utilisé.<br>Veuillez en choisir un autre</div>';
 	}
 
 // vérification du format de l'email
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$msg .= "Attention le format du mail n'est pas valide. Veuillez recommencer";
+		  $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
 	}
 	
 // vérification du format telephone
     if (!preg_match("#(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)#", $telephone)) {
-        $msg .= "Attentionn le format du téléphone n'est pas valide.";
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
     }  
 
 
@@ -97,6 +97,8 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 		$enregistrement->bindParam(':civilite', $civilite, PDO::PARAM_STR);
 		$enregistrement->bindParam(':telephone', $telephone, PDO::PARAM_STR);
         $enregistrement->execute();
+        
+        $msg .= '<div class="alert alert-success mt-2" role="alert">Bravo, vous etes inscrit.<br>Veuillez recommencer</div>';
 		// Enregistrement est OK renvoi vers index.php pour connexion
 		header('location:index.php');
 	} 
