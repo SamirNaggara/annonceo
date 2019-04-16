@@ -1,4 +1,9 @@
+<?php
+include_once('inc/init.inc.php');
+include_once('inc/modal.inc.php');
+?>
 <div class="row">
+<form method="post" action="">
     <div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="inscriptionModalLabel" aria-hidden="true" class="col-sm-4">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -9,35 +14,36 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="">
+                    
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo">
+                            <input type="text" class="form-control" id="inputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo" name="pseudo" value="<?php echo $pseudo; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe">
+                            <input type="text" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp" value="<?php echo $mdp; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Votre nom">
+                            <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Votre nom" name="nom" value="<?php echo $nom; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputFirstName" aria-describedby="firstNameHelp" placeholder="Votre prénom">
+                            <input type="text" class="form-control" id="inputFirstName" aria-describedby="firstNameHelp" placeholder="Votre prénom" name="prenom" value="<?php echo $prenom; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Votre email">
+                            <input type="text" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Votre email" name="email" value="<?php echo $email; ?>">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="inputPhone" placeholder="Votre téléphone">
+                            <input type="text" class="form-control" id="inputPhone" placeholder="Votre téléphone" name="telephone" value="<?php echo $telephone; ?>">
                         </div>
-                        <select class="custom-select" id="inputSelect ">
-                            <option selected>Homme</option>
-                            <option value="">Femme</option>
+                        <select class="custom-select" id="inputSelect" name="civilite">
+                            <option value="m">Homme</option>
+                            <option value="f" <?php if($civilite == 'f') echo 'selected';?>>Femme</option>
                         </select>
-                        <button type="submit" class="btn btn-primary w-100">Inscription</button>
-                    </form>
+                        <input type="submit" class="btn btn-primary w-100" id="inscription" name="inscription" value="Inscription">
+                    
                 </div>
             </div>
         </div>
     </div>
+    </form>
 </div>
 <div class="row">
     <div class="modal fade" id="connexionModal" tabindex="-1" role="dialog" aria-labelledby="connexionModalLabel" aria-hidden="true" class="col-sm-4">
@@ -64,7 +70,7 @@
         </div>
     </div>
 </div>
-</main><!-- /.container -->
+</main>
 
 <footer class="sticky-footer footerMembre">
     <div class="container my-auto">

@@ -6,7 +6,7 @@ $password = '';
 $options = array(
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, 
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8');
-$pdo = new PDO($host_db, $user, $password, $options);
+$pdo= new PDO($host_db, $user, $password, $options);
 
 $msg = '';
 

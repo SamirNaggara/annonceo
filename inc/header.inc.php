@@ -12,7 +12,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/starter-template/">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href=<?php echo URL ?>"css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo URL ?>css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo URL ?>css/sb-admin.css" >
     
         <!-- Notre propre style -->

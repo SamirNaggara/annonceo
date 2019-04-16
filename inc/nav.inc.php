@@ -1,3 +1,7 @@
+    <?php 
+    include_once('inc/init.inc.php');
+    include_once('inc/modal.inc.php');
+    ?>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="<?php echo URL;?>index.php">Annonceo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,8 +14,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Espace membres</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal">Inscription</a>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal">Connexion</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">Connexion</a>
                         <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
                     </div>
                 </li>
