@@ -100,7 +100,7 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
         
         $msg .= '<div class="alert alert-success mt-2" role="alert">Bravo, vous etes inscrit.<br>Veuillez recommencer</div>';
 		// Enregistrement est OK renvoi vers index.php pour connexion
-		$_SESSION['inscription_ok'] = 'Inscription ok';
+		//$_SESSION['inscription_ok'] = 'Inscription ok';
 		header('location:index.php');
 	} 
 }
