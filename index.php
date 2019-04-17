@@ -31,11 +31,11 @@ include_once('inc/nav.inc.php');
 
     <div class="starter-template">
         <h1><i class="fas fa-shopping-cart mes_icones"></i> Eshop <i class="fas fa-shopping-cart mes_icones"></i></h1>
-        <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
+        <p class="lead"><?php echo $msg; echo ajouterMessage('success');?></p>
     </div>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
-            <!-- <img src="..." class="w-100" alt="..."> -->
+            <img src="images/img1.jpg" class="w-100 img-fluid"  alt="...">
         </div>
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>
@@ -46,7 +46,7 @@ include_once('inc/nav.inc.php');
     <br>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
-            <!-- <img src="..." class="w-100" alt="..."> -->
+            <img src="images/img1.jpg" class="w-100 img-fluid"  alt="...">
         </div>
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>
@@ -57,7 +57,7 @@ include_once('inc/nav.inc.php');
         <br>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
-            <!-- <img src="..." class="w-100" alt="..."> -->
+            <img src="images/img1.jpg" class="w-100 img-fluid"  alt="...">
         </div>
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>
@@ -68,7 +68,7 @@ include_once('inc/nav.inc.php');
     <br>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
-            <!-- <img src="..." class="w-100" alt="..."> -->
+            <img src="images/img1.jpg" class="w-100 img-fluid"  alt="...">
         </div>
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>
@@ -79,7 +79,7 @@ include_once('inc/nav.inc.php');
     <br>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
-            <!-- <img src="..." class="w-100" alt="..."> -->
+            <img src="images/img1.jpg" class="w-100 img-fluid"  alt="...">
         </div>
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>

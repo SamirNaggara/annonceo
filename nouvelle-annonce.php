@@ -1,78 +1,93 @@
 <?php
 include_once('inc/init.inc.php');
-// restriction d'accès si l'utilisateur n'est pas admin il ne doit pas pouvoir venir sur cette page
-// if(!user_is_admin()) {
-// 	header("location:" . URL . "profil.php");
-// 	exit(); // permet de bloquer l'exécution de la suite du script
-// }
-
 
 //***************************
-// ENREGISTREMENT PRODUIT
+// ENREGISTREMENT ANNONCE
 //***************************
-$id_article = '';
-$reference = '';
+$id_annonce = '';
+$titre = '';
+$descriptionCourte = '';
+$descriptionLongue = '';
+$prix = ''; 
 $categorie = '';
-$titre = ''; 
-$description = '';
-$couleur = '';
-$taille = '';
+$pays = '';
+$ville = '';
 $photo_bdd = '';
-$prix = '';
-$sexe = '';
-$stock = '';
+$adresse = '';
+$cp = '';
 
-if(isset($_POST['reference']) && isset($_POST['categorie']) && isset($_POST['titre']) && isset($_POST['description']) && isset($_POST['couleur']) && isset($_POST['prix']) && isset($_POST['sexe']) && isset($_POST['stock']) && isset($_POST['taille']) && isset($_POST['id_article'])) {
+if(isset($_POST['id_annonce']) && isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST['descriptionLongue']) && isset($_POST['prix']) && isset($_POST['categorie']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['photo_base']) && isset($_POST['photo_miniature1']) && isset($_POST['photo_miniature2']) && isset($_POST['photo_miniature3']) && isset($_POST['photo_miniature4']) && isset($_POST['photo_miniature5']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
 	
-	$id_article = $_POST['id_article'];
-	$reference = $_POST['reference'];
-	$categorie = $_POST['categorie'];
-	$titre = $_POST['titre']; 
-	$description = $_POST['description'];
-	$couleur = $_POST['couleur'];
-	$taille = $_POST['taille'];
+	$id_annonce = $_POST['id_annonce'];
+	$titre = $_POST['titre'];
+	$descriptionCourte = $_POST['descriptionCourte'];
+	$descriptionLongue = $_POST['descriptionLongue']; 
 	$prix = $_POST['prix'];
-	$sexe = $_POST['sexe'];
-	$stock = $_POST['stock'];
+	$categorie = $_POST['categorie'];
+	$pays = $_POST['pays'];
+	$ville = $_POST['ville'];
+	$photo_bdd_base = $_POST['photo_base'];
+	$photo_bdd1 = $_POST['photo_miniature1'];
+	$photo_bdd2 = $_POST['photo_miniature2'];
+	$photo_bdd3 = $_POST['photo_miniature3'];
+	$photo_bdd4 = $_POST['photo_miniature4'];
+	$photo_bdd5 = $_POST['photo_miniature5'];
+	$adresse = $_POST['adresse'];
+	$cp = $_POST['cp'];
 	
-	// Controle sur la référence car unique en BDD
-	if(empty($id_article)) {
-		// si id_article n'est pas vide, nous sommes dans le cas d'une modif et la référence est présente en BDD
-		$verif_ref = $pdo->prepare("SELECT * FROM article WHERE reference = :reference");
-		$verif_ref->bindParam(":reference", $reference, PDO::PARAM_STR);
+	// Controle sur l'id_annonce car unique en BDD
+	if(empty($id_annonce)) {
+		// si id_annonce n'est pas vide, nous sommes dans le cas d'une modif et la référence est présente en BDD
+		$verif_ref = $pdo->prepare("SELECT * FROM annonce WHERE id_annonce = :id_annonce");
+		$verif_ref->bindParam(":id_annonce", $id_annonce, PDO::PARAM_STR);
 		$verif_ref->execute();
 		
 		if($verif_ref->rowCount() > 0) {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, la référence existe déjà.<br>Veuillez recommencer</div>';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'annonce existe déjà.';
 		}
 	}
 	
-	if(!empty($_POST['photo_actuelle'])) {
+	if(!empty($_POST['photo_base'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
-		$photo_bdd = $_POST['photo_actuelle'];
+		$photo_bdd = $_POST['photo_base'];
+	}	
+	if(!empty($_POST['photo_miniature1'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd = $_POST['photo_miniature1'];
+	}	
+	if(!empty($_POST['photo_miniature2'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd = $_POST['photo_miniature2'];
+	}	
+	if(!empty($_POST['photo_miniature3'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd = $_POST['photo_miniature3'];
+	}	
+	if(!empty($_POST['photo_miniature4'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd = $_POST['photo_miniature4'];
+	}	
+	if(!empty($_POST['photo_miniature5'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd = $_POST['photo_miniature5'];
 	}	
 	
 	// vérification de l'extension photo
 	if(empty($msg) && !empty($_FILES['photo']['name'])) {
-		// on récupère l'extension du fichier avec le point
-		// la fonction strrchr() permet de découper une chaine depuis la fin jusqu'à un caractère fourni en deuxième argument.
+
 		$extension = strrchr($_FILES['photo']['name'], '.');
-		// exemple: ma_photo.jpg => .jpg
 		
 		// on passe l'information en minuscule et on enlève le point
 		$extension = strtolower(substr($extension, 1));
-		// exemple: .PNG => png
-		// exemple: .Jpeg => jpeg
 		
 		// on défini toutes les valeurs acceptées dans un tableau array
 		$extension_valide = array('jpg', 'jpeg', 'png', 'gif');
-		
-		// in_array() permet de tester si une valeur fait partie d'un ensemble de valeur présentent dans un tableau array => true / false
+
 		$verif_extension = in_array($extension, $extension_valide);
 		
 		if($verif_extension) {
 			// l'extension est valide, on copie la photo dans notre projet.
-			$nom_photo = $reference . '-' . $_FILES['photo']['name'];
+			$nom_photo = $id_annonce . '-' . $_FILES['photo']['name'];
 			$photo_bdd = 'photo/' . $nom_photo; // src que l'on va enregistrer dans la BDD
 			$photo_dossier = RACINE_SERVEUR . $photo_bdd; // l'emplacement où on va copier la photo
 			
@@ -87,28 +102,32 @@ if(isset($_POST['reference']) && isset($_POST['categorie']) && isset($_POST['tit
 	// enregistrement produit en bdd
 	if(empty($msg)) {
 		
-		if(!empty($id_article)) {
+		if(!empty($id_annonce)) {
 			// modification
-			$enregistrement_produit = $pdo->prepare("UPDATE article SET reference = :reference, categorie = :categorie, titre = :titre, description = :description, couleur = :couleur, taille = :taille, sexe = :sexe, photo = :photo, prix = :prix, stock = :stock WHERE id_article = :id_article");
-			$enregistrement_produit->bindParam(':id_article', $id_article, PDO::PARAM_STR);
+			$enregistrement_annonce = $pdo->prepare("UPDATE annonce SET id_annonce = :id_annonce, categorie = :categorie, titre = :titre, descriptionCourte = :descriptionCourte, descriptionLongue = :descriptionLongue, prix = :prix, pays = :pays, ville = :ville, photo = :photo WHERE id_annonce = :id_annonce");
+			$enregistrement_annonce->bindParam(':id_annonce', $id_annonce, PDO::PARAM_STR);
 			$_GET['action'] = 'afficher';
 		} else {
 			// Ajout
-			$enregistrement_produit = $pdo->prepare("INSERT INTO article (reference, categorie, titre, description, couleur, taille, sexe, photo, prix, stock) VALUES (:reference, :categorie, :titre, :description, :couleur, :taille, :sexe, :photo, :prix, :stock)");
+			$enregistrement_annonce = $pdo->prepare("INSERT INTO annonce (categorie, titre, descriptionCourte, descriptionLongue, prix, pays, ville, photo ) VALUES (:categorie, :titre, :descriptionCourte, :descriptionLongue, :prix, :pays, :photo, :ville)");
 		}
 		
 		
-		$enregistrement_produit->bindParam(':reference', $reference, PDO::PARAM_STR);
 		$enregistrement_produit->bindParam(':categorie', $categorie, PDO::PARAM_STR);
 		$enregistrement_produit->bindParam(':titre', $titre, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':description', $description, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':couleur', $couleur, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':taille', $taille, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':sexe', $sexe, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':photo', $photo_bdd, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':descriptionCourte', $descriptionCourte, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':descriptionLongue', $descriptionLongue, PDO::PARAM_STR);
 		$enregistrement_produit->bindParam(':prix', $prix, PDO::PARAM_STR);
-		$enregistrement_produit->bindParam(':stock', $stock, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':pays', $pays, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':ville', $ville, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd_base, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd1, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd2, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd3, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd4, PDO::PARAM_STR);
+		$enregistrement_produit->bindParam(':photo', $photo_bdd5, PDO::PARAM_STR);
 		$enregistrement_produit->execute();
+
 	}
 	
 	

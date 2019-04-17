@@ -13,3 +13,12 @@ function checkInput($data) {
     $data = htmlspecialchars($data);
     return $data;
     } 
+
+function ajouterMessage($genre) {
+    $reponse = "";
+    if(isset($_SESSION['inscription_ok'])) {
+        $reponse = '<div class="alert alert-'. $genre .' mt-2" role="alert">'. $_SESSION['inscription_ok'] .'</div>';
+        unset($_SESSION['inscription_ok']);
+    }
+    return $reponse;
+    }

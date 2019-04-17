@@ -3,7 +3,7 @@ include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 ?>
 <div class="row">
-<form method="post" action="">
+<form id="register" method="post" action="" >
     <div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="inscriptionModalLabel" aria-hidden="true" class="col-sm-4">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -37,7 +37,7 @@ include_once('inc/modal.inc.php');
                             <option value="m">Homme</option>
                             <option value="f" <?php if($civilite == 'f') echo 'selected';?>>Femme</option>
                         </select>
-                        <input type="submit" class="btn btn-primary w-100" id="inscription" name="inscription" value="Inscription">
+                        <input type="submit" class="btn btn-primary w-100"  onclick="return inscription()" id="inscription" name="inscription" value="Inscription">
                     
                 </div>
             </div>

@@ -74,12 +74,12 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 
 // vérification du format de l'email
 	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		  $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
+		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
 	}
 	
 // vérification du format telephone
     if (!preg_match("#(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)#", $telephone)) {
-        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format de votre numéro de téléphone n\'est pas valide.<br>Veuillez recommencer</div>';
     }  
 
 
@@ -100,6 +100,7 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
         
         $msg .= '<div class="alert alert-success mt-2" role="alert">Bravo, vous etes inscrit.<br>Veuillez recommencer</div>';
 		// Enregistrement est OK renvoi vers index.php pour connexion
+		$_SESSION['inscription_ok'] = 'Inscription ok';
 		header('location:index.php');
 	} 
 }
