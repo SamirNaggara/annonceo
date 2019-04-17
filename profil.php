@@ -1,13 +1,10 @@
 <?php
 include_once('inc/init.inc.php');
 
-
-//if(!user_is_connected()) {
-//	// si l'utilisateur n'est pas connecté
-//	header("location:" . URL);
-//}
-
-
+if(!user_is_connected()) {
+// si l'utilisateur n'est pas connecté
+header("location:" . URL);
+}
 
 // déclaration de variable pour afficher les valeurs dans les values de nos champs egales aux sessions 
 
@@ -19,34 +16,19 @@ $telephone_profil = $_SESSION['utilisateur']['telephone'];
 $email_profil = $_SESSION['utilisateur']['email'];
 $civilite_profil = $_SESSION['utilisateur']['civilite'];
 $statut_profil = $_SESSION['utilisateur']['statut'];
-$date_enregistrement_profil = $_SESSION['utilisateur']['date_enregistrement'];
-
-
-
-
-
-
-
-
-echo '<pre>'; print_r($_POST); echo '</pre>';
-    
-    
+$date_enregistrement_profil = $_SESSION['utilisateur']['date_enregistrement'];  
 
 if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST['prenom_profil']) && isset($_POST['telephone_profil']) && isset($_POST['email_profil']) && isset($_POST['civilite_profil'])) {
     // on enlève les espace en début et fin de chaine avec trim()
 	foreach($_POST AS $indice => $valeur) {
 		$_POST[$indice] = trim($_POST[$indice]);
-	}
-    
+	} 
     
     // controle sur la taille du pseudo entre 4 et 14 caractères inclus
 
 	if(iconv_strlen($pseudo_profil) < 4 || iconv_strlen($pseudo_profil) > 14) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, Le pseudo doit avoir entre 4 et 14 caractères inclus.<br>Veuillez recommencer</div>';
-
-	}
-    
-
+	}    
     
     // si ça existe, on place la saisie du formulaire dans ces variables.
 	$pseudo_profil = $_POST['pseudo_profil'];
@@ -54,8 +36,7 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 	$prenom_profil = $_POST['prenom_profil'];
 	$telephone_profil = $_POST['telephone_profil'];
 	$email_profil = $_POST['email_profil'];
-	$civilite_profil = $_POST['civilite_profil'];
-    
+	$civilite_profil = $_POST['civilite_profil'];   
     
     // vérification des caractères présent dans le pseudo
 	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $pseudo_profil)) {
@@ -81,8 +62,7 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 	if($verif_pseudo_profil->rowCount() > 0) {
 		// s'il y a plus de 1 ligne alors le pseudo existe en plus de celui de l'identifiant en cours
 		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention ce pseudo est deja utilisé.<br>Veuillez en choisir un autre</div>';
-	}
-    
+	}   
     
     // vérification du format de l'email
 	if(!filter_var($email_profil, FILTER_VALIDATE_EMAIL)) {
@@ -93,13 +73,9 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
     if (!preg_match("#(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)#", $telephone_profil)) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du téléphone n\'est pas valide.<br>Veuillez recommencer</div>';
     }  
-
-	
-    
    
     // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
     if (($pseudo_profil != $_SESSION['utilisateur']['pseudo'] || $nom_profil != $_SESSION['utilisateur']['nom'] || $prenom_profil != $_SESSION['utilisateur']['prenom'] || $telephone_profil != $_SESSION['utilisateur']['telephone'] || $email_profil != $_SESSION['utilisateur']['email'] || $civilite_profil != $_SESSION['utilisateur']['civilite']) && empty($msg)){
-
 
         $enregistrement = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, nom = :nom, prenom = :prenom, telephone = :telephone, email = :email, civilite = :civilite WHERE id_membre = :id_membre_profil");
         $enregistrement->bindParam(':id_membre_profil', $id_membre_profil, PDO::PARAM_STR);
@@ -122,22 +98,10 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
         //message que les informations ont été modifiées
 
         $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
-
-        
     }
-    
-    
-
 }
-
-
-
-
 include_once('inc/header.inc.php');
-
 include_once('inc/nav.inc.php');
-
- 
 ?>
 
 <!--Titre et boutons de navigations-->
@@ -152,14 +116,12 @@ include_once('inc/nav.inc.php');
     <hr>
 </div>
 
-
 <!--Formulaires des informations personnels-->
 
 <?php
 
 // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
 if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !isset($_GET['action'])){    
-    
     
 ?>
 <div class="col-6 mx-auto">
@@ -168,32 +130,26 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
             <label for="id_membre_profil">Identifiant</label>
             <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="pseudo_profil">Pseudo</label>
             <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo $pseudo_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="nom_profil">Nom</label>
             <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo $nom_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="prenom_profil">Prenom</label>
             <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo $prenom_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="telephone_profil">Telephone</label>
             <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="email_profil">Email</label>
             <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
         </div>
-
         <div class="form-group">
             <label for="civilite_profil">Sexe</label>
             <select class="form-control" id="civilite_profil" name="civilite_profil">
@@ -201,23 +157,17 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
                 <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="date_enregistrement_profil">Date d'inscription</label>
             <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
         </div>
-
         <button type="submit" class="btn btn-primary">Valider</button>
     </form>
-
 </div>
-
 <?php
     //Fermeture du if de l'onglet informations personnels
 }
 ?>
-
 <?php
 include_once('inc/footer.inc.php');
-
 ?>

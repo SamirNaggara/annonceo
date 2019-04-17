@@ -1,4 +1,8 @@
 <?php
+// deconnexion
+if(isset($_GET['action']) && $_GET['action'] == 'deconnexion') {
+	session_destroy();
+}
 //***********************
 // Modal d'inscription
 //***********************

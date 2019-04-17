@@ -2,35 +2,13 @@
 include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
-
-
-
-
+<!-- Affichage des annonces en pages d'accueil -->
 <div class="container annonce-index">
-
-
-
     <div class="starter-template">
-        <h1><i class="fas fa-shopping-cart mes_icones"></i> Eshop <i class="fas fa-shopping-cart mes_icones"></i></h1>
+        <h1><i class="fas fa-shopping-cart mes_icones"></i> Bienvenue sur Annonceo <i class="fas fa-shopping-cart mes_icones"></i></h1>
         <p class="lead"><?php echo $msg;?></p>
     </div>
     <div class="row no-gutters bg-light position-relative">
@@ -88,6 +66,7 @@ include_once('inc/nav.inc.php');
         </div>
     </div>
 </div>
+<!-- Fin d'affichage des annonces en pages d'accueil -->
 <?php
 include_once('inc/footer.inc.php');
 ?>
