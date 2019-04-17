@@ -8,6 +8,11 @@ body {
   width: 100% !important;
   position: inherit !important; }
 
+.adminFooter {
+  position: inherit !important;
+  width: 100% !important;
+  display: none !important; }
+
 .annonce-index {
   margin-top: 150px; }
 

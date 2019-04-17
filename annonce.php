@@ -61,11 +61,11 @@ else{
 
 //Test pour voir si toutes les valeurs sont recuperer normalement dans la baess de données
 
-echo <pre>; print_r($cetteAnnonce); echo </pre>
-echo <pre>; print_r($ceVendeur); echo </pre>
-echo <pre>; print_r($lesPhotos); echo </pre>
-echo <pre>; print_r($lesNotes); echo </pre>
-echo <pre>; print_r($lesCommentaires); echo </pre>
+echo '<pre>'; print_r($cetteAnnonce); echo '</pre>';
+echo '<pre>'; print_r($ceVendeur); echo '</pre>';
+echo '<pre>'; print_r($lesPhotos); echo '</pre>';
+echo '<pre>'; print_r($lesNotes); echo '</pre>';
+echo '<pre>'; print_r($lesCommentaires); echo '</pre>';
 
     
 
@@ -81,9 +81,21 @@ include_once('inc/nav.inc.php');
 <section class="monAnnonce">
 
     <header>
-        <h1>$cetteAnnonce["titre"]</h1>
+        <h1><?php echo $cetteAnnonce["titre"]; ?></h1>
         <span class="separation"> / </span>
-        <strong class="vendeur"><i class="fas fa-user"></i> $ceVendeur['pseudo']</strong>
+        <strong class="vendeur"><i class="fas fa-user"></i><?php echo $ceVendeur['pseudo']; ?></strong>
+        <span class="laMoyenne"><?php echo calculMoyenneNote($cetteAnnonce[membre_id]); ?>/5</span>
+        span
+        
+        Ici le collapse 
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseVoirLesAvis" role="button" aria-expanded="false" aria-controls="collapseVoirLesAvis">
+            (voir les avis)
+        </a>
+        <div class="collapse" id="collapseVoirLesAvis">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
 
     </header>
 
