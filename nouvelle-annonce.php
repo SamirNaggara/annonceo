@@ -45,6 +45,34 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 		if($verif_ref->rowCount() > 0) {
 			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'annonce existe déjà.';
 		}
+	}
+	if(empty($msg) && !empty($_FILES['photo'])) {
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		$photo_bdd_base = $_FILES['photo'];
+		$extension = strrchr($_FILES['photo']['name'], '.');
+		
+		// on passe l'information en minuscule et on enlève le point
+		$extension = strtolower(substr($extension, 1));
+		
+		// on défini toutes les valeurs acceptées dans un tableau array
+		$extension_valide = array('jpg', 'jpeg', 'png', 'gif');
+
+		$verif_extension = in_array($extension, $extension_valide);
+		
+		if($verif_extension) {
+			// l'extension est valide, on copie la photo dans notre projet.
+			//$nom_photo = $id_annonce . '-' . $_FILES['photo_base']['name'];
+			$nom_photo = time() . '0-' . $_FILES['photo']['name'];
+			$photo_bdd_base = 'images/' . $nom_photo; // src que l'on va enregistrer dans la BDD
+			$photo_dossier = RACINE_SERVEUR . $photo_bdd_base; // l'emplacement où on va copier la photo
+			
+			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
+			copy($_FILES['photo']['tmp_name'], $photo_dossier);
+			
+		} else {
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
+			echo 'je suis dans le else de verif extension';
+		}
 	}	
 	if(empty($msg) && !empty($_FILES['photo1'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -67,9 +95,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			
 			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
 			copy($_FILES['photo1']['tmp_name'], $photo_dossier);
+			echo 'je suis dans le else de verif extension';
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234789</div>';
 		}
 	}	
 	if(empty($msg) && !empty($_FILES['photo2'])) {
@@ -147,7 +176,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo4']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
 		}
 	}	
 	if(empty($msg) && !empty($_FILES['photo5'])) {
@@ -173,40 +202,11 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo5']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
 		}
 	}	
 	
-	// vérification de l'extension photo
-	if(empty($msg) && !empty($_FILES['photo'])) {
-		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
-		$photo_bdd_base = $_FILES['photo'];
-		$extension = strrchr($_FILES['photo']['name'], '.');
-		
-		// on passe l'information en minuscule et on enlève le point
-		$extension = strtolower(substr($extension, 1));
-		
-		// on défini toutes les valeurs acceptées dans un tableau array
-		$extension_valide = array('jpg', 'jpeg', 'png', 'gif');
-
-		$verif_extension = in_array($extension, $extension_valide);
-		
-		if($verif_extension) {
-			// l'extension est valide, on copie la photo dans notre projet.
-			//$nom_photo = $id_annonce . '-' . $_FILES['photo_base']['name'];
-			$nom_photo = time() . '0-' . $_FILES['photo']['name'];
-			$photo_bdd_base = 'images/' . $nom_photo; // src que l'on va enregistrer dans la BDD
-			$photo_dossier = RACINE_SERVEUR . $photo_bdd_base; // l'emplacement où on va copier la photo
-			
-			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
-			copy($_FILES['photo']['tmp_name'], $photo_dossier);
-			
-		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
-			echo 'je suis dans le else de verif extension';
-		}
-	}
-	
+	// vérification de l'extension photo	
 	// enregistrement annonce en bdd
 	if(empty($msg)) {
 		echo 'je suis dans enregistrement en bdd';

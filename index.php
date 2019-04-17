@@ -31,7 +31,7 @@ include_once('inc/nav.inc.php');
 
     <div class="starter-template">
         <h1><i class="fas fa-shopping-cart mes_icones"></i> Eshop <i class="fas fa-shopping-cart mes_icones"></i></h1>
-        <p class="lead"><?php echo $msg; echo ajouterMessage('success');?></p>
+        <p class="lead"><?php echo $msg;?></p>
     </div>
     <div class="row no-gutters bg-light position-relative">
         <div class="col-md-6 mb-md-0 p-md-4">
