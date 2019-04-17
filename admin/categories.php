@@ -92,7 +92,7 @@ include_once('inc/nav.inc.php');
 
 
 <div id="content-wrapper">
-    <p class="lead"><?php echo $msg; echo ajouterMessage('success');?></p>
+ 
 
     <!-- DataTables Example -->
     <div class="card mb-3">
