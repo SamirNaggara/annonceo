@@ -1,4 +1,4 @@
-<?php
+e<?php
 include_once('inc/init.inc.php');
 
 
