@@ -1,25 +1,39 @@
 body {
   background-color: grey; }
 
+/** contact.php **/
 #contactForm {
   margin-top: 150px; }
 
+/** footer.inc.php **/
 .footerMembre {
   width: 100% !important;
   position: inherit !important; }
 
+/** admin/footer.in.php **/
 .adminFooter {
   position: inherit !important;
   width: 100% !important;
   display: none !important; }
 
-.annonce-index {
-  margin-top: 150px; }
+/** index.php **/
+/* conteneur principal englobant les annonces*/
+.annonce-index,
+.container {
+  margin-top: 150px;
+  margin-bottom: 150px; }
 
+/** titres des pages affiche les message d'erreur */
 .starter-template {
   text-align: center; }
 
-.container {
-  margin-top: 80px; }
+.monAnnonce header > .titreAnnonce #collapseVoirLesAvis .dateNote {
+  font-size: 10px; }
+
+img {
+  height: 500px !important; }
+  @media screen and (max-width: 480px) {
+    img {
+      height: 400px !important; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,29 +1,68 @@
 body {
     background-color: grey;
 }
+
 /** contact.php **/
 #contactForm {
     margin-top: 150px;
 }
 
 /** footer.inc.php **/
-.footerMembre{
-    width:100% !important;
-    position:inherit !important;
+.footerMembre {
+    width: 100% !important;
+    position: inherit !important;
 }
+
 /** admin/footer.in.php **/
-.adminFooter{
-    position:inherit !important;
-    width:100% !important;
-    display:none !important;
+.adminFooter {
+    position: inherit !important;
+    width: 100% !important;
+    display: none !important;
 }
+
 /** index.php **/
 /* conteneur principal englobant les annonces*/
-.annonce-index, .container {
-    margin: 150px 0;
+.annonce-index,
+.container {
+    margin-top: 150px;
+    margin-bottom: 150px;
 }
+
 /** titres des pages affiche les message d'erreur */
-.starter-template{
+.starter-template {
     text-align: center;
 }
+
+//--------------page annonce---------------
+
+.monAnnonce {
+    header {
+        > .titreAnnonce {
+            #collapseVoirLesAvis {
+                .dateNote {
+                    font-size: 10px;
+                }
+            }   
+}
+
+> .contacter {}
+}
+}
+
+#carouselAnnonce{
+//    height:500px;
+}
+
+img{
+    height:500px !important;
+
+    @media screen AND (max-width:480px){
+        height:400px !important;
+    }
+    
+}
+
+
+
+
 
