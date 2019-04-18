@@ -16,7 +16,7 @@ function user_is_admin() {
 
 
 function calculMoyenneNote($id_membre){
-    //Retourne la moyenne de toutes les notes qui ont été déposées à un vendeur"
+    //Retourne la moyenne de toutes les notes qui ont ï¿½tï¿½ dï¿½posï¿½es ï¿½ un vendeur"
         
         //On recupere les informations sur les notes
         $infosNotes = $pdo->prepare("SELECT note FROM note WHERE membre_id2 = :id_membre");

@@ -1,0 +1,5 @@
+SELECT c.commentaire, c.date_enregistrement, m.pseudo
+FROM commentaire c, annonce a, membre m
+WHERE a.membre_id = 4 (penser à mettre l'id de la session)
+AND c.annonce_id = a.id_annonce
+AND m.id_membre = c.membre_id;

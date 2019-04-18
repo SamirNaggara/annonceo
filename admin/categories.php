@@ -83,7 +83,7 @@ if(isset($_POST['nouveauTitre']) && isset($_POST['nouveauxMotsCles'])) {
 
 
 
-
+$lesCategories = $categories->fetchAll(PDO::FETCH_ASSOC);
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 

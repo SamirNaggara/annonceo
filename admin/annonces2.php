@@ -48,9 +48,10 @@ if(!user_is_admin()) {
         echo '<select name="categorie" class="form-control col-2 my-2">';
 							$recup_categorie = $pdo->query("SELECT * FROM categorie ORDER BY titre");
 							while($categorie = $recup_categorie->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option value="' . $categorie['id_categorie'] . '">'. $categorie['titre'].'</option>';
-                if($categorie['id_categorie']) {
-                  echo '	</select>';
+								echo '<option value="' . $categorie['id_categorie'] . '">'. $categorie['titre'].'</option>';
+								echo 'probleme dans le while';
+							}
+        echo '	</select>';
         echo '</div>';
         echo '<div class="row">';
         echo '<table class="table table-hover table-responsive-sm table-responsive-md">';
@@ -81,8 +82,6 @@ if(!user_is_admin()) {
                       echo '<td>' . substr($valeur, 0, 21). '<a href="">...</a></td>';
                     } elseif ($indice == 'description_longue') {
                       echo '<td>' . substr($valeur, 0, 21). '<a href="">...</a></td>';
-                    } elseif {
-
                     } else {
                       echo '<td>' . $valeur . '</td>';
                     }
@@ -99,10 +98,6 @@ echo '</tr>';
 echo '</table>';
 echo '</div>';
 echo '</div>';
-                }
-								echo 'probleme dans le while';
-							}
-        
 ?>
 <?php
 include_once('inc/footer.inc.php');
