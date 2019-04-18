@@ -4,6 +4,11 @@
     ?>
         <!-- Navbar -->
         <!-- Accueil -->
+        <?php
+        if(isset($_GET['action']) && $_GET['action'] == 'deconnexion') {
+        session_destroy();
+        } ?>
+        
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="<?php echo URL;?>index.php">Annonceo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +52,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="<?php echo URL ?>">Accueil site</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="?action=deconnexion" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
+                            <a class="dropdown-item" href="<?php echo URL; ?>profil.php" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
                             <div class="dropdown-divider"></div>
@@ -59,4 +64,5 @@
                 </ul>
             </div>
         </nav>
+       
     <main role="main" class="container">
