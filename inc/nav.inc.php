@@ -19,7 +19,7 @@
                     <?php 
                     if(user_is_admin()) {
                     echo '<li class="nav-item dropdown">
-                        <a class="nav-link" href="<?php echo URL; ?>admin/index.php" id="dropdown02" aria-haspopup="true" aria-expanded="false">Administration</a>
+                        <a class="nav-link" href="'.URL.'/admin/index.php" id="dropdown02" aria-haspopup="true" aria-expanded="false">Administration</a>
                     </li>';
                     }?>
                     <!-- Contact -->
