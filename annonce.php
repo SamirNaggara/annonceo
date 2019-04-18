@@ -3,9 +3,10 @@ include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 
 
-//if(!isset($_GET['id_annonce'])) {
-//	header('location:' . URL);
-//}
+
+if(!isset($_GET['id_annonce'])) {
+	header('location:' . URL);
+}
 else{
     //Recuperons les informations de la table annoncede l'id_anoonce en question
     
@@ -61,11 +62,11 @@ else{
 
 //Test pour voir si toutes les valeurs sont recuperer normalement dans la baess de données
 
-echo '<pre>'; print_r($cetteAnnonce); echo '</pre>';
-echo '<pre>'; print_r($ceVendeur); echo '</pre>';
-echo '<pre>'; print_r($lesPhotos); echo '</pre>';
-echo '<pre>'; print_r($lesNotes); echo '</pre>';
-echo '<pre>'; print_r($lesCommentaires); echo '</pre>';
+//echo '<pre>'; print_r($cetteAnnonce); echo '</pre>';
+//echo '<pre>'; print_r($ceVendeur); echo '</pre>';
+//echo '<pre>'; print_r($lesPhotos); echo '</pre>';
+//echo '<pre>'; print_r($lesNotes); echo '</pre>';
+//echo '<pre>'; print_r($lesCommentaires); echo '</pre>';
 
     
 
@@ -84,7 +85,7 @@ include_once('inc/nav.inc.php');
         <h1><?php echo $cetteAnnonce["titre"]; ?></h1>
         <span class="separation"> / </span>
         <strong class="vendeur"><i class="fas fa-user"></i><?php echo $ceVendeur['pseudo']; ?></strong>
-        <span class="laMoyenne"><?php echo calculMoyenneNote($cetteAnnonce[membre_id]); ?>/5</span>
+        <span class="laMoyenne">/5</span>
         span
         
         Ici le collapse 

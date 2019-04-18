@@ -52,7 +52,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="<?php echo URL ?>">Accueil site</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="<?php echo URL; ?>profil.php" data-toggle="modal" data-target="#logoutModal">Déconnexion</a>
+                            <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion'?>">Déconnexion</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
                             <div class="dropdown-divider"></div>
