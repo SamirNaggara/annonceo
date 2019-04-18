@@ -3,9 +3,9 @@ include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 
 
-if(!isset($_GET['id_annonce'])) {
-	header('location:' . URL);
-}
+//if(!isset($_GET['id_annonce'])) {
+//	header('location:' . URL);
+//}
 else{
     //Recuperons les informations de la table annoncede l'id_anoonce en question
     
