@@ -1,29 +1,29 @@
 body {
     background-color: grey;
 }
+/** contact.php **/
 #contactForm {
     margin-top: 150px;
 }
 
-
+/** footer.inc.php **/
 .footerMembre{
     width:100% !important;
     position:inherit !important;
 }
-
+/** admin/footer.in.php **/
 .adminFooter{
     position:inherit !important;
     width:100% !important;
     display:none !important;
 }
-.annonce-index {
-    margin-top: 150px;
+/** index.php **/
+/* conteneur principal englobant les annonces*/
+.annonce-index, .container {
+    margin: 150px 0;
 }
-
+/** titres des pages affiche les message d'erreur */
 .starter-template{
     text-align: center;
 }
 
-.container{
-    margin-top: 80px;
-}

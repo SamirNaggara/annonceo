@@ -124,6 +124,7 @@ include_once('inc/nav.inc.php');
 if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !isset($_GET['action'])){    
     
 ?>
+<div class="container">
 <div class="col-6 mx-auto">
     <form action="" method="post">
         <div class="form-group">
@@ -163,6 +164,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
         </div>
         <button type="submit" class="btn btn-primary">Valider</button>
     </form>
+</div>
 </div>
 <?php
     //Fermeture du if de l'onglet informations personnels

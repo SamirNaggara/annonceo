@@ -258,6 +258,7 @@ include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 
 ?>
+<div class="container">
 	<div class="starter-template">
 		<h1>Bootstrap starter template</h1>
 		<p class="lead"><?php echo $msg;?></p>
@@ -325,6 +326,7 @@ include_once('inc/nav.inc.php');
 			<input type="submit" class="form-control btn btn-warning" id="enregistrement" name="enregistrement" value="Enregistrement">		
 		</form>
 	</div>
+</div>
 <?php
 include_once('inc/footer.inc.php');
 
