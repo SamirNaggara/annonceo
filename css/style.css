@@ -27,14 +27,23 @@ body {
 .starter-template {
   text-align: center; }
 
+.monAnnonce header > .titreAnnonce #collapseVoirLesAvis .dateNote {
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
   font-size: 10px; }
 
+img {
 .monAnnonce .conteneurCarouselTexte .carousel img {
+  height: 500px !important; }
+  @media screen and (max-width: 480px) {
+    img {
+      height: 400px !important; } }
   height: 500px !important; }
   @media screen and (max-width: 480px) {
     .monAnnonce .conteneurCarouselTexte .carousel img {
       height: 400px !important; } }
+
+
+
 
 .conteneurCarouselTexte .description {
   position: relative;
