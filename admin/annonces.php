@@ -5,9 +5,6 @@ if(!user_is_admin()) {
 	header("location:" . URL . "profil.php");
 	exit(); // permet de bloquer l'exécution de la suite du script
 }
-
-echo '<pre>'; print_r($_SESSION); echo '</pre>';
-echo '<pre>'; print_r($_GET); echo '</pre>';
 //Recuperation des categories dans la base de données
 
     
@@ -21,8 +18,11 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
         header("location:" . URL . "admin/annonces.php");
     }
 
-    if(isset($_POST['nouveauTitre']) && isset($_POST['nouveauxMotsCles'])) {
+    if(isset($_GET['modifier'])) {
+
+      $recupAnnonces = $pdo->query("SELECT * FROM annonce");
         //Ici, une categorie du meme nom existe deja, on procede a l'update
+        echo '<pre>'; print_r($recupAnnonces); echo '</pre>';
 
         $updateAnnonce = $pdo->query("UPDATE annonce SET motscles = :motscles WHERE titre = :titre");
         $updateAnnonce->bindParam(':titre', $nouveauTitre, PDO::PARAM_STR);
@@ -65,13 +65,13 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
 
 <?php 
 // Affichage des annonces
-        echo '<div class="d-flex flex-column col-12">';
+        echo '<div class="tableAnnonces">';
         echo '<div class="row">';
         // lien des catégories
         echo '<a class="nav-link dropdown-toggle btn btn-default" href="" id="categorieAnnonces" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Trier par categories';
         echo '</a>';
-        echo '<div class="dropdown-menu" aria-labelledby="navbarDropdown">';
+        echo '<div class="dropdown-menu categoriesAnnonce" aria-labelledby="navbarDropdown">';
         echo '<a class="dropdown-item" href="'. URL. 'admin/annonces.php">Toutes les categories</a>';
         echo '<div class="dropdown-divider"></div>';
 							while($categorie = $recup_categorie->fetch(PDO::FETCH_ASSOC)) {
@@ -80,9 +80,9 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
               }
         echo '</div>';
         echo '</div>';
-        echo '<div class="row">';
+        echo '<div class="row tableauAnnonces">';
         // création du tableau
-        echo '<table class="table table-hover table-responsive-sm table-responsive-md">';
+        echo '<table class="table table-hover table-responsive-sm table-responsive-md col-12" >';
         echo '<tr>
                   <th>Id annonce</th>
                   <th>Titre</th>
@@ -113,15 +113,15 @@ echo '<pre>'; print_r($_GET); echo '</pre>';
                       echo '<td>' . $valeur . '</td>';
                     }
                   }  
-                  echo '<pre>'; print_r($indice); echo '</pre>';
+                  //echo '<pre>'; print_r($ligne); echo '</pre>';
 
 
 //24 - 2 - création des bouttons de modification et supression , ajouter ?action=modification&id_article='. $ligne['id_article'] .' et 
 // ?action=supression&id_article='. $ligne['id_article'] .' dans le href=""
                     echo '<td>'; 
-                    echo '<a href="?categorie="'.$indice['titre'].'"><i class="fas fa-search"></i></a>';
-                    echo '<a href="?modifier="'.$indice['titre'].'"><i class="fas fa-edit"></i></a>';
-                    echo '<a href="?supprimer="' . $indice['titre'] . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
+                    echo '<a href="?categorie='.$ligne['id_annonce'].'"><i class="fas fa-search"></i></a>';
+                    echo '<a href="?modifier='.$ligne['id_annonce'].'"><i class="fas fa-edit"></i></a>';
+                    echo '<a href="?supprimer=' . $ligne['id_annonce'] . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
                     echo '</td>';
 echo '</tr>';
 }
