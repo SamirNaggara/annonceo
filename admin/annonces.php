@@ -19,17 +19,30 @@ if(!user_is_admin()) {
     }
 
     if(isset($_GET['modifier'])) {
+      // $recupAnnonces = $pdo->prepare("SELECT a.id_annonce, a.titre AS titre_annonce, a.description_courte, a.description_longue, a.prix, a.photo, p.photo1, p.photo2, p.photo3, p.photo4, p.photo5, a.pays, a.ville, a.adresse, a.cp, m.pseudo, c.titre, a.date_enregistrement  
+      // FROM annonce a, membre m, categorie c, photo p
+      // WHERE m.id_membre = a.membre_id   
+      // AND a.categorie_id = c.id_categorie
+      // AND a.photo_id = p.id_photo");
+      // echo 'je suis dans le if';
+      $recupAnnonces = $pdo->prepare("SELECT * FROM annonce, photo WHERE id_annonce = :id_annonce AND id_photo = photo_id");
+      $recupAnnonces->bindParam(':id_annonce', $_GET['modifier'], PDO::PARAM_STR);
+      $recupAnnonces->execute();
+      // echo '<pre>'; print_r($recupAnnonces); echo '</pre>';
+      echo 'je suis dans le if';
+      // $recupAnnonces->bindParam(':id_annonce', $_GET['modifier'], PDO::PARAM_STR);
 
-      $recupAnnonces = $pdo->query("SELECT * FROM annonce");
+      $laRecupAnnonces = $recupAnnonces->fetch(PDO::FETCH_ASSOC);
         //Ici, une categorie du meme nom existe deja, on procede a l'update
-        echo '<pre>'; print_r($recupAnnonces); echo '</pre>';
+        echo '<pre>'; print_r($laRecupAnnonces); echo '</pre>';
 
-        $updateAnnonce = $pdo->query("UPDATE annonce SET motscles = :motscles WHERE titre = :titre");
-        $updateAnnonce->bindParam(':titre', $nouveauTitre, PDO::PARAM_STR);
-        $updateAnnonce->bindParam(':motscles', $nouveauxMotsCles, PDO::PARAM_STR);
-        $updateAnnonce->execute();
+        // $updateAnnonce = $pdo->query("UPDATE annonce SET titre = :titre, description_courte = :descripition_courte, description_longue = :description_longue, prix = :prix, photo = :photo, photo1 = :photo1, photo2 = :photo2, photo3 = :photo3, photo4 = :photo4, photo5 = :photo5, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp WHERE id_annonce = :id_annonce");
+        // $updateAnnonce->bindParam(':titre', $nouveauTitre, PDO::PARAM_STR);
+        // $updateAnnonce->bindParam(':motscles', $nouveauxMotsCles, PDO::PARAM_STR);
+        // $updateAnnonce->execute();
         
-        header("location:" . URL . "admin/categories.php");
+        //header("location:" . URL . "admin/categories.php");
+        $_GET['modifier']['id_annonce']
     }
     // récuperation des categories
     $recup_categorie = $pdo->query(
@@ -129,7 +142,13 @@ echo '</tr>';
 echo '</table>';
 echo '</div>';
 echo '</div>';
-?>
+
+ if(isset($_GET['modifier']))
+ {
+     echo $laRecupAnnonces['titre'];
+   ?>
+form
+
 <?php
 include_once('inc/footer.inc.php');
 ?>
