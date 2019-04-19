@@ -35,33 +35,31 @@ body {
 
 //--------------page annonce---------------
 
-.monAnnonce {
-    header {
-        > .titreAnnonce {
-            #collapseVoirLesAvis {
-                .dateNote {
-                    font-size: 10px;
-                }
-            }   
+.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
+                    font-size: 10px;   
 }
 
-> .contacter {}
-}
-}
 
-#carouselAnnonce{
-//    height:500px;
-}
 
-img{
-    height:500px !important;
+.monAnnonce .conteneurCarouselTexte .carousel img{
+        height:500px !important;
 
     @media screen AND (max-width:480px){
         height:400px !important;
     }
-    
 }
 
+
+.conteneurCarouselTexte .description{
+    position:relative;
+    border:10px solid red;
+    
+    
+        .footerDescription{
+            position:absolute;
+            bottom:0;
+        }
+    }
 
 
 

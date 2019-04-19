@@ -27,13 +27,20 @@ body {
 .starter-template {
   text-align: center; }
 
-.monAnnonce header > .titreAnnonce #collapseVoirLesAvis .dateNote {
+.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
   font-size: 10px; }
 
-img {
+.monAnnonce .conteneurCarouselTexte .carousel img {
   height: 500px !important; }
   @media screen and (max-width: 480px) {
-    img {
+    .monAnnonce .conteneurCarouselTexte .carousel img {
       height: 400px !important; } }
+
+.conteneurCarouselTexte .description {
+  position: relative;
+  border: 10px solid red; }
+  .conteneurCarouselTexte .description .footerDescription {
+    position: absolute;
+    bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */

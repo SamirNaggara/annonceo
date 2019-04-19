@@ -46,14 +46,23 @@ else{
         $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
         //Recuperons les informations e la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
         
-        $infosCommentaires = $pdo->prepare("SELECT * FROM commentaire WHERE annonce_id = :id_membre");
-        $infosCommentaires->bindParam(':id_membre', $_GET['id_annonce'], PDO::PARAM_STR);
+        $infosCommentaires = $pdo->prepare("SELECT * FROM commentaire WHERE annonce_id = :id_annonce");
+        $infosCommentaires->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
         $infosCommentaires->execute();
         
         $lesCommentaires = $infosCommentaires->fetch(PDO::FETCH_ASSOC);
         
         
+        //Recuperation des 4 dernières annonces de la categories
         
+        $infosAutresAnnonces = $pdo->prepare("SELECT * FROM annonce WHERE categorie_id = :categorie_id AND id_annonce != :id_annonce ORDER BY date_enregistrement limit 4");
+        $infosAutresAnnonces->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
+        $infosAutresAnnonces->bindParam(':categorie_id', $cetteAnnonce['categorie_id'], PDO::PARAM_STR);
+        $infosAutresAnnonces->execute();
+        
+        $autresAnnonces = $infosAutresAnnonces->fetchAll(PDO::FETCH_ASSOC);   
+        
+        echo '<pre>'; print_r($autresAnnonces); echo '</pre>';
 
         
         //On parcours toute les notes, on calcule la sommes de toutes les notes dans la variables $notes, on increment un compteur qui compte le nombre de notes, et le resultat est la division des deux
@@ -110,7 +119,7 @@ include_once('inc/nav.inc.php');
 <section class="monAnnonce">
 
     <header class="row">
-        <div class="titreAnnonce row col-lg-8 d-inline-block text-center text-lg-left mb-2">
+        <div class="titreAnnonce row col-lg-12 d-inline-block text-center text-lg-left mb-2 mx-auto">
             <h1 class="d-inline-block"><?php echo $cetteAnnonce["titre"]; ?></h1>
             <span class="separation d-none d-lg-inline-block"> / </span>
 
@@ -119,6 +128,9 @@ include_once('inc/nav.inc.php');
                 <span class="laMoyenne mx-auto"><?php echo $moyenneNote ?>/5 (voir les avis)</span>
 
             </a>
+
+            <a class="contacter btn btn-success col-lg-3 col-6 mx-auto my-3 float-lg-right " href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
+            
 
             <div class="collapse" id="collapseVoirLesAvis">
                 <div class="card card-body listingNote">
@@ -159,12 +171,14 @@ include_once('inc/nav.inc.php');
             </div>
         </div>
 
-        <a class="contacter btn btn-success col-lg-3 col-6 mx-auto my-auto " href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
+        
 
 
     </header>
-    <section class="carouselEtTexte row">
-        <div id="carouselAnnonce" class="carousel slide col-lg-6" data-ride="carousel">
+    
+    <div class="conteneurCarouselTexte row border-primary">
+        <section class="carousel col-lg-6">
+        <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselAnnonce" data-slide-to="1"></li>
@@ -173,7 +187,7 @@ include_once('inc/nav.inc.php');
                 <li data-target="#carouselAnnonce" data-slide-to="4"></li>
                 <li data-target="#carouselAnnonce" data-slide-to="5"></li>
             </ol>
-            
+
             <?php echo '
             <div class="carousel-inner w-100">
                 <div class="carousel-item active">
@@ -195,19 +209,51 @@ include_once('inc/nav.inc.php');
                     <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo5"] . '" alt="6 slide">
                 </div>';
                 ?>
-            </div>
-            <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-        <div class="description"></div>
+        <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
 
     </section>
+
+        <div class="description col-lg-6 border p-3">
+            <h3 class="p-3 text-center text-lg-left">Description</h3>
+            <div class="conteneurTexte overflow-scroll border p-3">
+                <p class="p-0 m-0 text-justify"><?php echo $cetteAnnonce['description_longue'] ?></p>
+            </div>
+            <div class="footerDescription row border p-3 w-100">
+                <div class="prix col-lg-4 w-100 text-center text-lg-left"><i class="fas fa-euro-sign"></i> <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> €</div>
+                <div class="adresse col-lg-8 text-center text-lg-right"><i class="fas fa-map-marker-alt"></i> <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?></div>
+                
+            </div>
+            
+
+        </div> 
+    </div>
+    
+    <div class="autresAnnonces row mt-5">
+      <h3 class="bold col-12 text-lg-left text-center">Autres annonces</h3>
+       <?php 
+        foreach($autresAnnonces as $cetteAutreAnnonce){
+            ?>
+            <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>"><?php echo '<img class="img-fluid" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
+               <figcaption class="text-white text-center;"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
+               </a>
+                
+                
+            </figure>
+            <?php
+        }
+            ?>
+    </div>
+    
+    <div class="commentaires"></div>
+    
 
     <div class="row modalContacter">
         <form id="register" method="post" action="">
