@@ -3,9 +3,12 @@ include_once('inc/init.inc.php');
 
 
 
+
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
+
+
 else{
     //Recuperons les informations de la table annoncede l'id_anoonce en question
     
@@ -62,7 +65,6 @@ else{
         
         $autresAnnonces = $infosAutresAnnonces->fetchAll(PDO::FETCH_ASSOC);   
         
-        echo '<pre>'; print_r($autresAnnonces); echo '</pre>';
 
         
         //On parcours toute les notes, on calcule la sommes de toutes les notes dans la variables $notes, on increment un compteur qui compte le nombre de notes, et le resultat est la division des deux
@@ -78,8 +80,58 @@ else{
     
         $moyenneNote = round($notes/$compteur, 1);     
         
+        $inputNote = "";
+        $inputAvis = "";
+        //Enregister l'avis dans la bse de données
+        if(isset($_POST['inputNote']) && is_numeric($_POST['inputNote']) && isset($_POST['inputAvis']) && isset($_POST['envoyerAvis'])){
+            $inputNote = $_POST['inputNote'];
+            $inputAvis = $_POST['inputAvis'];
+            
+            //Verifions si l'utilisateur à deja laissé un avis
+            
+            $recuperationAvis = $pdo->prepare("SELECT membre_id1 FROM note WHERE membre_id1 = :membre_id1 AND date_enregistrement > DATE_SUB(NOW(), INTERVAL 1 WEEK)");
+            $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
+
+
+            $recuperationAvis->execute();
+            
+            print_r($recuperationAvis);
+//            S'il y a une ligne, cela signifie qu'un resultat à été trouvé, donc il ne faut pas enregistrer le poste, mais envoyer un message d'erreur
+            
+            if ($recuperationAvis->rowCount() > 0){
+                $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous avez deja laissé un commentaire à cette personne dans la semaine.<br> Veuillez attendre 1 semaine avant de recommencer</div>';
+            }
+            else{
+                
+                //Il nous faut tester si la personne ne se met pas une note a elle meme
+            $recuperationAvis = $pdo->prepare("SELECT membre_id1 FROM note WHERE membre_id2 = :membre_id1 AND date_enregistrement > DATE_SUB(NOW(), INTERVAL 1 WEEK)");
+            $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
+
+
+            $recuperationAvis->execute();
+                
+                if ($recuperationAvis->rowCount() > 0){
+                    $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous ne pouvez pas vous mettre un commentaire a vous meme.<br>Merci</div>';
+                }
+                else{
+                                $enregistrementAvis = $pdo->prepare("INSERT INTO note (membre_id1, membre_id2, note, avis,date_enregistrement) VALUES (:membre_id1, :membre_id2, :note, :avis, NOW())");
+            $enregistrementAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
+            $enregistrementAvis->bindParam(':membre_id2', $ceVendeur['id_membre'], PDO::PARAM_STR);
+            $enregistrementAvis->bindParam(':note', $inputNote, PDO::PARAM_STR);
+            $enregistrementAvis->bindParam(':avis', $inputAvis, PDO::PARAM_STR);
+
+            $enregistrementAvis->execute();
+            
+             header('Location: '.$_SERVER['REQUEST_URI']);
+                }
+                
+                        //On enregistrer les avis
+
+            }           
+        }
+        
         // Envoyer le mail
-        if(isset($_POST['monMessage']) && isset($_POST['inscriptionMessage'])){
+        if(isset($_POST['monMessage']) && isset($_POST['envoyerMessage'])){
 	       $destinataire = $ceVendeur['email'];
 	       $expediteur = $_SESSION['utilisateur']['email'];
 	       $sujet = 'Vous avez reçut un message de ' . $_SESSION['utilisateur']['pseudo'];
@@ -88,6 +140,18 @@ else{
             $expediteur = 'From: ' . $expediteur;
             
             mail($destinataire, $sujet, $message, $expediteur);
+        }
+        
+        //Enovyer un nouveau commentaire
+        
+        if(isset($_POST['inputCommentaire']) && isset($_POST['envoyerCommentaire'])){
+            $enregistrementCommentaire = $pdo->prepare("INSERT INTO commentaire (membre_id, annonce_id, note, avis,date_enregistrement) VALUES (:membre_id, :annonce_id, :commentaire, :date_enregistrement");
+            $enregistrementCommentaire->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':membre_id2', $ceVendeur['id_membre'], PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':note', $inputNote, PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':avis', $inputAvis, PDO::PARAM_STR);
+
+            $enregistrementCommentaire->execute();
         }
         
         
@@ -105,8 +169,8 @@ else{
 //echo '<pre>'; print_r($lesNotes); echo '</pre>';
 //echo '<pre>'; print_r($lesCommentaires); echo '</pre>';
 
-    
-
+//echo '<pre>'; print_r($_SESSION); echo '</pre>';
+echo '<pre>'; print_r($_POST); echo '</pre>';
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
@@ -117,7 +181,7 @@ include_once('inc/nav.inc.php');
 
 
 <section class="monAnnonce">
-
+    <p class="lead"><?php echo $msg;?></p>
     <header class="row">
         <div class="titreAnnonce row col-lg-12 d-inline-block text-center text-lg-left mb-2 mx-auto">
             <h1 class="d-inline-block"><?php echo $cetteAnnonce["titre"]; ?></h1>
@@ -130,7 +194,9 @@ include_once('inc/nav.inc.php');
             </a>
 
             <a class="contacter btn btn-success col-lg-3 col-6 mx-auto my-3 float-lg-right " href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-            
+
+            <a class="laisserAvis btn btn-info col-lg-3 col-6 mx-auto my-3 float-lg-right px-3 " href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
+
 
             <div class="collapse" id="collapseVoirLesAvis">
                 <div class="card card-body listingNote">
@@ -171,24 +237,24 @@ include_once('inc/nav.inc.php');
             </div>
         </div>
 
-        
+
 
 
     </header>
-    
-    <div class="conteneurCarouselTexte row border-primary">
-        <section class="carousel col-lg-6">
-        <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselAnnonce" data-slide-to="1"></li>
-                <li data-target="#carouselAnnonce" data-slide-to="2"></li>
-                <li data-target="#carouselAnnonce" data-slide-to="3"></li>
-                <li data-target="#carouselAnnonce" data-slide-to="4"></li>
-                <li data-target="#carouselAnnonce" data-slide-to="5"></li>
-            </ol>
 
-            <?php echo '
+    <div class="conteneurCarouselTexte row ">
+        <section class="carousel col-lg-6">
+            <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselAnnonce" data-slide-to="1"></li>
+                    <li data-target="#carouselAnnonce" data-slide-to="2"></li>
+                    <li data-target="#carouselAnnonce" data-slide-to="3"></li>
+                    <li data-target="#carouselAnnonce" data-slide-to="4"></li>
+                    <li data-target="#carouselAnnonce" data-slide-to="5"></li>
+                </ol>
+
+                <?php echo '
             <div class="carousel-inner w-100">
                 <div class="carousel-item active">
                     <img class="d-block img-fluid w-100" src="' . $cetteAnnonce["photo"] . '" alt="First slide">
@@ -209,59 +275,73 @@ include_once('inc/nav.inc.php');
                     <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo5"] . '" alt="6 slide">
                 </div>';
                 ?>
-        </div>
-        <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+            </div>
+            <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
 
-    </section>
+        </section>
 
-        <div class="description col-lg-6 border p-3">
+        <div class="description col-lg-6 p-3">
             <h3 class="p-3 text-center text-lg-left">Description</h3>
-            <div class="conteneurTexte overflow-scroll border p-3">
+            <div class="conteneurTexte overflow-scroll p-3">
                 <p class="p-0 m-0 text-justify"><?php echo $cetteAnnonce['description_longue'] ?></p>
             </div>
-            <div class="footerDescription row border p-3 w-100">
+            <div class="footerDescription position-absolute row p-3 w-100">
                 <div class="prix col-lg-4 w-100 text-center text-lg-left"><i class="fas fa-euro-sign"></i> <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> €</div>
                 <div class="adresse col-lg-8 text-center text-lg-right"><i class="fas fa-map-marker-alt"></i> <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?></div>
-                
-            </div>
-            
 
-        </div> 
+            </div>
+
+
+        </div>
     </div>
-    
+
     <div class="autresAnnonces row mt-5">
-      <h3 class="bold col-12 text-lg-left text-center">Autres annonces</h3>
-       <?php 
+        <h3 class="bold col-12 text-lg-left text-center">Autres annonces</h3>
+        <?php 
         foreach($autresAnnonces as $cetteAutreAnnonce){
             ?>
-            <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>"><?php echo '<img class="img-fluid" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-               <figcaption class="text-white text-center;"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
-               </a>
-                
-                
-            </figure>
-            <?php
+        <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>"><?php echo '<img class="img-fluid" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
+                <figcaption class="text-center text-dark"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
+            </a>
+
+
+        </figure>
+        <?php
         }
             ?>
     </div>
-    
-    <div class="commentaires"></div>
-    
 
-    <div class="row modalContacter">
-        <form id="register" method="post" action="">
-            <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
+    <div class="commentaires ">
+        <h2>Commentaires</h2>
+
+        <form id="avis" method="post" action="">
+
+            <div class="form-group">
+                <label for="inputCommentaire">Ecrivez un commentaire:</label>
+                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="3" placeholder="Mon commentaire"></textarea>
+                
+                <input type="submit" class="btn btn-primary w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
+
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="row laisserAvis">
+        <form id="avis" method="post" action="">
+            <div class="modal fade" id="laisserAvis" tabindex="-1" role="dialog" aria-labelledby="laisserAvis" aria-hidden="true" class="col-sm-4">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Laisser un avis à <?php echo ucfirst($ceVendeur["pseudo"]); ?></h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -270,34 +350,69 @@ include_once('inc/nav.inc.php');
 
                             <form action="post">
 
-
-
-
+                                <div class="form-group">
+                                    <label for="inputNote">Notes: </label>
+                                    <select class="form-control" id="inputNote" name="inputNote">
+                                        <option value="0">0/5</option>
+                                        <option value="1">1/5</option>
+                                        <option value="2">2/5</option>
+                                        <option value="3">3/5</option>
+                                        <option value="4">4/5</option>
+                                        <option value="5" selected>5/5</option>
+                                    </select>
+                                </div>
 
                                 <div class="form-group">
-                                    <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
-                                </div>
-
-                                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
-                                    Ou obtenir le numero de téléphone
-
-                                </a>
-
-                                <div class="collapse" id="collapseNumeroDeTelephone">
-                                    <div class="card card-body listingNote">
-                                        <p class="nomEtNote m-0"><i class="fas fa-phone"></i> <?php echo $ceVendeur['telephone'] ?>
-                                    </div>
+                                    <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
                                 </div>
 
 
-
-                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="inscriptionMessage" value="Envoyer">
+                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerAvis" value="Envoyer">
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+    </div>
+
+
+    <div class="row modalContacter">
+        <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="post">
+                            <div class="form-group">
+                                <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
+                            </div>
+
+                            <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
+                                Ou obtenir le numero de téléphone
+
+                            </a>
+
+                            <div class="collapse" id="collapseNumeroDeTelephone">
+                                <div class="card card-body listingNote">
+                                    <p class="nomEtNote m-0"><i class="fas fa-phone"></i> <?php echo $ceVendeur['telephone'] ?>
+                                </div>
+                            </div>
+
+
+
+                            <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerMessage" value="Envoyer">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php

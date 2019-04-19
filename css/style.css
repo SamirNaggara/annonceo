@@ -1,6 +1,3 @@
-body {
-  background-color: grey; }
-
 /** contact.php **/
 #contactForm {
   margin-top: 150px; }
@@ -27,29 +24,23 @@ body {
 .starter-template {
   text-align: center; }
 
-.monAnnonce header > .titreAnnonce #collapseVoirLesAvis .dateNote {
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
   font-size: 10px; }
 
-img {
 .monAnnonce .conteneurCarouselTexte .carousel img {
-  height: 500px !important; }
-  @media screen and (max-width: 480px) {
-    img {
-      height: 400px !important; } }
   height: 500px !important; }
   @media screen and (max-width: 480px) {
     .monAnnonce .conteneurCarouselTexte .carousel img {
       height: 400px !important; } }
 
-
-
+#collapseVoirLesAvis .listingNote {
+  max-height: 500px;
+  overflow: scroll; }
 
 .conteneurCarouselTexte .description {
-  position: relative;
-  border: 10px solid red; }
-  .conteneurCarouselTexte .description .footerDescription {
-    position: absolute;
-    bottom: 0; }
+  position: relative; }
+  @media screen and (min-width: 990px) {
+    .conteneurCarouselTexte .description .footerDescription {
+      bottom: 0; } }
 
 /*# sourceMappingURL=style.css.map */
