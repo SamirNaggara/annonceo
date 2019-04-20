@@ -6,8 +6,10 @@
         <!-- Accueil -->
         <?php
         if(isset($_GET['action']) && $_GET['action'] == 'deconnexion') {
-        session_destroy();
-        } ?>
+            session_destroy();            
+            header('Location:' . URL);
+        } 
+        ?>
         
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="<?php echo URL;?>index.php">Annonceo</a>
@@ -17,9 +19,13 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <!-- Dépot d'annonce -->
+                    
+<!--                    On affiche "Déposer une annonce" seulement siun utilateur est connecter-->
+                    <?php if (user_is_connected()){ ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="nouvelle-annonce.php">Déposer une annonce</a>
                     </li>
+                    <?php } ?>
                     <!-- Adminstration si utilisateur est admin -->
                     <?php 
                     if(user_is_admin()) {
@@ -48,17 +54,37 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle fa-fw"></i>
+                            <?php 
+                            // Si l'utilisateur n'est pas connecter on ecrit "se connecter", sinon on n'ecris le pseudo du membre, et entre parenthese s'il est admin ou non
+                            if (!user_is_connected()){
+                                echo 'Se connecter';
+                            }
+                            else{
+                                echo ucfirst($_SESSION['utilisateur']['pseudo']);
+                                
+                                if (user_is_admin()){
+                                    echo ' (admin)';
+                                }
+                            }
+                            ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="<?php echo URL ?>">Accueil site</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion'?>">Déconnexion</a>
-                            <div class="dropdown-divider"></div>
+                           <?php 
+                            // Inscription et connections ne n'apparaissent que si l'utilisateur n'est pas connecter
+                            
+                            if (!user_is_connected()){
+                                ?>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">Connexion</a>
-                            <div class="dropdown-divider"></div>
+                            
+                            <?php
+                            }else{
+                            ?>
                             <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion' ?>" data-toggle="modal" data-target="#logoutModal">Deconnexion</a>
+                            <?php } ?>
                         </div>
                     </li>
                 </ul>

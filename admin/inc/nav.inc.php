@@ -28,7 +28,7 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                   <a class="dropdown-item" href="<?php echo URL ?>">Accueil site</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                  <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion' ?>" data-toggle="modal" data-target="#logoutModal">Deconnexion</a>
               </div>
           </li>
       </ul>

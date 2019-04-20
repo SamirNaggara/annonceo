@@ -2,6 +2,15 @@
 include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 
+
+
+
+
+
+
+
+
+
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
@@ -18,7 +27,7 @@ include_once('inc/nav.inc.php');
         <div class="col-md-6 position-static p-4 pl-md-0">
             <h5 class="mt-0">Columns with stretched link</h5>
             <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-            <a href="#" class="stretched-link">Go somewhere</a>
+            <a href="<?php echo URL . "annonce.php?id_annonce=2"; ?>" class="stretched-link">Go somewhere</a>
         </div>
     </div>
     <br>

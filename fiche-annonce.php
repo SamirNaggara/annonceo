@@ -25,7 +25,11 @@ include_once('inc/nav.inc.php');
 
 
 
-
+    <div class="starter-template">
+        <h1>Page fiche-annonce</h1>
+<!--        Attention!!! Important pour ecrire les messages d'erreurs-->
+        <p class="lead"><?php echo $msg;?></p>
+    </div>
 
 <div class="row no-gutters bg-light position-relative">
   <div class="col-md-6 mb-md-0 p-md-4">

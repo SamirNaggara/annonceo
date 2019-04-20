@@ -22,7 +22,12 @@ include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
 
-
+    <div class="starter-template">
+        <h1>Contact</h1>
+<!--        Attention!!! Important pour ecrire les messages d'erreurs-->
+        <p class="lead"><?php echo $msg;?></p>
+    </div>
+    
 <div class="row">
     <div class="col-6 mx-auto">
         <form id="contactForm" method="post" action="">

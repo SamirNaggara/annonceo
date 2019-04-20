@@ -50,12 +50,12 @@
     }
 }
 
-#collapseVoirLesAvis .listingNote{
+.monAnnonce #collapseVoirLesAvis .listingNote{
     max-height: 500px;
     overflow: scroll;
 }
 
-.conteneurCarouselTexte .description {
+.monAnnonce .conteneurCarouselTexte .description {
     position: relative;
 
 
@@ -65,4 +65,8 @@
         }
         
     }
+}
+
+.monAnnonce .commentaires .conteneurCommentaire .date{
+    font-size:10px;
 }

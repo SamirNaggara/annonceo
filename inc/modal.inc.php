@@ -1,15 +1,19 @@
 <?php
 // deconnexion
+
+//Affiche un message de succes quand une inscription vient d'etre réalisé. Le message apparait une fois, puis ne réapparaitra plus
+if (isset($_SESSION['inscription_ok']) && $_SESSION['inscription_ok'] = 'Inscription ok'){
+    $msg .= '<div class="alert alert-success mt-2" role="alert">Vous avez été inscrit avec succes!<br>Connectez-vous!</div>';
+    session_destroy();
+    
+}
+
+
+
 //***********************
 // Modal d'inscription
 //***********************
-// restriction d'acces
 
-if(user_is_connected()) {
-
-// si l'utilisateur est connecté, on l'envoie vers profil.php
-// header('location:profil.php');
-}
 
 // déclaration de variable pour afficher les valeurs dans les values de nos champs // vides par defaut.
 $pseudo = "";
@@ -25,7 +29,7 @@ $mdp_connexion="";
 
 
 // vérification si les champs existe deja
-if(isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['nom']) && isset($_POST['prenom']) && 
+if(isset($_POST['pseudo']) && isset($_POST['mdp']) && isset($_POST['nom']) && isset($_POST['prenom']) &&  
 isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone'])) {
 
 // enlève ses espaces.
@@ -45,7 +49,7 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 // controle sur la taille du pseudo entre 4 et 14 caractères inclus
 
 	if(iconv_strlen($pseudo) < 4 || iconv_strlen($pseudo) > 14) {
-		$msg .= 'Le pseudo doit avoir entre 4 et 14 caractères inclus. Veuillez recommencer';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Le pseudo doit avoir entre 4 et 14 caractères inclus.<br>Veuillez recommencer</div>';
 	}
 
     // vérification des caractères présent dans le pseudo
@@ -101,7 +105,7 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
         
         $msg .= '<div class="alert alert-success mt-2" role="alert">Bravo, vous etes inscrit.<br>Veuillez recommencer</div>';
 		// Enregistrement est OK renvoi vers index.php pour connexion
-		//$_SESSION['inscription_ok'] = 'Inscription ok';
+		$_SESSION['inscription_ok'] = 'Inscription ok';
 		header('location:index.php');
 	} 
 }
@@ -109,16 +113,12 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 // Modal de connexion
 //***********************
 
-// deconnexion
-if(isset($_GET['action']) && $_GET['action'] == 'deconnexion') {
-    session_destroy();
-    header('location:index.php');
-	// unset($_SESSION);
-}
+
+   
+//Formulaire se connecter
 if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
 	$pseudo_connexion = trim($_POST['pseudo_connexion']);
     $mdp_connexion = trim($_POST['mdp_connexion']);
-    echo 'je suis dans le 1er if';
 	
     // on demande à la BDD de nous renvoyer les informations d'un utilisateur sur la base du pseudo saisie dans le champ.
 	$connexion = $pdo->prepare("SELECT * FROM membre WHERE pseudo = :pseudo");
@@ -128,7 +128,6 @@ if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
 	
 	// s'il y a une ligne alors le pseudo existe en BDD
 	if($connexion->rowCount() > 0) {
-		echo 'je suis dans le 2eme if';
 		// si le pseudo est ok, on vérifie le mot de passe
         $utilisateur = $connexion->fetch(PDO::FETCH_ASSOC);
 		//echo '<pre>'; print_r($utilisateur); echo '</pre>';
@@ -143,9 +142,10 @@ if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
 			}
 			header("location:profil.php");
 		} else {
-			$msg .= 'Erreur sur le pseudo ou le mot de passe. Veuillez recommencer';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">Erreur sur le pseudo ou le mot de passe<br>Veuillez recommencer</div>';
+            
 		}
 	} else {
-		$msg .= 'Erreur sur le pseudo ou le mot de passe';
+		$msg .= '<div class="alert alert-danger mt-2" role="alert">Erreur sur le pseudo ou le mot de passe<br>Veuillez recommencer</div>';
 	}
 }

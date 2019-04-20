@@ -49,11 +49,22 @@ else{
         $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
         //Recuperons les informations e la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
         
-        $infosCommentaires = $pdo->prepare("SELECT * FROM commentaire WHERE annonce_id = :id_annonce");
+        $infosCommentaires = $pdo->prepare("SELECT
+                                                c.commentaire,
+                                                c.date_enregistrement,
+                                                m.pseudo
+                                                FROM
+                                                    commentaire c
+                                                LEFT JOIN annonce a ON
+                                                    a.id_annonce = c.annonce_id
+                                                LEFT JOIN membre m ON
+                                                    m.id_membre = a.membre_id
+                                                WHERE c.annonce_id = 2
+                                                ORDER BY c.date_enregistrement DESC");
         $infosCommentaires->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
         $infosCommentaires->execute();
         
-        $lesCommentaires = $infosCommentaires->fetch(PDO::FETCH_ASSOC);
+        $lesCommentaires = $infosCommentaires->fetchAll(PDO::FETCH_ASSOC);
         
         
         //Recuperation des 4 dernières annonces de la categories
@@ -99,7 +110,7 @@ else{
 //            S'il y a une ligne, cela signifie qu'un resultat à été trouvé, donc il ne faut pas enregistrer le poste, mais envoyer un message d'erreur
             
             if ($recuperationAvis->rowCount() > 0){
-                $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous avez deja laissé un commentaire à cette personne dans la semaine.<br> Veuillez attendre 1 semaine avant de recommencer</div>';
+                $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous avez deja laissé un avis à cette personne dans la semaine.<br> Veuillez attendre 1 semaine avant de recommencer</div>';
             }
             else{
                 
@@ -111,7 +122,7 @@ else{
             $recuperationAvis->execute();
                 
                 if ($recuperationAvis->rowCount() > 0){
-                    $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous ne pouvez pas vous mettre un commentaire a vous meme.<br>Merci</div>';
+                    $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous ne pouvez pas vous mettre un avis a vous meme.<br>Merci</div>';
                 }
                 else{
                                 $enregistrementAvis = $pdo->prepare("INSERT INTO note (membre_id1, membre_id2, note, avis,date_enregistrement) VALUES (:membre_id1, :membre_id2, :note, :avis, NOW())");
@@ -145,14 +156,16 @@ else{
         //Enovyer un nouveau commentaire
         
         if(isset($_POST['inputCommentaire']) && isset($_POST['envoyerCommentaire'])){
-            $enregistrementCommentaire = $pdo->prepare("INSERT INTO commentaire (membre_id, annonce_id, note, avis,date_enregistrement) VALUES (:membre_id, :annonce_id, :commentaire, :date_enregistrement");
-            $enregistrementCommentaire->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
-            $enregistrementCommentaire->bindParam(':membre_id2', $ceVendeur['id_membre'], PDO::PARAM_STR);
-            $enregistrementCommentaire->bindParam(':note', $inputNote, PDO::PARAM_STR);
-            $enregistrementCommentaire->bindParam(':avis', $inputAvis, PDO::PARAM_STR);
+            $enregistrementCommentaire = $pdo->prepare("INSERT INTO commentaire (membre_id, annonce_id, commentaire, date_enregistrement) VALUES (:membre_id, :annonce_id, :commentaire, NOW())");
+            $enregistrementCommentaire->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':annonce_id', $cetteAnnonce['id_annonce'], PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':commentaire', $_POST['inputCommentaire'], PDO::PARAM_STR);
 
             $enregistrementCommentaire->execute();
+            
+            header('Location: '.$_SERVER['REQUEST_URI']);
         }
+        
         
         
         
@@ -181,6 +194,7 @@ include_once('inc/nav.inc.php');
 
 
 <section class="monAnnonce">
+<!--        Attention!!! Important pour ecrire les messages d'erreurs-->
     <p class="lead"><?php echo $msg;?></p>
     <header class="row">
         <div class="titreAnnonce row col-lg-12 d-inline-block text-center text-lg-left mb-2 mx-auto">
@@ -204,6 +218,8 @@ include_once('inc/nav.inc.php');
                 $premiereLigne = true;
                 foreach($lesNotes as $uneNote){
                     
+                    //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                    
                     if ($premiereLigne){
                         $premiereLigne = false;
                     }else{
@@ -213,7 +229,7 @@ include_once('inc/nav.inc.php');
 
                     <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
                     
-                    //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+
                     
                     
                     $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
@@ -318,20 +334,46 @@ include_once('inc/nav.inc.php');
             ?>
     </div>
 
-    <div class="commentaires ">
+    <div class="commentaires">
         <h2>Commentaires</h2>
 
         <form id="avis" method="post" action="">
 
             <div class="form-group">
-                <label for="inputCommentaire">Ecrivez un commentaire:</label>
-                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="3" placeholder="Mon commentaire"></textarea>
-                
+                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="3" placeholder="Mon commentaire..."></textarea>
+
                 <input type="submit" class="btn btn-primary w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
 
             </div>
 
         </form>
+        <div class="conteneurCommentaire mt-5">
+            <?php
+            
+                $premiereLigne2 = true;
+                foreach($lesCommentaires as $ceCommentaire){
+                    
+                    if ($premiereLigne2){
+                        $premiereLigne = false;
+                    }else{
+                        echo '<hr>';
+                    }
+                    
+                    
+                    ?>
+                    
+            <span class="pseudo"><?php echo ucfirst($ceCommentaire['pseudo']); ?></span>
+            <span class="date text-secondary"><?php echo formatStandardTotal($ceCommentaire['date_enregistrement']); ?></span>
+            <p class="texteCommentaire"><?php echo $ceCommentaire['commentaire']; ?></p>
+            <?php
+                }
+                ?>
+
+        </div>
+
+
+
+
     </div>
 
 
@@ -415,7 +457,8 @@ include_once('inc/nav.inc.php');
         </div>
     </div>
 
-    <?php
+</section>
+<?php
 include_once('inc/footer.inc.php');
 
 ?>

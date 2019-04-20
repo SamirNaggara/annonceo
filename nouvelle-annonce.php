@@ -1,6 +1,12 @@
 <?php
 include_once('inc/init.inc.php');
 
+if (!user_is_connected()){
+    header('location:' . URL);
+    exit();
+}
+
+
 //***************************
 // ENREGISTREMENT ANNONCE
 //***************************
@@ -23,6 +29,12 @@ $cp = '';
 //$categorie_hidden = $categorie['id_categorie'];
 echo '<pre>'; print_r($_POST); echo '</pre>';
 echo '<pre>'; print_r($_FILES); echo '</pre>';
+
+if(!user_is_connected()) {
+// si l'utilisateur n'est pas connecté
+    header("location:" . URL);
+    exit();
+}
 
 if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST['descriptionLongue']) && isset($_POST['prix']) && isset($_POST['categorie']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
 
@@ -260,7 +272,7 @@ include_once('inc/nav.inc.php');
 ?>
 <div class="container">
 	<div class="starter-template">
-		<h1>Bootstrap starter template</h1>
+		<h1>Enregistrer une nouvelle annonce</h1>
 		<p class="lead"><?php echo $msg;?></p>
 	</div>
 	<div class="col-6 mx-auto">

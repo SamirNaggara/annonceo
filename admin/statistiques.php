@@ -4,7 +4,10 @@ include_once('../inc/init.inc.php');
 
 
 
-
+if(!user_is_admin()) {
+	header("location:" . URL . "profil.php");
+	exit(); // permet de bloquer l'exécution de la suite du script
+}
 
 
 

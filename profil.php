@@ -3,7 +3,8 @@ include_once('inc/init.inc.php');
 
 if(!user_is_connected()) {
 // si l'utilisateur n'est pas connecté
-header("location:" . URL);
+    header("location:" . URL);
+    exit();
 }
 
 // déclaration de variable pour afficher les valeurs dans les values de nos champs egales aux sessions 
