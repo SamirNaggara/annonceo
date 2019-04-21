@@ -12,7 +12,7 @@ if(!user_is_admin()) {
 
 //Recuperation des categories dans la base de données
 
-    $categories = $pdo->prepare("SELECT * FROM categorie");
+    $categories = $pdo->prepare("SELECT * FROM categorie ORDER BY titre");
     $categories->execute();
 
     $lesCategories = $categories->fetchAll(PDO::FETCH_ASSOC);
@@ -152,7 +152,7 @@ include_once('inc/nav.inc.php');
                 <div class="form-group">
                     <label for="nouveauTitre">Titre de la nouvelle categorie</label>
                     <input type="text" class="form-control" id="nouveauTitre" name="nouveauTitre" <?php if (isset($_GET["modifier"])){
-    echo 'value="' . $_GET["modifier"] . '"';} ?>>
+                        echo 'value="' . $_GET["modifier"] . '"';} ?>>
                 </div>
 
                 <div class="form-group">

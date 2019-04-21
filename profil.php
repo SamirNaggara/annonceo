@@ -6,7 +6,6 @@ if(!user_is_connected()) {
     header("location:" . URL);
     exit();
 }
-
 // déclaration de variable pour afficher les valeurs dans les values de nos champs egales aux sessions 
 
 $id_membre_profil = $_SESSION['utilisateur']['id_membre'];
@@ -98,8 +97,33 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
         //message que les informations ont été modifiées
 
         $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
+    
+
     }
 }
+
+//Recuperons les information de la table note, avec le note_id2 qui est egale a  membre_id de la table annonce
+        
+$infosNotes = $pdo->prepare("SELECT * FROM note WHERE membre_id1 = :id_membre OR membre_id2 = :id_membre");
+$infosNotes->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
+$infosNotes->execute();
+
+$lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
+//On parcours toute les notes, on calcule la sommes de toutes les notes dans la variables $notes, on increment un compteur qui compte le nombre de notes, et le resultat est la division des deux
+
+//        echo $lesNotes[0]["note"];
+$compteur = 0;
+$notes=0;
+foreach($lesNotes as $uneNote){
+    //On calcule la moyenne des notes que la personne connectée a reçut
+    if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
+        $notes += floatval($uneNote["note"]);
+
+        $compteur += 1;
+    }
+
+}
+$moyenneNote = round($notes/$compteur, 1);  
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
@@ -109,7 +133,6 @@ include_once('inc/nav.inc.php');
 <div class="starter-template">
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-    <hr>
     <a href="?action=informationsPersonnels" class="btn btn-warning text-white">Informations personnels</a>
     <a href="?action=mesCommentaires" class="btn btn-primary">Mes commentaires</a>
     <a href="?action=mesNotes" class="btn btn-primary">Mes notes</a>
@@ -169,7 +192,111 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
 <?php
     //Fermeture du if de l'onglet informations personnels
 }
-?>
+
+// Ouverture de l'onglet sur les commentaires
+if (isset($_GET['action']) && $_GET['action'] == "mesCommentaires"){    
+    echo '<p>Je suis la page commentaire</p>';
+}
+
+// Ouverture de l'onglet sur les notes
+if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){    
+    ?>
+    <div class="starter-template">
+        <h2>Mes avis</h2>
+    </div>
+    <div class="card card-body listingNote">
+            <?php
+        $premiereLigne = true;
+        foreach($lesNotes as $uneNote){
+               
+        //On affiche uniquement les commentaire que la personne à reçut
+    if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
+            //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                    
+            if ($premiereLigne){
+                $premiereLigne = false;
+            }else{
+                echo '<hr>';
+            }
+            ?>
+
+            <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
+                    
+
+                    
+                    
+            $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+            $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+            $infosMembreAvis->execute();
+
+            $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                    
+            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
+
+            <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
+            <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
+
+            <?php } ?>
+
+
+
+            <?php
+                //On ferme l'accolade du foreach des notes
+            }
+            ?>
+    </div>
+
+    <div class="starter-template">
+        <h2>Les avis donnés</h2>
+    </div>
+
+    <div class="card card-body listingNote">
+            <?php
+        $premiereLigne = true;
+        foreach($lesNotes as $uneNote){
+               
+        //On affiche uniquement les commentaire que la personne à reçut
+    if ($uneNote["membre_id1"] == $_SESSION['utilisateur']['id_membre']){
+            //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                    
+            if ($premiereLigne){
+                $premiereLigne = false;
+            }else{
+                echo '<hr>';
+            }
+            ?>
+
+            <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
+                    
+
+                    
+                    
+            $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+            $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+            $infosMembreAvis->execute();
+
+            $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                    
+            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
+
+            <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
+            <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
+
+            <?php } ?>
+
+
+
+            <?php
+                //On ferme l'accolade du foreach des notes
+            }
+            ?>
+    </div>
+            <?php
+    }
+    ?>
+
+
+
 <?php
 include_once('inc/footer.inc.php');
 ?>
