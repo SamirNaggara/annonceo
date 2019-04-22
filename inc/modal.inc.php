@@ -38,10 +38,10 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 	}
 
 // placement des saisies du formulaire dans les variables.
-	$pseudo = $_POST['pseudo'];
+	$pseudo = strtolower($_POST['pseudo']);
 	$mdp = $_POST['mdp'];
-	$nom = $_POST['nom'];
-	$prenom = $_POST['prenom'];
+	$nom = strtolower($_POST['nom']);
+	$prenom = strtolower($_POST['prenom']);
 	$email = $_POST['email'];
 	$civilite = $_POST['civilite'];
 	$telephone = $_POST['telephone'];

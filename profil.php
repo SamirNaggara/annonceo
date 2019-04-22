@@ -18,7 +18,7 @@ $civilite_profil = $_SESSION['utilisateur']['civilite'];
 $statut_profil = $_SESSION['utilisateur']['statut'];
 $date_enregistrement_profil = $_SESSION['utilisateur']['date_enregistrement'];  
 
-if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST['prenom_profil']) && isset($_POST['telephone_profil']) && isset($_POST['email_profil']) && isset($_POST['civilite_profil'])) {
+if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST['prenom_profil']) && isset($_POST['telephone_profil']) && isset($_POST['email_profil']) && isset($_POST['civilite_profil']) && isset($_POST['validerMembre'])) {
     // on enlève les espace en début et fin de chaine avec trim()
 	foreach($_POST AS $indice => $valeur) {
 		$_POST[$indice] = trim($_POST[$indice]);
@@ -31,9 +31,9 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 	}    
     
     // si ça existe, on place la saisie du formulaire dans ces variables.
-	$pseudo_profil = $_POST['pseudo_profil'];
-	$nom_profil = $_POST['nom_profil']; 
-	$prenom_profil = $_POST['prenom_profil'];
+	$pseudo_profil = strtolower($_POST['pseudo_profil']);
+	$nom_profil = strtolower($_POST['nom_profil']); 
+	$prenom_profil = strtolower($_POST['prenom_profil']);
 	$telephone_profil = $_POST['telephone_profil'];
 	$email_profil = $_POST['email_profil'];
 	$civilite_profil = $_POST['civilite_profil'];   
@@ -102,6 +102,61 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
     }
 }
 
+
+//Partie sur le changement de mot de passe
+
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
+
+$actuelMdp = "";
+$nouveauMdp= "";;
+
+if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset($_POST['inputNouveauMdp2']) && isset($_POST['enregistrementMdp'])){
+    
+    // L'enregistrement ne s'effectuera que si les deux mots de passe correspondent, sinon, l'on renvoie un message d'erreur que les deux ne correspondent pas
+    if ($_POST['inputNouveauMdp1'] == $_POST['inputNouveauMdp2']){
+        
+        $nouveauMdp = $_POST['inputNouveauMdp1'];
+        $actuelMdp = $_POST['inputActuelMdp'];
+        //L'on verifie que le mot de passe actuel est le bon
+        
+        
+        
+        $infoMdp = $pdo-> prepare("SELECT mdp FROM membre WHERE id_membre = :id_membre");
+        $infoMdp-> bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
+        $infoMdp -> execute();
+        
+        $ligneMdpActuel = $infoMdp -> fetch(PDO::FETCH_ASSOC);
+        echo $ligneMdpActuel['mdp'];
+        
+        //On verifie si le mdp est bon, s'il est bon on update dans la page de donnée et on envoie un message de succes, et si non, on envoie un message que le mdp n'est pas bon
+        if(password_verify($actuelMdp, $ligneMdpActuel['mdp'])){
+            //On hache le nouveau mdp
+            $mdp = password_hash($nouveauMdp, PASSWORD_DEFAULT);
+            
+            //Puis on update le nouveau mdp
+            
+            $updateMdp = $pdo-> prepare("UPDATE membre SET mdp = :mdp WHERE id_membre = :id_membre");
+            $updateMdp-> bindParam(':mdp', $mdp, PDO::PARAM_STR);
+            $updateMdp-> bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
+            $updateMdp -> execute();
+            
+            
+            
+            $msg .= '<div class="alert alert-success mt-2" role="alert">Le nouveau a été attribué avec succes.</div>';
+        }else{
+          $msg .= '<div class="alert alert-danger mt-2" role="alert">Le mot de passe actuel n\'est pas le bon.<br>Veuillez recommencer</div>';  
+        }
+        
+        
+    }else{
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Les deux mots de passes ne correspondent pas.<br>Veuillez recommencer</div>';
+
+    }
+}
+
+
 //Recuperons les information de la table note, avec le note_id2 qui est egale a  membre_id de la table annonce
         
 $infosNotes = $pdo->prepare("SELECT * FROM note WHERE membre_id1 = :id_membre OR membre_id2 = :id_membre");
@@ -134,7 +189,7 @@ include_once('inc/nav.inc.php');
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
     <a href="?action=informationsPersonnels" class="btn btn-warning text-white">Informations personnels</a>
-    <a href="?action=mesCommentaires" class="btn btn-primary">Mes commentaires</a>
+    <a href="?action=mesAnnonces" class="btn btn-primary">Mes annonces</a>
     <a href="?action=mesNotes" class="btn btn-primary">Mes notes</a>
     <hr>
 </div>
@@ -156,15 +211,15 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
         </div>
         <div class="form-group">
             <label for="pseudo_profil">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo $pseudo_profil; ?>">
+            <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
         </div>
         <div class="form-group">
             <label for="nom_profil">Nom</label>
-            <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo $nom_profil; ?>">
+            <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
         </div>
         <div class="form-group">
             <label for="prenom_profil">Prenom</label>
-            <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo $prenom_profil; ?>">
+            <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
         </div>
         <div class="form-group">
             <label for="telephone_profil">Telephone</label>
@@ -185,7 +240,25 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
             <label for="date_enregistrement_profil">Date d'inscription</label>
             <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
         </div>
-        <button type="submit" class="btn btn-primary">Valider</button>
+        <button type="submit" class="btn btn-primary" name="validerMembre">Valider</button>
+    </form>
+    
+<!--    /Form pour le mot de passe-->
+    <form action="" method="post">
+        <div class="form-group">
+            <label for="id_membre_profil">Mot de passe actuel</label>
+            <input type="text" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
+        </div>
+        <div class="form-group">
+            <label for="pseudo_profil">Nouveau mot de passe</label>
+            <input type="text" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
+        </div>
+        <div class="form-group">
+            <label for="nom_profil">Nouveau mot de passe (Verification)</label>
+            <input type="text" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
+        </div>
+        <button type="submit" class="btn btn-primary" name="enregistrementMdp">Enregistrer nouveau mot de passe</button>
+
     </form>
 </div>
 </div>
@@ -194,8 +267,8 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !
 }
 
 // Ouverture de l'onglet sur les commentaires
-if (isset($_GET['action']) && $_GET['action'] == "mesCommentaires"){    
-    echo '<p>Je suis la page commentaire</p>';
+if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){    
+    echo '<p>Je suis la page annonce</p>';
 }
 
 // Ouverture de l'onglet sur les notes

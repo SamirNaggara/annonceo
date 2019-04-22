@@ -105,15 +105,24 @@ include_once('inc/nav.inc.php');
                         <?php 
                         
                         foreach($lesMembres as $leMembre){
+                            
+                            if ($leMembre['statut'] == 1){
+                                $leMembreStatut = 'Membre';
+                            }elseif ($leMembre['statut'] == 2){
+                                $leMembreStatut = 'Admin';
+                            }else{
+                                $leMembreStatut = "Il y a un probleme avec le statut";
+                            }
+                            
                             echo '<tr>';
                             echo '<td>' . $leMembre['id_membre'] . '</td>';
-                            echo '<td>' . $leMembre['pseudo'] . '</td>';
-                            echo '<td>' . $leMembre['nom'] . '</td>';
-                            echo '<td>' . $leMembre['prenom'] . '</td>';
+                            echo '<td>' . ucfirst($leMembre['pseudo']) . '</td>';
+                            echo '<td>' . ucfirst($leMembre['nom']) . '</td>';
+                            echo '<td>' . ucfirst($leMembre['prenom']) . '</td>';
                             echo '<td>' . $leMembre['telephone'] . '</td>';
                             echo '<td>' . $leMembre['email'] . '</td>';
                             echo '<td>' . $leMembre['civilite'] . '</td>';
-                            echo '<td>' . $leMembre['statut'] . '</td>';
+                            echo '<td>' . $leMembreStatut . '</td>';
                             echo '<td>' . formatStandardTotal($leMembre['date_enregistrement']) . '</td>';
                             ?>
                             <td> 
