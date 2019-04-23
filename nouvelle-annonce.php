@@ -38,15 +38,15 @@ if(!user_is_connected()) {
 
 if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST['descriptionLongue']) && isset($_POST['prix']) && isset($_POST['categorie']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
 
-	$titre = $_POST['titre'];
-	$descriptionCourte = $_POST['descriptionCourte'];
-	$descriptionLongue = $_POST['descriptionLongue']; 
-	$prix = $_POST['prix'];
-	$categorie = $_POST['categorie'];
-	$pays = $_POST['pays'];
-	$ville = $_POST['ville'];
-	$adresse = $_POST['adresse'];
-	$cp = $_POST['cp'];
+	$titre = checkInput($_POST['titre']);
+	$descriptionCourte = checkInput($_POST['descriptionCourte']);
+	$descriptionLongue = checkInput($_POST['descriptionLongue']); 
+	$prix = checkInput($_POST['prix']);
+	$categorie = checkInput($_POST['categorie']);
+	$pays = checkInput($_POST['pays']);
+	$ville = checkInput($_POST['ville']);
+	$adresse = checkInput($_POST['adresse']);
+	$cp = checkInput(is_numeric($_POST['cp']));
 	
 	// Controle sur l'id_annonce car unique en BDD
 	if(empty($id_annonce)) {
@@ -83,7 +83,6 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			
 		} else {
 			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
-			echo 'je suis dans le else de verif extension';
 		}
 	}	
 	if(empty($msg) && !empty($_FILES['photo1'])) {

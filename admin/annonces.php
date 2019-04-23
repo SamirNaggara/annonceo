@@ -1,5 +1,6 @@
 <?php
 include_once('../inc/init.inc.php');
+include_once('../inc/function.inc.php');
 
 if(!user_is_admin()) {
 	header("location:" . URL . "profil.php");
@@ -25,8 +26,63 @@ if(isset($_GET['modifier'])) {
   $recupAnnonces->bindParam(':id_annonce', $_GET['modifier'], PDO::PARAM_STR);
   $recupAnnonces->execute();
   $laRecupAnnonces = $recupAnnonces->fetch(PDO::FETCH_ASSOC);
+
+  $id = checkInput($laRecupAnnonces['id_annonce']);
+  $titre = checkInput($laRecupAnnonces['titre']);
+  $pseudo = checkInput($laRecupAnnonces['pseudo']);
+  $date = checkInput($laRecupAnnonces['date_enregistrement']);
+  $desCourte = checkInput($laRecupAnnonces['description_courte']);
+  $desLongue = checkInput($laRecupAnnonces['description_longue']);
+  $prix = checkInput($laRecupAnnonces['prix']);
+  $pays = checkInput($laRecupAnnonces['pays']);
+  $ville = checkInput($laRecupAnnonces['ville']);
+  $adresse = checkInput($laRecupAnnonces['adresse']);
+  $cp = checkInput($laRecupAnnonces['cp']);
+  $photo = checkInput($laRecupAnnonces['photo']);
+  $photo1 = $laRecupAnnonces['photo1'];
+  $photo2 = $laRecupAnnonces['photo2'];
+  $photo3 = $laRecupAnnonces['photo3'];
+  $photo4 = $laRecupAnnonces['photo4'];
+  $photo5 = $laRecupAnnonces['photo5'];
   echo '<pre>';print_r($laRecupAnnonces);echo'</pre>';
+
+  /* sleep(3);
+  $msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été modifiée.'; */
 }
+if (($titre != $titre || $pseudo != $pseudo|| $desCourte != $desCourte || $desLongue != $desLongue || $prix != $prix || $pays != $pays || $ville != $ville || $adresse != $adresse|| $cp != $cp) && empty($msg)) {
+  
+  $enregistrement = $pdo->prepare("UPDATE annonce SET titre = :titre, pseudo = :pseudo, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp WHERE id_annonce = :id_annonce");
+  $enregistrement->bindParam(':titre', $titre, PDO::PARAM_STR);
+  $enregistrement->bindParam(':pseudo', $pseudo_profil, PDO::PARAM_STR);
+  $enregistrement->bindParam(':desCourte', $desCourte, PDO::PARAM_STR);
+  $enregistrement->bindParam(':desLongue', $desLongue, PDO::PARAM_STR);
+  $enregistrement->bindParam(':prix', $prix, PDO::PARAM_STR);
+  $enregistrement->bindParam(':pays', $pays, PDO::PARAM_STR);
+  $enregistrement->bindParam(':ville', $ville, PDO::PARAM_STR);
+  $enregistrement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+  $enregistrement->bindParam(':cp', $cp, PDO::PARAM_STR);
+  $enregistrement->bindParam(':id_annonce', $id, PDO::PARAM_STR);
+  $enregistrement->execute();
+  
+  //actualisation de l'annonce
+
+  $_GET['titre'] = $titre;
+  $_GET['pseudo'] = $pseudo;
+  $_GET['description_courte'] = $desCourte;
+  $_GET['description_longue'] = $desLongue;
+  $_GET['prix'] = $prix;
+  $_GET['pays'] = $pays;
+  $_GET['ville'] = $ville;
+  $_GET['adresse'] = $adresse;
+  $_GET['cp'] = $cp;
+  
+  //message que les informations ont été modifiées
+
+  $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
+
+
+}
+echo '<pre>'; print_r($_POST); echo '</pre>';
 // récuperation des categories
 $recup_categorie = $pdo->query(
   "SELECT * FROM categorie 
@@ -43,6 +99,7 @@ if(isset($_GET['categorie'])) {
     );
     $annonces->bindParam(':titre', $_GET['categorie'], PDO::PARAM_STR);
     $annonces->execute();
+
 } else {
   // recuperation des informations des annonces au complet
   $annonces = $pdo->prepare(
@@ -54,31 +111,7 @@ if(isset($_GET['categorie'])) {
   $annonces->execute();
 }
 // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
-/*if (($pseudo_profil != $_SESSION['utilisateur']['pseudo'] || $nom_profil != $_SESSION['utilisateur']['nom'] || $prenom_profil != $_SESSION['utilisateur']['prenom'] || $telephone_profil != $_SESSION['utilisateur']['telephone'] || $email_profil != $_SESSION['utilisateur']['email'] || $civilite_profil != $_SESSION['utilisateur']['civilite']) && empty($msg)){
 
-  $enregistrement = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, nom = :nom, prenom = :prenom, telephone = :telephone, email = :email, civilite = :civilite WHERE id_membre = :id_membre_profil");
-  $enregistrement->bindParam(':id_membre_profil', $id_membre_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':pseudo', $pseudo_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':nom', $nom_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':prenom', $prenom_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':telephone', $telephone_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':email', $email_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':civilite', $civilite_profil, PDO::PARAM_STR);
-  $enregistrement->execute();
-  
-  //actualisation de la session
-  $_SESSION['utilisateur']['pseudo'] = $pseudo_profil;
-  $_SESSION['utilisateur']['nom'] = $nom_profil;
-  $_SESSION['utilisateur']['prenom'] = $prenom_profil;
-  $_SESSION['utilisateur']['telephone'] = $telephone_profil;
-  $_SESSION['utilisateur']['email'] = $email_profil;
-  $_SESSION['utilisateur']['civilite'] = $civilite_profil;
-  
-  //message que les informations ont été modifiées
-
-  $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
-}
-*/
   include_once('inc/header.inc.php');
   include_once('inc/nav.inc.php');
 
@@ -98,53 +131,56 @@ if(!empty($_GET['modifier'])) {
 		<form method="post" action="" enctype="multipart/form-data" >
 		<!--  affichage de l'annonce pour modification -->
       <div class="form-group">
+				<input type="hidden" class="form-control" id="id" name="id" value="<?php echo $id; ?>">
+			</div>
+      <div class="form-group">
 				<label for="titre">Titre de l'annonce :</label>
-				<input type="text" class="form-control" id="titre" name="titre" value="<?php echo $laRecupAnnonces['titre']; ?>">
+				<input type="text" class="form-control" id="titre" name="titre" value="<?php echo $titre; ?>">
 			</div>
 			<div class="form-group">
 				<label for="pseudo">Auteur de l'annonce :</label>
-				<input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php echo $laRecupAnnonces['pseudo']; ?>">
+				<input type="text" class="form-control" id="pseudo" name="pseudo" value="<?php echo $pseudo; ?>">
 			</div>
 			<div class="form-group">
 				<label for="date">Publié le :</label>
-				<input type="text" class="form-control" id="date" name="date" value="<?php echo formatStandardTotal($laRecupAnnonces['date_enregistrement']); ?>">
+				<input type="text" class="form-control" id="date" name="date" value="<?php echo formatStandardTotal($date); ?>">
 			</div>
 			<div class="form-group">
 				<label for="descriptionCourte">Description courte :</label>
-				<textarea name="descriptionCourte" id="descriptionCourte" class="w-100" rows="5"><?php echo $laRecupAnnonces['description_courte']; ?></textarea>
+				<textarea name="descriptionCourte" id="descriptionCourte" class="w-100" rows="5"><?php echo $desCourte; ?></textarea>
 			</div>
       <div class="form-group">
 				<label for="descriptionLongue">Description longue :</label>
-				<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="5"><?php echo $laRecupAnnonces['description_longue']; ?></textarea>
+				<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="5"><?php echo $desLongue; ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="prix">Prix :</label>
-				<input type="text" class="form-control" id="prix" name="prix" value="<?php echo $laRecupAnnonces['prix']; ?>">
+				<input type="text" class="form-control" id="prix" name="prix" value="<?php echo $prix; ?>">
 			</div>
 			<div class="form-group">
 				<label for="pays">Pays :</label>
-				<input type="text" class="form-control" id="pays" name="pays" value="<?php echo $laRecupAnnonces['pays']; ?>">
+				<input type="text" class="form-control" id="pays" name="pays" value="<?php echo $pays; ?>">
 			</div>
       <div class="form-group">
 				<label for="ville">Ville :</label>
-				<input type="text" class="form-control" id="ville" name="ville" value="<?php echo $laRecupAnnonces['ville']; ?>">
+				<input type="text" class="form-control" id="ville" name="ville" value="<?php echo $ville; ?>">
 			</div>
 			<div class="form-group">
 				<label for="photo">Photos :</label>
-				<input type="file" class="form-control" id="photo" name="photo"><span><?php echo $laRecupAnnonces['photo']; ?></span>
-				<input type="file" class="form-control" id="photo1" name="photo1"><span><?php echo $laRecupAnnonces['photo1']; ?></span>
-				<input type="file" class="form-control" id="photo2" name="photo2"><span><?php echo $laRecupAnnonces['photo2']; ?></span>
-				<input type="file" class="form-control" id="photo3" name="photo3"><span><?php echo $laRecupAnnonces['photo3']; ?></span>
-				<input type="file" class="form-control" id="photo4" name="photo4"><span><?php echo $laRecupAnnonces['photo4']; ?></span>
-				<input type="file" class="form-control" id="photo5" name="photo5"><span><?php echo $laRecupAnnonces['photo5']; ?></span>
+				<input type="file" class="form-control" id="photo" name="photo"><span><?php echo $photo; ?></span>
+				<input type="file" class="form-control" id="photo1" name="photo1"><span><?php echo $photo1; ?></span>
+				<input type="file" class="form-control" id="photo2" name="photo2"><span><?php echo $photo2; ?></span>
+				<input type="file" class="form-control" id="photo3" name="photo3"><span><?php echo $photo3; ?></span>
+				<input type="file" class="form-control" id="photo4" name="photo4"><span><?php echo $photo4; ?></span>
+				<input type="file" class="form-control" id="photo5" name="photo5"><span><?php echo $photo5; ?></span>
 			</div>
 			<div class="form-group">
 				<label for="adresse">Adresse :</label>
-				<input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo $laRecupAnnonces['adresse']; ?>">
+				<input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo $adresse; ?>">
 			</div>
 			<div class="form-group">
 				<label for="cp">Code postal :</label>
-				<input type="text" class="form-control" id="cp" name="cp" value="<?php echo $laRecupAnnonces['cp']; ?>">
+				<input type="text" class="form-control" id="cp" name="cp" value="<?php echo $cp; ?>">
 			</div>
 			<hr>
 			<input type="submit" class="form-control btn btn-warning" id="enregistrement" name="enregistrement" value="Enregistrement">		
@@ -164,7 +200,8 @@ if(!empty($_GET['modifier'])) {
               echo '<a class="dropdown-item" href="'. URL. 'admin/annonces.php">Toutes les categories</a>';
               echo '<div class="dropdown-divider"></div>';
 							while($categorie = $recup_categorie->fetch(PDO::FETCH_ASSOC)) {
-              echo '<a class="dropdown-item" href="?categorie=' . $categorie['titre'] . '">'. $categorie['titre'] . '</a>';
+                    $cat = checkInput($categorie['titre']);
+              echo '<a class="dropdown-item" href="?categorie=' . $cat . '">'. $cat . '</a>';
               echo '<div class="dropdown-divider"></div>';
               }
             echo '</div>';
@@ -188,10 +225,10 @@ if(!empty($_GET['modifier'])) {
                   <th>Date enregistrement</th>
                   <th>Actions</th>
                 </tr>';
-                while($ligne = $annonces->fetch(PDO::FETCH_ASSOC)) {
+                while($mesAnnonces = $annonces->fetch(PDO::FETCH_ASSOC)) {
                 // Affichage des produits dans le tableau
                   echo '<tr>';
-                  foreach($ligne AS $indice => $valeur ) {
+                  foreach($mesAnnonces AS $indice => $valeur ) {
                     if($indice == 'photo') {
                       echo '<td><img src="' . URL . $valeur . '" alt="image produit" style="width: 100px;"></td>';
                     } elseif ($indice == 'description_courte') {
@@ -208,9 +245,9 @@ if(!empty($_GET['modifier'])) {
 //24 - 2 - création des bouttons de modification et supression , ajouter ?action=modification&id_article='. $ligne['id_article'] .' et 
 // ?action=supression&id_article='. $ligne['id_article'] .' dans le href=""
                     echo '<td>'; 
-                    echo '<a href="?categorie='.$ligne['id_annonce'].'"><i class="fas fa-search"></i></a>';
-                    echo '<a href="?modifier='.$ligne['id_annonce'].'"><i class="fas fa-edit"></i></a>';
-                    echo '<a href="?supprimer=' . $ligne['id_annonce'] . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
+                    echo '<a href="?categorie='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-search"></i></a>';
+                    echo '<a href="?modifier='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-edit"></i></a>';
+                    echo '<a href="?supprimer=' . checkInput($mesAnnonces['id_annonce']) . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
                     echo '</td>';
                   echo '</tr>';
                 }

@@ -58,3 +58,10 @@ function minute($dateFormatSql){
 function formatStandardTotal($dateFormatSql){
     return numeroDuMois($dateFormatSql) . " " . mois($dateFormatSql) . " " . annee($dateFormatSql) . " - " . heure($dateFormatSql) . ":" . minute($dateFormatSql);
 }
+
+function checkInput ($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}

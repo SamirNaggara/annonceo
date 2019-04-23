@@ -11,4 +11,4 @@ echo "WARNING: The dart-sass executable is deprecated, use sass instead."
 
 set SCRIPTPATH=%~dp0
 set arguments=%*
-"%SCRIPTPATH%\src\dart.exe" "-Dversion=1.18.0" "%SCRIPTPATH%\src\sass.dart.snapshot" %arguments%
+"%SCRIPTPATH%\src\dart.exe" "-Dversion=1.19.0" "%SCRIPTPATH%\src\sass.dart.snapshot" %arguments%
