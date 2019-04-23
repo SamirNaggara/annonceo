@@ -195,7 +195,7 @@ if(!empty($_GET['modifier'])) {
                     if($indice == 'photo') {
                       echo '<td><img src="' . URL . $valeur . '" alt="image produit" style="width: 100px;"></td>';
                     } elseif ($indice == 'description_courte') {
-                      echo '<td>' . substr($valeur, 0, 21). '<a href="">...</a></td>';
+                      echo '<td>' . substr($valeur, 0, 21). '<a class="dropdown-item" href">lire la suite</a></td>';
                     } elseif ($indice == 'description_longue') {
                       echo '<td>' . substr($valeur, 0, 21). '<a href="">...</a></td>';
                     } else {

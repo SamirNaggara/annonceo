@@ -259,6 +259,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_annonce ->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':adresse', $adresse, PDO::PARAM_STR);
 			$enregistrement_annonce ->execute();
+			$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
+			sleep(3);
+			header("location:" . URL . "nouvelle-annonce.php");
+			// prévoir redirection vers ?id_annonce=annonce.php
 		}
 	}
 }
