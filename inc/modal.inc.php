@@ -117,7 +117,7 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
    
 //Formulaire se connecter
 if(isset($_POST['pseudo_connexion']) && isset($_POST['mdp_connexion'])) {
-	$pseudo_connexion = trim($_POST['pseudo_connexion']);
+	$pseudo_connexion = strtolower(trim($_POST['pseudo_connexion']));
     $mdp_connexion = trim($_POST['mdp_connexion']);
 	
     // on demande à la BDD de nous renvoyer les informations d'un utilisateur sur la base du pseudo saisie dans le champ.
