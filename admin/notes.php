@@ -93,16 +93,14 @@ if(isset($_POST['inputIdNote']) && isset($_POST['inputNote']) && isset($_POST['i
 	$nouvelleNote = $_POST['inputNote'];
 	$nouvelleAvis = $_POST['inputAvis'];
 
-    echo 'nouvelleNote=' . $nouvelleNote;
-    echo 'nouvelleAvis=' . $nouvelleAvis;
     
     //Verification de si l'id existe
     
     $verif_note = $pdo->prepare("SELECT * FROM note WHERE id_note=:id_note");
-	$verif_note -> bindParam(':id_note', $nouveauIdNote, PDO::PARAM_STR);
+	$verif_note -> bindParam(':id_note', $nouvelleIdNote, PDO::PARAM_STR);
 	$verif_note -> execute();
     
-    if($verif_note->rowCount() < 1) {
+    if($verif_note->rowCount() > 0) {
         //Ici, l'id note existe bel et bien, on update les changement
         $enregistrement = $pdo->prepare("UPDATE note SET note = :nouvelleNote, avis = :nouvelleAvis WHERE id_note=:id_note");
 		$enregistrement->bindParam(':id_note', $nouvelleIdNote, PDO::PARAM_STR);

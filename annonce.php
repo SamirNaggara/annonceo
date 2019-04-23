@@ -3,7 +3,6 @@ include_once('inc/init.inc.php');
 
 
 
-
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
@@ -53,13 +52,9 @@ else{
                                                 c.commentaire,
                                                 c.date_enregistrement,
                                                 m.pseudo
-                                                FROM
-                                                    commentaire c
-                                                LEFT JOIN annonce a ON
-                                                    a.id_annonce = c.annonce_id
-                                                LEFT JOIN membre m ON
-                                                    m.id_membre = a.membre_id
-                                                WHERE c.annonce_id = 2
+                                                FROM commentaire c
+                                                LEFT JOIN membre m ON m.id_membre = c.membre_id
+                                                WHERE c.annonce_id = :id_annonce
                                                 ORDER BY c.date_enregistrement DESC");
         $infosCommentaires->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
         $infosCommentaires->execute();

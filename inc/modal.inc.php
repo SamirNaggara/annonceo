@@ -54,17 +54,17 @@ isset($_POST['email']) && isset($_POST['civilite']) && isset($_POST['telephone']
 
     // vérification des caractères présent dans le pseudo
 	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $pseudo)) {
-        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre pseudo est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre pseudo ne doit contenir que des caractères autorisés., les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
 	}
     
     // vérification des caractères présent dans le prenom
 	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $prenom)) {
-        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre prenom est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre prenom ne doit contenir que des caractères autorisés., les caractères autorisés sont: a-z A-Z 0-9.<br>Veuillez recommencer</div>';
 	}
     
     // vérification des caractères présent dans le nom
 	if (!preg_match('#^[a-zA-Z0-9._-]+$#', $nom)) {
-        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre nom est incorrect, les caractères autorisés sont: a-z 0-9.<br>Veuillez recommencer</div>';
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention votre nom ne doit contenir que des caractères autorisés., les caractères autorisés sont: a-z A-Z 0-9.<br>Veuillez recommencer</div>';
 	}
 
 // verification si le pseudo est disponible en BDD car unique
