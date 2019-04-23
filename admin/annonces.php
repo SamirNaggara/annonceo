@@ -52,7 +52,6 @@ if(isset($_GET['categorie'])) {
     AND a.categorie_id = c.id_categorie"
   );
   $annonces->execute();
-  echo '<pre>'; print_r($annonces); echo '</pre>';
 }
 // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
 /*if (($pseudo_profil != $_SESSION['utilisateur']['pseudo'] || $nom_profil != $_SESSION['utilisateur']['nom'] || $prenom_profil != $_SESSION['utilisateur']['prenom'] || $telephone_profil != $_SESSION['utilisateur']['telephone'] || $email_profil != $_SESSION['utilisateur']['email'] || $civilite_profil != $_SESSION['utilisateur']['civilite']) && empty($msg)){
@@ -108,7 +107,7 @@ if(!empty($_GET['modifier'])) {
 			</div>
 			<div class="form-group">
 				<label for="date">Publié le :</label>
-				<input type="text" class="form-control" id="date" name="date" value="<?php echo date("Le d F Y  à H:i:s", strtotime($laRecupAnnonces['date_enregistrement'])); ?>">
+				<input type="text" class="form-control" id="date" name="date" value="<?php echo formatStandardTotal($laRecupAnnonces['date_enregistrement']); ?>">
 			</div>
 			<div class="form-group">
 				<label for="descriptionCourte">Description courte :</label>
