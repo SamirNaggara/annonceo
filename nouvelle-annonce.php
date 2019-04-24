@@ -58,7 +58,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'annonce existe déjà.';
 		}
 	}
+
+
 	if(empty($msg) && !empty($_FILES['photo'])) {
+
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd_base = $_FILES['photo'];
 		$extension = strrchr($_FILES['photo']['name'], '.');
@@ -85,7 +88,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
 		}
 	}	
-	if(empty($msg) && !empty($_FILES['photo1'])) {
+	
+	if(!empty($_FILES['photo1'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd1 = $_FILES['photo1'];
 		$extension = strrchr($_FILES['photo1']['name'], '.');
@@ -109,10 +113,12 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			echo 'je suis dans le else de verif extension';
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234789</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
-	}	
-	if(empty($msg) && !empty($_FILES['photo2'])) {
+	}
+
+	var_dump($msg);
+	if(!empty($_FILES['photo2'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd2 = $_FILES['photo2'];
 		$extension = strrchr($_FILES['photo2']['name'], '.');
@@ -135,10 +141,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo2']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
-	if(empty($msg) && !empty($_FILES['photo3'])) {
+	if(!empty($_FILES['photo3'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd3 = $_FILES['photo3'];
 		$extension = strrchr($_FILES['photo3']['name'], '.');
@@ -161,10 +167,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo3']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
-	if(empty($msg) && !empty($_FILES['photo4'])) {
+	if(!empty($_FILES['photo4'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd4 = $_FILES['photo4'];
 		$extension = strrchr($_FILES['photo4']['name'], '.');
@@ -187,10 +193,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo4']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
-	if(empty($msg) && !empty($_FILES['photo5'])) {
+	if(!empty($_FILES['photo5'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd5 = $_FILES['photo5'];
 		$extension = strrchr($_FILES['photo5']['name'], '.');
@@ -213,7 +219,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo5']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	

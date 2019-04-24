@@ -20,6 +20,7 @@ if (isset($_GET['supprimer'])) {
 }
 
 // récupération des informations de l'annonce pour modification
+
 if(isset($_GET['modifier'])) {
 
   $recupAnnonces = $pdo->prepare("SELECT * FROM annonce, photo, membre WHERE id_annonce = :id_annonce AND id_photo = photo_id");
@@ -44,12 +45,24 @@ if(isset($_GET['modifier'])) {
   $photo3 = $laRecupAnnonces['photo3'];
   $photo4 = $laRecupAnnonces['photo4'];
   $photo5 = $laRecupAnnonces['photo5'];
+
   echo '<pre>';print_r($laRecupAnnonces);echo'</pre>';
 
   /* sleep(3);
   $msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été modifiée.'; */
 }
-if (($titre != $titre || $pseudo != $pseudo|| $desCourte != $desCourte || $desLongue != $desLongue || $prix != $prix || $pays != $pays || $ville != $ville || $adresse != $adresse|| $cp != $cp) && empty($msg)) {
+
+  $titre = '';
+  $pseudo = '';
+  $desCourte = '';
+  $desLongue = '';
+  $prix = '';
+  $pays = '';
+  $ville = '';
+  $adresse = '';
+  $cp = '';
+
+if (($titre != $_POST['titre'] || $pseudo != $_POST['pseudo'] || $desCourte != $_POST['description_courte'] || $desLongue != $_POST['description_longue'] || $prix != $_POST['prix'] || $pays != $_POST['pays'] || $ville != $_POST['ville'] || $adresse != $_POST['adresse'] || $cp != $_POST['cp']) && empty($msg)) {
   
   $enregistrement = $pdo->prepare("UPDATE annonce SET titre = :titre, pseudo = :pseudo, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp WHERE id_annonce = :id_annonce");
   $enregistrement->bindParam(':titre', $titre, PDO::PARAM_STR);
@@ -65,24 +78,12 @@ if (($titre != $titre || $pseudo != $pseudo|| $desCourte != $desCourte || $desLo
   $enregistrement->execute();
   
   //actualisation de l'annonce
-
-  $_GET['titre'] = $titre;
-  $_GET['pseudo'] = $pseudo;
-  $_GET['description_courte'] = $desCourte;
-  $_GET['description_longue'] = $desLongue;
-  $_GET['prix'] = $prix;
-  $_GET['pays'] = $pays;
-  $_GET['ville'] = $ville;
-  $_GET['adresse'] = $adresse;
-  $_GET['cp'] = $cp;
-  
   //message que les informations ont été modifiées
 
   $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
-
-
 }
 echo '<pre>'; print_r($_POST); echo '</pre>';
+
 // récuperation des categories
 $recup_categorie = $pdo->query(
   "SELECT * FROM categorie 
