@@ -164,21 +164,19 @@ $infosNotes->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO:
 $infosNotes->execute();
 
 $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
-//On parcours toute les notes, on calcule la sommes de toutes les notes dans la variables $notes, on increment un compteur qui compte le nombre de notes, et le resultat est la division des deux
 
-//        echo $lesNotes[0]["note"];
-$compteur = 0;
-$notes=0;
-foreach($lesNotes as $uneNote){
-    //On calcule la moyenne des notes que la personne connectée a reçut
-    if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
-        $notes += floatval($uneNote["note"]);
 
-        $compteur += 1;
-    }
+//Requette qui recupere la moyenne des notes
+$moyenneNote = $pdo->prepare("SELECT AVG(note) AS moyenneNote FROM note WHERE membre_id2 = :id_membre");
+$moyenneNote->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
+$moyenneNote->execute();
 
-}
-$moyenneNote = round($notes/$compteur, 1);  
+$moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);  
+
+$moyenneNote = round($moyenneNote['moyenneNote'],1);
+
+
+
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
@@ -276,6 +274,7 @@ if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){
     ?>
     <div class="starter-template">
         <h2>Mes avis</h2>
+        <h3>Moyenne: <?php echo $moyenneNote; ?>/5</h3>
     </div>
     <div class="card card-body listingNote">
             <?php

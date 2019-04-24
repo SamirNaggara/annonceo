@@ -6,10 +6,8 @@ include_once('inc/init.inc.php');
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
-
-
 else{
-    //Recuperons les informations de la table annoncede l'id_anoonce en question
+    //Recuperons les informations de la table annoncede l'id_anonce en question
     
     $infosAnnonce = $pdo->prepare("SELECT * FROM annonce WHERE id_annonce = :id_annonce");
 	$infosAnnonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
@@ -46,6 +44,17 @@ else{
         $infosNotes->execute();
         
         $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
+        
+        //Requette qui recupere la moyenne des notes
+        $moyenneNote = $pdo->prepare("SELECT AVG(note) AS moyenneNote FROM note WHERE membre_id2 = :id_membre");
+        $moyenneNote->bindParam(':id_membre', $cetteAnnonce["membre_id"], PDO::PARAM_STR);
+        $moyenneNote->execute();
+        
+        $moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);  
+        
+        $moyenneNote = round($moyenneNote['moyenneNote'],1);
+        
+        
         //Recuperons les informations e la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
         
         $infosCommentaires = $pdo->prepare("SELECT
@@ -71,21 +80,8 @@ else{
         
         $autresAnnonces = $infosAutresAnnonces->fetchAll(PDO::FETCH_ASSOC);   
         
-
         
-        //On parcours toute les notes, on calcule la sommes de toutes les notes dans la variables $notes, on increment un compteur qui compte le nombre de notes, et le resultat est la division des deux
-        
-//        echo $lesNotes[0]["note"];
-        $compteur = 0;
-        $notes=0;
-        foreach($lesNotes as $uneNote){
-            $notes += floatval($uneNote["note"]);
-            
-            $compteur += 1;
-        }
-    
-        $moyenneNote = round($notes/$compteur, 1);     
-        
+        // Formulaire de l'avis
         $inputNote = "";
         $inputAvis = "";
         //Enregister l'avis dans la bse de données
@@ -189,25 +185,17 @@ include_once('inc/nav.inc.php');
 
 
 <section class="monAnnonce">
-<!--        Attention!!! Important pour ecrire les messages d'erreurs-->
+    <!--        Attention!!! Important pour ecrire les messages d'erreurs-->
     <p class="lead"><?php echo $msg;?></p>
-    <header class="row">
-        <div class="titreAnnonce row col-lg-12 d-inline-block text-center text-lg-left mb-2 mx-auto">
-            <h1 class="d-inline-block"><?php echo $cetteAnnonce["titre"]; ?></h1>
-            <span class="separation d-none d-lg-inline-block"> / </span>
-
-            <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark" data-toggle="collapse" href="#collapseVoirLesAvis" role="button" aria-expanded="false" aria-controls="collapseVoirLesAvis">
-                <strong class="vendeur mx-auto"><i class="fas fa-user"></i> <?php echo $ceVendeur['pseudo']; ?></strong>
-                <span class="laMoyenne mx-auto"><?php echo $moyenneNote ?>/5 (voir les avis)</span>
-
-            </a>
-
-            <a class="contacter btn btn-success col-lg-3 col-6 mx-auto my-3 float-lg-right " href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-
-            <a class="laisserAvis btn btn-info col-lg-3 col-6 mx-auto my-3 float-lg-right px-3 " href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
-
-
-            <div class="collapse" id="collapseVoirLesAvis">
+    <header class="container-fluid">
+        <div class="titreAnnonce row justify-content-between">
+            <div class="conteneurTitreNote col-lg-6 w-100 container-fluid ml-auto mx-left mx-lg-0">
+                <h1 class="d-block text-lg-left text-center"><?php echo ucfirst($cetteAnnonce["titre"]); ?></h1>
+                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark text-lg-left text-center m-3 m-lg-0" data-toggle="collapse" href="#collapseVoirLesAvis" role="button" aria-expanded="false" aria-controls="collapseVoirLesAvis">
+                    <strong class="vendeur mx-auto"><i class="fas fa-user"></i> <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
+                    <span class="laMoyenne mx-auto"><?php echo $moyenneNote ?>/5 (voir les avis)</span>
+                </a>
+                <div class="collapse" id="collapseVoirLesAvis">
                 <div class="card card-body listingNote">
                     <?php
                 $premiereLigne = true;
@@ -246,6 +234,19 @@ include_once('inc/nav.inc.php');
                 ?>
                 </div>
             </div>
+            </div>
+
+
+            <div class="conteneurBoutons col-lg-6 row align-items-start m-0 p-3">
+                <a class="contacter btn btn-success col-6 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
+
+                <a class="laisserAvis btn btn-info col-6 mx-auto" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
+            </div>
+
+            
+
+
+            
         </div>
 
 
@@ -253,7 +254,7 @@ include_once('inc/nav.inc.php');
 
     </header>
 
-    <div class="conteneurCarouselTexte row ">
+    <div class="conteneurCarouselTexte row mt-5">
         <section class="carousel col-lg-6">
             <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -356,7 +357,7 @@ include_once('inc/nav.inc.php');
                     
                     
                     ?>
-                    
+
             <span class="pseudo"><?php echo ucfirst($ceCommentaire['pseudo']); ?></span>
             <span class="date text-secondary"><?php echo formatStandardTotal($ceCommentaire['date_enregistrement']); ?></span>
             <p class="texteCommentaire"><?php echo $ceCommentaire['commentaire']; ?></p>

@@ -111,6 +111,7 @@ include_once('inc/modal.inc.php');
 <script src="<?php echo URL ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo URL ?>js/sb-admin.min.js"></script>
 <script src="<?php echo URL ?>js/monScript.js"></script>
+<script src="<?php echo URL ?>js/carte.js"></script>
 </body>
 
 </html>

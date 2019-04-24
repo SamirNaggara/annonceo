@@ -1,68 +1,56 @@
 /** contact.php **/
 #contactForm {
-  margin-top: 150px;
-}
+  margin-top: 150px; }
 
 /** footer.inc.php **/
 .footerMembre {
   width: 100% !important;
-  position: inherit !important;
-}
+  position: inherit !important; }
 
 /** admin/footer.in.php **/
 .adminFooter {
   position: inherit !important;
   width: 100% !important;
-  display: none !important;
-}
+  display: none !important; }
 
 /** index.php **/
 /* conteneur principal englobant les annonces*/
 .annonce-index,
 .container {
   margin-top: 150px;
-  margin-bottom: 150px;
-}
+  margin-bottom: 150px; }
 
 /** titres des pages affiche les message d'erreur */
 .starter-template {
-  text-align: center;
-}
+  text-align: center; }
 
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
-  font-size: 10px;
-}
+  font-size: 10px; }
 
 .monAnnonce .conteneurCarouselTexte .carousel img {
-  height: 500px !important;
-}
-@media screen and (max-width: 480px) {
-  .monAnnonce .conteneurCarouselTexte .carousel img {
-    height: 400px !important;
-  }
-}
+  height: 500px !important; }
+  @media screen and (max-width: 480px) {
+    .monAnnonce .conteneurCarouselTexte .carousel img {
+      height: 400px !important; } }
 
 .monAnnonce #collapseVoirLesAvis .listingNote {
   max-height: 500px;
-  overflow: scroll;
-}
+  overflow: scroll; }
 
 .monAnnonce .conteneurCarouselTexte .description {
-  position: relative;
-}
-@media screen and (min-width: 990px) {
-  .monAnnonce .conteneurCarouselTexte .description .footerDescription {
-    bottom: 0;
-  }
-}
+  position: relative; }
+  @media screen and (min-width: 990px) {
+    .monAnnonce .conteneurCarouselTexte .description .footerDescription {
+      bottom: 0; } }
 
 .monAnnonce .commentaires .conteneurCommentaire .date {
-  font-size: 10px;
-}
+  font-size: 10px; }
+
+.monAnnonce header .titreAnnonce .conteneurConten {
+  max-width: 400px; }
 
 .tableAnnonces .row {
   margin-right: 0px;
-  margin-left: 0px;
-}
+  margin-left: 0px; }
 
 /*# sourceMappingURL=style.css.map */
