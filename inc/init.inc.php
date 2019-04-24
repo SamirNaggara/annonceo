@@ -9,7 +9,7 @@ $options = array(
 $pdo= new PDO($host_db, $user, $password, $options);
 
 $msg = '';
-$msg = '';
+$msg2 = '';
 
 session_start();
 include_once('function.inc.php');

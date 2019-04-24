@@ -59,11 +59,14 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 		}
 	}
 
-
-	if(empty($msg) && !empty($_FILES['photo'])) {
-
+	if(!empty($_POST['photo'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd_base = $_FILES['photo'];
+	}
+	if(empty($msg) && !empty($_FILES['photo']['name'])) {
+
+		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
+		
 		$extension = strrchr($_FILES['photo']['name'], '.');
 		
 		// on passe l'information en minuscule et on enlève le point
@@ -83,13 +86,12 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			
 			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
 			copy($_FILES['photo']['tmp_name'], $photo_dossier);
-			
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">test 1234</div>';
+			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	
-	if(!empty($_FILES['photo1'])) {
+	if(empty($msg2) && !empty($_FILES['photo1'])) {
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd1 = $_FILES['photo1'];
 		$extension = strrchr($_FILES['photo1']['name'], '.');
@@ -113,7 +115,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			echo 'je suis dans le else de verif extension';
 			
 		} else {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°1 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}
 
@@ -141,7 +143,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo2']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°2 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	if(!empty($_FILES['photo3'])) {
@@ -167,7 +169,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo3']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°3 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	if(!empty($_FILES['photo4'])) {
@@ -193,7 +195,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo4']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°4 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	if(!empty($_FILES['photo5'])) {
@@ -219,10 +221,10 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			copy($_FILES['photo5']['tmp_name'], $photo_dossier);
 			
 		} else {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°5 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
-	
+
 	// vérification de l'extension photo	
 	// enregistrement annonce en bdd
 	if(empty($msg)) {
@@ -233,7 +235,6 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_annonce->bindParam(':id_annonce', $id_annonce, PDO::PARAM_STR);
 		} else {
 			// insert into photo les 5 
-			// lastInsertId()
 			$enregistrement_photo = $pdo->prepare("INSERT INTO photo (photo1, photo2, photo3, photo4, photo5) VALUES (:photo1, :photo2, :photo3, :photo4, :photo5)");
 			$enregistrement_photo->bindParam(':photo1', $photo_bdd1, PDO::PARAM_STR);
 			$enregistrement_photo->bindParam(':photo2', $photo_bdd2, PDO::PARAM_STR);
@@ -245,7 +246,6 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			// Ajout
 			echo '<pre>'; print_r($enregistrement_photo); echo '</pre>';
 			echo '<pre>'; print_r($_FILES); echo '</pre>';
-			echo '<pre>'; print_r($_POST); echo '</pre>';
 
 			$photo_id = $pdo->lastInsertId();
 
@@ -283,6 +283,7 @@ include_once('inc/nav.inc.php');
 	<div class="starter-template">
 		<h1>Enregistrer une nouvelle annonce</h1>
 		<p class="lead"><?php echo $msg;?></p>
+		<p class="lead"><?php echo $msg2;?></p>
 	</div>
 	<div class="col-6 mx-auto">
 		<form method="post" action="" enctype="multipart/form-data" >
@@ -293,11 +294,11 @@ include_once('inc/nav.inc.php');
 			</div>
 			<div class="form-group">
 				<label for="descriptionCourte">Description Courte</label>
-				<textarea name="descriptionCourte" id="descriptionCourte" class="w-100" rows="5" value="<?php echo $descriptionCourte; ?>"></textarea>
+				<textarea name="descriptionCourte" id="descriptionCourte" class="w-100" rows="5"><?php echo $descriptionCourte; ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="descriptionLongue">Description Longue</label>
-				<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="5" value="<?php echo $descriptionLongue; ?>"></textarea>
+				<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="5"><?php echo $descriptionLongue; ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="reference">Prix</label>
@@ -306,7 +307,7 @@ include_once('inc/nav.inc.php');
 			<div class="form-group">
 				<label for="categorie">Catégorie</label>
 				<div class="form-group">
-				<input type="text" name="categorie" value="<?php echo $categorie['id_categorie']; ?>">
+				
 					<select name="categorie" class="form-control">
 						<?php 
 							$recup_categorie = $pdo->query("SELECT * FROM categorie ORDER BY titre");
@@ -320,12 +321,36 @@ include_once('inc/nav.inc.php');
 			</div>
 			<div class="form-group">
 				<label for="photo">Photo</label>
-				<input type="file" class="form-control" id="photo" name="photo" value="<?php echo $photo_bdd_base; ?>">
-				<input type="file" class="form-control" id="photo1" name="photo1" value="<?php echo $photo_bdd1; ?>">
-				<input type="file" class="form-control" id="photo2" name="photo2" value="<?php echo $photo_bdd2; ?>">
-				<input type="file" class="form-control" id="photo3" name="photo3" value="<?php echo $photo_bdd3; ?>">
-				<input type="file" class="form-control" id="photo4" name="photo4" value="<?php echo $photo_bdd4; ?>">
-				<input type="file" class="form-control" id="photo5" name="photo5" value="<?php echo $photo_bdd5; ?>">
+				<input type="file" class="form-control" id="photo" name="photo" value="<?php echo $_FILES['photo']['name']; ?>">
+				<?php 
+				if(isset($_FILES['photo'])) {?> 
+					<span><?php echo $_FILES['photo']['name'];?></span>
+				<?php } ?>
+				<input type="file" class="form-control" id="photo1" name="photo1" value="<?php echo $_FILES['photo1']['name']; ?>">
+				<?php 
+				if(isset($_FILES['photo1'])) {?> 
+					<span><?php echo $_FILES['photo1']['name'];?></span>
+				<?php } ?>
+				<input type="file" class="form-control" id="photo2" name="photo2" value="<span><?php echo $_FILES['photo2']['name']; ?>">
+				<?php 
+				if(isset($_FILES['photo2'])) {?> 
+					<span><?php echo $_FILES['photo2']['name'];?></span>
+				<?php } ?>
+				<input type="file" class="form-control" id="photo3" name="photo3" value="<?php echo $_FILES['photo3']['name']; ?>"><span>
+				<?php 
+				if(isset($_FILES['photo3'])) {?> 
+					<span><?php echo $_FILES['photo3']['name'];?></span>
+				<?php } ?>
+				<input type="file" class="form-control" id="photo4" name="photo4" value="<?php echo $_FILES['photo4']['name']; ?>">
+				<?php 
+				if(isset($_FILES['photo4'])) {?> 
+					<span><?php echo $_FILES['photo4']['name'];?></span>
+				<?php } ?>
+				<input type="file" class="form-control" id="photo5" name="photo5" value="<?php echo $_FILES['photo5']['name']; ?>">
+				<?php 
+				if(isset($_FILES['photo5'])) {?> 
+					<span><?php echo $_FILES['photo5']['name'];?></span>
+				<?php } ?>
 			</div>
 			<div class="form-group">
 				<label for="pays">Pays</label>
@@ -337,7 +362,7 @@ include_once('inc/nav.inc.php');
 			</div>
 			<div class="form-group">
 				<label for="adresse">Adresse</label>
-				<textarea name="adresse" id="adresse" class="w-100" rows="5" value="<?php echo $adresse; ?>"></textarea>
+				<textarea name="adresse" id="adresse" class="w-100" rows="5"><?php echo $adresse; ?></textarea>
 			</div>
 			<div class="form-group">
 				<label for="cp">Code postal</label>
