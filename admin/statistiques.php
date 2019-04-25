@@ -21,7 +21,7 @@ $membreMieuxNotes = $pdo->prepare("SELECT m.id_membre, m.pseudo, COUNT(n.id_note
                                         LIMIT 5");
 $membreMieuxNotes->execute();
 
-$resultatMieuxNotes = $membreMieuxNotes ->fetchAll(PDO::FETCH_ASSOC)
+$resultatMieuxNotes = $membreMieuxNotes ->fetchAll(PDO::FETCH_ASSOC);
 
 //    
 //Requette pour les 5 membre les plus actifs
@@ -34,7 +34,7 @@ $membrePlusActif = $pdo->prepare("SELECT m.id_membre, m.pseudo, count(a.id_annon
                                         LIMIT 5");
 $membrePlusActif->execute();
 
-$resultatMembreActif = $membrePlusActif ->fetchAll(PDO::FETCH_ASSOC)
+$resultatMembreActif = $membrePlusActif ->fetchAll(PDO::FETCH_ASSOC);
     
     
 
@@ -46,7 +46,7 @@ $annoncesPlusAnciennes = $pdo->prepare("SELECT * FROM annonce
                                             limit 5");
 $annoncesPlusAnciennes->execute();
 
-$resultatsAnnoncesAnciennes = $annoncesPlusAnciennes ->fetchAll(PDO::FETCH_ASSOC)
+$resultatsAnnoncesAnciennes = $annoncesPlusAnciennes ->fetchAll(PDO::FETCH_ASSOC);
 
 
 //Requette pour les 5 categories contenants le pluss d'annonces'
@@ -60,7 +60,7 @@ ORDER BY COUNT(a.id_annonce) DESC
 LIMIT 5");
 $topCategorie->execute();
 
-$resultatTopCategories = $topCategorie ->fetchAll(PDO::FETCH_ASSOC)
+$resultatTopCategories = $topCategorie ->fetchAll(PDO::FETCH_ASSOC);
     
 
 
@@ -98,8 +98,37 @@ include_once('inc/nav.inc.php');
             <a href="?action=mesNotes" class="btn btn-primary">Catégories les plus populaires</a>
             <hr>
         </div>
+        
+        <ul class="list-group">
+          <li class="list-group-item  w-50 active mx-auto">Participant les mieux notés</li>
+          <?php foreach($resultatMieuxNotes as $leResultat){
+                ?>
+                <li class="list-group-item w-50 mx-auto row">
+                        <div class="nom"' . ucfirst($leResultat['pseudo']) . '</li>';
+            }
+            <?php
+            ?>
+        </ul>
+        
 
 
 
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
         <?php
 include_once('inc/footer.inc.php');
