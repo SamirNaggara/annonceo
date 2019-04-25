@@ -182,7 +182,7 @@ include_once('inc/nav.inc.php');
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Note</a>
+                <a href="#">Commentaires</a>
             </li>
             <li class="breadcrumb-item active">Modérer un commentaire</li>
         </ol>

@@ -74,16 +74,26 @@
                             
                             if (!user_is_connected()){
                                 ?>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static">Inscription</a>
+                                
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static"><i class="fas fa-sign-in-alt"></i> Connexion</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">Connexion</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static"><i class="far fa-edit"></i> Inscription</a>
+                            
+                            
                             
                             <?php
                             }else{
-                            ?>
-                            <a class="dropdown-item" href="<?php echo URL; ?>profil.php">Profil</a>
+                                if (user_is_admin()){
+                                    ?>
+                                    <a class="dropdown-item" href="<?php echo URL . 'admin/index.php'; ?>" ><i class="fas fa-users-cog"></i> Administration</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion' ?>" data-toggle="modal" data-target="#logoutModal">Deconnexion</a>
+                               <?php
+                                }
+                            ?>
+                            
+                            <a class="dropdown-item" href="<?php echo URL; ?>profil.php"><i class="fas fa-user"></i> Profil</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?php echo URL . '?action=deconnexion' ?>" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt"></i> Deconnexion</a>
                             <?php } ?>
                         </div>
                     </li>

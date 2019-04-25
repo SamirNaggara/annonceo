@@ -119,10 +119,9 @@ include_once('inc/nav.inc.php');
                             echo '<td>' . $laCategorie['titre'] . '</td>';
                             echo '<td>' . $laCategorie['motscles'] . '</td>';
                             ?>
-                            <td> 
-                                <a href="annonces.php?categorie=<?php echo $laCategorie['titre'] ?>"><i class="fas fa-search"></i></a>
-                                <a href="?modifier=<?php echo $laCategorie['titre'] ?>"><i class="fas fa-edit"></i></a>
-                                <a href="?supprimer=<?php echo $laCategorie['titre'] ?>" onclick="return(confirm('Etes vous sûr ?'))"><i class="fas fa-trash"></i></a>
+                            <td class="d-flex justify-content-center"> 
+                                <a href="?modifier=<?php echo $laCategorie['titre'] ?>"><i class="fas fa-edit pr-2"></i></a>
+                                <a href="?supprimer=<?php echo $laCategorie['titre'] ?>" onclick="return(confirm('Etes vous sûr ?'))"><i class="fas fa-trash pl-2"></i></a>
                             </td>
                             <?php
                             echo '</tr>';

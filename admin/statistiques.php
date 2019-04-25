@@ -157,7 +157,7 @@ include_once('inc/nav.inc.php');
 
        <?php
         // Le formulaire est apparent seuelement si action = lesMieuxNotes OU BIEN si get action n'existe pas
-        if ((isset($_GET['action']) && $_GET['action'] == "lesPlusAnciens") || !isset($_GET['action'])){ 
+        if ((isset($_GET['action']) && $_GET['action'] == "lesPlusAnciens")){ 
     
         ?>
         <ul class="list-group" id="3">
@@ -183,7 +183,7 @@ include_once('inc/nav.inc.php');
             
                    <?php
         // Le formulaire est apparent seuelement si action = lesMieuxNotes OU BIEN si get action n'existe pas
-        if ((isset($_GET['action']) && $_GET['action'] == "lesPlusPopulaire") || !isset($_GET['action'])){ 
+        if ((isset($_GET['action']) && $_GET['action'] == "lesPlusPopulaire")){ 
     
         ?>
         <ul class="list-group" id="4">

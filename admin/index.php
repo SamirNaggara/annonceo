@@ -8,7 +8,7 @@ if(!user_is_admin()) {
 	exit(); // permet de bloquer l'exécution de la suite du script
 }
 
-
+header("location:" . URL . "admin/statistiques.php");
 
 
 

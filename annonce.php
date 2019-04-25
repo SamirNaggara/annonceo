@@ -249,38 +249,49 @@ include_once('inc/nav.inc.php');
 
     </header>
 
-    <div class="conteneurCarouselTexte row mt-5">
+    <div class="conteneurCarouselTexte row mt-5 ">
+        <?php echo '<pre>';
+        print_r($lesPhotos);
+            echo '</pre>';
+        echo $cetteAnnonce["photo"];
+        ?>
         <section class="carousel col-lg-6">
             <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselAnnonce" data-slide-to="1"></li>
-                    <li data-target="#carouselAnnonce" data-slide-to="2"></li>
-                    <li data-target="#carouselAnnonce" data-slide-to="3"></li>
-                    <li data-target="#carouselAnnonce" data-slide-to="4"></li>
-                    <li data-target="#carouselAnnonce" data-slide-to="5"></li>
+                    <?php 
+                        $i=1;
+                    //Pour chaque tour de boucle, la ligne <li>...</li> s'écrit uniquement si il y a une photo, et le compteur suit pour que les data-slide se suivent 
+                        foreach($lesPhotos as $ind => $laPhoto){
+                            if (!empty($laPhoto) && $ind != 'id_photo'){
+                                echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
+                                $i++;
+                            }
+                        }
+                    ?>
                 </ol>
-
-                <?php echo '
-            <div class="carousel-inner w-100">
+                <div class="carousel-inner w-100">
                 <div class="carousel-item active">
-                    <img class="d-block img-fluid w-100" src="' . $cetteAnnonce["photo"] . '" alt="First slide">
+                   <?php 
+                    echo '<img class="d-block img-fluid w-100" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
+                    ?>
                 </div>
-                <div class="carousel-item w-100">
-                    <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo1"] . '"  alt="Second slide">
-                </div>
-                <div class="carousel-item w-100">
-                    <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo2"] . '" alt="Third slide">
-                </div>   
-                <div class="carousel-item w-100">
-                    <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo3"] . '" alt="4 slide">
-                </div>   
-                <div class="carousel-item w-100">
-                    <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo4"] . '" alt="5 slide">
-                </div>   
-                <div class="carousel-item w-100">
-                    <img class="d-block img-fluid w-100" src="' . $lesPhotos["photo5"] . '" alt="6 slide">
-                </div>';
+                <?php
+                    $j=0;
+                    $listePhoto = ['photo1', 'photo2', 'photo3', 'photo4', 'photo5'];
+                    foreach($lesPhotos as $ind => $laPhoto){
+                        if (!empty($laPhoto) && $ind != 'id_photo'){
+                            echo '<div class="carousel-item">';
+                            echo '<img class="d-block img-fluid w-100" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
+                            echo '</div>';
+                            $j++;
+                        }
+                    }
+                
+            
+            
+                
+
                 ?>
             </div>
             <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
@@ -294,10 +305,24 @@ include_once('inc/nav.inc.php');
 
         </section>
 
-        <div class="description col-lg-6 p-3">
+        <div class="description col-lg-6 p-3 border border-primary">
             <h3 class="p-3 text-center text-lg-left">Description</h3>
             <div class="conteneurTexte overflow-scroll p-3">
-                <p class="p-0 m-0 text-justify"><?php echo $cetteAnnonce['description_longue'] ?></p>
+                <p class="p-0 m-0 text-justify" id="description"><?php 
+                    if (strlen($cetteAnnonce['description_longue']) > 960){
+                        $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
+                        if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
+                            echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
+                        }else{
+                            echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
+                        }
+                            
+                    }else{
+                        echo ucfirst($cetteAnnonce['description_longue']);
+                    }
+    
+                    ?></p>
+                    
             </div>
             <div class="footerDescription position-absolute row p-3 w-100">
                 <div class="prix col-lg-4 w-100 text-center text-lg-left"><i class="fas fa-euro-sign"></i> <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> €</div>
