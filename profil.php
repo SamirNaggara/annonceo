@@ -186,9 +186,9 @@ include_once('inc/nav.inc.php');
 <div class="starter-template">
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-    <a href="?action=informationsPersonnels" class="btn btn-warning text-white">Informations personnels</a>
-    <a href="?action=mesAnnonces" class="btn btn-primary">Mes annonces</a>
-    <a href="?action=mesNotes" class="btn btn-primary">Mes notes</a>
+    <a href="?action=informationsPersonnels" class="btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
+    <a href="?action=mesAnnonces" class="btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
+    <a href="?action=mesNotes" class="btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
     <hr>
 </div>
 
