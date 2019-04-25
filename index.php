@@ -17,7 +17,7 @@ include_once('inc/nav.inc.php');
 <!-- Affichage des annonces en pages d'accueil -->
 <div class="container annonce-index">
     <div class="starter-template">
-        <h1><i class="fas fa-shopping-cart mes_icones"></i> Bienvenue sur Annonceo <i class="fas fa-shopping-cart mes_icones"></i></h1>
+        <h1 title="je suis un title de Annonceo"><i class="fas fa-shopping-cart mes_icones"></i> Bienvenue sur Annonceo <i class="fas fa-shopping-cart mes_icones"></i></h1>
         <p class="lead"><?php echo $msg;?></p>
     </div>
     <div class="row no-gutters bg-light position-relative">

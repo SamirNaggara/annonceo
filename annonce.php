@@ -105,14 +105,9 @@ else{
             }
             else{
                 
-                //Il nous faut tester si la personne ne se met pas une note a elle meme
-            $recuperationAvis = $pdo->prepare("SELECT membre_id1 FROM note WHERE membre_id2 = :membre_id1 AND date_enregistrement > DATE_SUB(NOW(), INTERVAL 1 WEEK)");
-            $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
-
-
-            $recuperationAvis->execute();
+            
                 
-                if ($recuperationAvis->rowCount() > 0){
+                if ($_SESSION['utilisateur']['id_membre'] == $cetteAnnonce['membre_id']){
                     $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous ne pouvez pas vous mettre un avis a vous meme.<br>Merci</div>';
                 }
                 else{
