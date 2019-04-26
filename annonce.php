@@ -1,10 +1,13 @@
 <?php
 include_once('inc/init.inc.php');
 
-
+if(isset($_POST['enregistrement'])){
+    
+}
 
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
+    
 }
 else{
     //Recuperons les informations de la table annoncede l'id_anonce en question
@@ -250,11 +253,6 @@ include_once('inc/nav.inc.php');
     </header>
 
     <div class="conteneurCarouselTexte row mt-5 ">
-        <?php echo '<pre>';
-        print_r($lesPhotos);
-            echo '</pre>';
-        echo $cetteAnnonce["photo"];
-        ?>
         <section class="carousel col-lg-6">
             <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">

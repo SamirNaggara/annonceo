@@ -290,9 +290,9 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_annonce ->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':adresse', $adresse, PDO::PARAM_STR);
 			$enregistrement_annonce ->execute();
-			$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
+			//$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
 			// redirection apres 3 sec
-			header("refresh:3;url=". URL . "nouvelle-annonce.php");
+			//header("refresh:3;url=". URL . "annonce.php");
 		}	
 		
 			
@@ -303,7 +303,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 //***************************
 
 // Récupération du dernier id_annonce insérer en BDD
-$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC");
+$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC LIMIT 1");
 $liste_annonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
 $liste_annonce->execute();
 	
@@ -311,8 +311,10 @@ $liste_annonce->execute();
 		$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
 		$id_annonce = $infos_annonce['id_annonce'];
 	}
-	$_GET['id_annonce'] = $id_annonce;
-	echo '<pre>'; print_r($_GET['id_annonce']); echo '</pre>';
+
+	header('location:'. URL . 'annonce.php?id_annonce=' . $id_annonce);
+	//$_GET['id_annonce'] = $id_annonce;
+	//echo '<pre>'; print_r($_GET['id_annonce']); echo '</pre>';
 	
 //echo '<pre>'; print_r($id_annonce); echo '</pre>';
 //*****************************************
@@ -333,7 +335,7 @@ include_once('inc/nav.inc.php');
 		<form method="post" action="" enctype="multipart/form-data" >
 			<div class="form-group">
 				<label for="reference">ID annonce</label>
-				<input type="text" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
+				<input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
 			</div>
 			<div class="form-group">
 				<label for="reference">Titre de l'annonce</label>
