@@ -293,28 +293,28 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			//$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
 			// redirection apres 3 sec
 			//header("refresh:3;url=". URL . "annonce.php");
+			// Récupération du dernier id_annonce insérer en BDD
+			if(!empty($_POST['enregistrement'])) {
+				$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC LIMIT 1");
+				$liste_annonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
+				$liste_annonce->execute();
+					
+					if($liste_annonce->rowCount() > 0) {
+						$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
+						$id_annonce = $infos_annonce['id_annonce'];
+					}
+				header('location:'. URL . 'annonce.php?id_annonce=' . $id_annonce);
+			}
 		}	
-		
-			
 	}
 }
+echo '<pre>'; print_r($_POST); echo '</pre>';
 //***************************
 // FIN ENREGISTREMENT PRODUIT
 //***************************
 
-// Récupération du dernier id_annonce insérer en BDD
-$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC LIMIT 1");
-$liste_annonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
-$liste_annonce->execute();
-	
-	if($liste_annonce->rowCount() > 0) {
-		$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
-		$id_annonce = $infos_annonce['id_annonce'];
-	}
 
-	header('location:'. URL . 'annonce.php?id_annonce=' . $id_annonce);
-	//$_GET['id_annonce'] = $id_annonce;
-	//echo '<pre>'; print_r($_GET['id_annonce']); echo '</pre>';
+
 	
 //echo '<pre>'; print_r($id_annonce); echo '</pre>';
 //*****************************************
