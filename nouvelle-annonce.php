@@ -36,6 +36,7 @@ $cp = '';
 if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST['descriptionLongue']) && isset($_POST['prix']) && isset($_POST['categorie']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
 
 	// vérification des valeurs saisie dans les différents input
+	$id_annonce = checkInput($_POST['id_annonce']);
 	$titre = checkInput($_POST['titre']);
 	$descriptionCourte = checkInput($_POST['descriptionCourte']);
 	$descriptionLongue = checkInput($_POST['descriptionLongue']); 
@@ -62,11 +63,18 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'annonce existe déjà.';
 		}
 	}
+	// Controle sur le prix
+	if(!is_numeric($prix)) {
+		$msg .= '<div class="alert alert-danger mt-2" role="alert">Veuillez entrer des chiffres pour le prix.';
+	}
+	// 2 décimales autorisées pour le prix
+	number_format($prix, 2,',','.');
+
 	///////////////////////////////////////////
 	// Début vérification des extensions photo
 	///////////////////////////////////////////
 	// verification de la photo principal avant enregistrement
-	if(empty($msg) && !empty($_FILES['photo']['name'])) {
+	if(empty($msg2) && !empty($_FILES['photo']['name'])) {
 		
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
 		$photo_bdd_base = $_FILES['photo'];
@@ -92,7 +100,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
 			copy($_FILES['photo']['tmp_name'], $photo_dossier);
 		} else {
-			$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
 	// vérification de la photo1 avant enregistrement
@@ -262,12 +270,13 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_photo->bindParam(':photo4', $photo_bdd4, PDO::PARAM_STR);
 			$enregistrement_photo->bindParam(':photo5', $photo_bdd5, PDO::PARAM_STR);
 			$enregistrement_photo ->execute();
-			echo '<pre>'; print_r($_FILES); echo '</pre>';
+			
 			// récupération du dernier id inséré dans la table photo pour la lier à la table annonce
 			$photo_id = $pdo->lastInsertId();
 
 			// enregistrement de l'annonce dans la table annonce
-			$enregistrement_annonce = $pdo->prepare ("INSERT INTO annonce (photo_id, categorie_id, titre, description_courte, description_longue, prix, pays, photo, ville, cp, membre_id, adresse, date_enregistrement ) VALUES (:photo_id, :categorie_id, :titre, :description_courte, :description_longue, :prix, :pays, :photo, :ville, :cp, :membre_id, :adresse, NOW())");
+			$enregistrement_annonce = $pdo->prepare ("INSERT INTO annonce (id_annonce, photo_id, categorie_id, titre, description_courte, description_longue, prix, pays, photo, ville, cp, membre_id, adresse, date_enregistrement ) VALUES (:id_annonce, :photo_id, :categorie_id, :titre, :description_courte, :description_longue, :prix, :pays, :photo, :ville, :cp, :membre_id, :adresse, NOW())");
+			$enregistrement_annonce ->bindParam(':id_annonce', $id_annonce, PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':photo_id', $photo_id, PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':categorie_id', $categorie, PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':titre', $titre, PDO::PARAM_STR);
@@ -282,15 +291,33 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_annonce ->bindParam(':adresse', $adresse, PDO::PARAM_STR);
 			$enregistrement_annonce ->execute();
 			$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
-		}	
 			// redirection apres 3 sec
-			sleep(3);
-			header("location:" . URL . "nouvelle-annonce.php");
+			header("refresh:3;url=". URL . "nouvelle-annonce.php");
+		}	
+		
+			
 	}
 }
 //***************************
 // FIN ENREGISTREMENT PRODUIT
 //***************************
+
+// Récupération du dernier id_annonce insérer en BDD
+$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC");
+$liste_annonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
+$liste_annonce->execute();
+	
+	if($liste_annonce->rowCount() > 0) {
+		$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
+		$id_annonce = $infos_annonce['id_annonce'];
+	}
+	$_GET['id_annonce'] = $id_annonce;
+	echo '<pre>'; print_r($_GET['id_annonce']); echo '</pre>';
+	
+//echo '<pre>'; print_r($id_annonce); echo '</pre>';
+//*****************************************
+// FIN RECUP INFO PRODUIT POUR MODIFICATION
+//*****************************************
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
@@ -304,6 +331,10 @@ include_once('inc/nav.inc.php');
 	</div>
 	<div class="col-6 mx-auto">
 		<form method="post" action="" enctype="multipart/form-data" >
+			<div class="form-group">
+				<label for="reference">ID annonce</label>
+				<input type="text" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
+			</div>
 			<div class="form-group">
 				<label for="reference">Titre de l'annonce</label>
 				<input type="text" class="form-control" id="titre" name="titre" value="<?php echo $titre; ?>">
