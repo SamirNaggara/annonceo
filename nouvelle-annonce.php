@@ -290,10 +290,6 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$enregistrement_annonce ->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 			$enregistrement_annonce ->bindParam(':adresse', $adresse, PDO::PARAM_STR);
 			$enregistrement_annonce ->execute();
-			//$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistré</div>';
-			// redirection apres 3 sec
-			//header("refresh:3;url=". URL . "annonce.php");
-			// Récupération du dernier id_annonce insérer en BDD
 			if(!empty($_POST['enregistrement'])) {
 				$liste_annonce = $pdo->query("SELECT * FROM annonce ORDER BY id_annonce DESC LIMIT 1");
 				$liste_annonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
@@ -308,18 +304,6 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 		}	
 	}
 }
-echo '<pre>'; print_r($_POST); echo '</pre>';
-//***************************
-// FIN ENREGISTREMENT PRODUIT
-//***************************
-
-
-
-	
-//echo '<pre>'; print_r($id_annonce); echo '</pre>';
-//*****************************************
-// FIN RECUP INFO PRODUIT POUR MODIFICATION
-//*****************************************
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
