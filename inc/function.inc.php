@@ -65,3 +65,26 @@ function checkInput ($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
+//Renvoie la ragion en fonction du code postal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
