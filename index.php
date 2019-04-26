@@ -81,49 +81,61 @@ include_once('inc/nav.inc.php');
 ?>
 
 <div class="containerPage container-fluid row border border-primary">
+    <div class="contenerResultat" id="contenerResultat"></div>
+    <?php 
+//    echo '<pre>';
+//    print_r($_POST);
+//    echo '<pre>';
 
+    ?>
     <nav class="col-lg-4 mt-3">
-        <div class="form-group">
-            <label for="categorie">Categorie</label>
-            <select class="custom-select" id="categorie" name="categorie">
-              <option value="toutes">Toutes les catégories</option>
-               <?php 
-                
-                foreach($infosCategorie AS $laCategorie){
-                    echo '<option value="' . $id_categorie . '">' . $laCategorie['titre'] . '</option>';
-                }
-                ?>
-                
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="regions">Regions</label>
-            <select class="custom-select" id="regions" name="regions">
-                <option value="toutes">Toutes les regions</option>
-                <?php foreach($listeRegions as $laRegion){
-                echo '<option>' . $laRegion . '</option>';
-                }
-                ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="regions">Departement</label>
-            <select class="custom-select" id="regions" name="regions">
-                <option value="toutes">Tout les departements</option>
-                <?php foreach($listeDepartements as $leDepartement){
-                echo '<option>' . $leDepartement . '</option>';
-                }
-                ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="prixMinimum">Prix minimum</label>
-            <input type="range" class="prixMinimum" id="prixMinimum" min="0" max="10000" step="100">
-        </div>
-        <div class="form-group">
-            <label for="prixMaximum">Prix maximum</label>
-            <input type="range" class="prixMaximum" id="prixMinimum" min="0" max="10000" step="100">
-        </div>
+       <form method="post" action="#">
+            <div class="form-group">
+                <label for="categorie">Categorie</label>
+                <select class="ajaxIndex custom-select" id="categorie" name="categorie">
+                  <option value="toutes">Toutes les catégories</option>
+                   <?php 
+
+                    foreach($infosCategorie AS $laCategorie){
+                        echo '<option value="' . $laCategorie['id_categorie'] . '">' . $laCategorie['titre'] . '</option>';
+                    }
+                    ?>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="region">Regions</label>
+                <select class="ajaxIndex custom-select" id="region" name="region">
+                    <option value="toutes">Toutes les regions</option>
+                    <?php foreach($listeRegions as $laRegion){
+                    echo '<option>' . $laRegion . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="departement">Departement</label>
+                <select class="custom-select ajaxIndex" id="departement" name="departement">
+                    <option value="toutes">Tout les departements</option>
+                    <?php foreach($listeDepartements as $leDepartement){
+                    echo '<option>' . $leDepartement . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="prixMinimum">Prix minimum</label>
+                <input type="range" class="ajaxIndex rangeMin" name="prixMin" min="0" max="1000" step="10" value="0"/>
+                <output id="prixMin" name="resultMin"></output>
+            </div>
+            <div class="form-group">
+                <label for="prixMaximum">Prix maximum</label>
+                <input type="range" class="rangeMax" name="prixMax" min="0" max="1000" step="10" value="1000"/>
+                <output id="prixMax" class="resultMax" name="resultMax"></output>
+            </div>
+<!--           <button type="submit" name="enregistrement">Valider</button>-->
+        </form>
+        
     </nav>
     <!-- Affichage des annonces en pages d'accueil -->
     <div class="container annonce-index col-lg-8 border border-primary mt-3">
