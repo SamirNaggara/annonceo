@@ -55,26 +55,9 @@ for ($i=2; $i<count($lesVilles);$i++){
     }      
 }
 
-//On recupere ici la liste de tout les departements
-$listeDepartements = [];
-for ($i=2; $i<count($lesVilles);$i++){
-    if (!empty($lesVilles[$i][2])){
-        if (!in_array($lesVilles[$i][2], $listeDepartements)){
-    array_push($listeDepartements, $lesVilles[$i][2]);  
-        }
-    }      
-}
-
-sort($listeRegions);
-sort($listeDepartements);
 
      
-//echo '<pre>';
-//print_r($listeRegions);
-//echo '</pre>';     
-//echo '<pre>';
-//print_r($listeDepartements);
-//echo '</pre>';
+
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
@@ -89,12 +72,12 @@ include_once('inc/nav.inc.php');
 
     ?>
     <nav class="col-lg-4 mt-3">
-       <form method="post" action="#">
+        <form method="post" action="#">
             <div class="form-group">
                 <label for="categorie">Categorie</label>
-                <select class="ajaxIndex custom-select" id="categorie" name="categorie">
-                  <option value="toutes">Toutes les catégories</option>
-                   <?php 
+                <select class="ajaxCategorie custom-select" id="categorie" name="categorie">
+                    <option value="toutes">Toutes les catégories</option>
+                    <?php 
 
                     foreach($infosCategorie AS $laCategorie){
                         echo '<option value="' . $laCategorie['id_categorie'] . '">' . $laCategorie['titre'] . '</option>';
@@ -115,27 +98,35 @@ include_once('inc/nav.inc.php');
             </div>
             <div class="form-group">
                 <label for="departement">Departement</label>
-                <select class="custom-select ajaxIndex" id="departement" name="departement">
+                <select class="custom-select selectDepartement" id="departement" name="departement">
                     <option value="toutes">Tout les departements</option>
-                    <?php foreach($listeDepartements as $leDepartement){
+                    <?php foreach(departements('toutes', $lesVilles) as $leDepartement){
                     echo '<option>' . $leDepartement . '</option>';
                     }
                     ?>
                 </select>
             </div>
+            <div class="form-group champVille ajaxIndex">
+                <label for="ville">Ville</label>
+                <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
+
+                </select>
+            
+
+            </div>
             <div class="form-group">
                 <label for="prixMinimum">Prix minimum</label>
-                <input type="range" class="ajaxIndex rangeMin" name="prixMin" min="0" max="1000" step="10" value="0"/>
+                <input type="range" class="ajaxIndex rangeMin" id="prixMinimum" name="prixMin" min="0" max="1000" step="10" value="0" />
                 <output id="prixMin" name="resultMin"></output>
             </div>
             <div class="form-group">
                 <label for="prixMaximum">Prix maximum</label>
-                <input type="range" class="rangeMax" name="prixMax" min="0" max="1000" step="10" value="1000"/>
+                <input type="range" class="ajaxIndex rangeMax" id="prixMaximum" name="prixMax" min="0" max="1000" step="10" value="1000" />
                 <output id="prixMax" class="resultMax" name="resultMax"></output>
             </div>
-<!--           <button type="submit" name="enregistrement">Valider</button>-->
+            <!--           <button type="submit" name="enregistrement">Valider</button>-->
         </form>
-        
+
     </nav>
     <!-- Affichage des annonces en pages d'accueil -->
     <div class="container annonce-index col-lg-8 border border-primary mt-3">

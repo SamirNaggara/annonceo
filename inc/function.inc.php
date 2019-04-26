@@ -66,7 +66,35 @@ function checkInput ($data) {
     return $data;
 }
 
-//Renvoie la ragion en fonction du code postal
+
+function departements($region, $lesVilles){
+//    Renvoie la liste des depatements de la region rentré en premiere argument, dans la liste $lesVilles rentré en deuxieme arguments
+    $listeDepartements = [];
+    for ($i=2; $i<count($lesVilles);$i++){
+        if ((!empty($lesVilles[$i][2]) && $lesVilles[$i][1] == $region) || $region == 'toutes'){
+            if (!in_array($lesVilles[$i][2], $listeDepartements)){
+                array_push($listeDepartements, $lesVilles[$i][2]);  
+            }
+        }      
+    }
+    sort($listeDepartements);
+    return $listeDepartements;
+}
+
+function villes($departement, $lesVilles){
+//    Renvoie la liste des depatements de la region rentré en premiere argument, dans la liste $lesVilles rentré en deuxieme arguments
+    $listeVilles = [];
+    for ($i=2; $i<count($lesVilles);$i++){
+        if ((!empty($lesVilles[$i][3]) && $lesVilles[$i][2] == $departement) || $departement == 'toutes'){
+            if (!in_array($lesVilles[$i][3], $listeVilles)){
+                array_push($listeVilles, $lesVilles[$i][3]);  
+            }
+        }      
+    }
+    sort($listeVilles);
+    return $listeVilles;
+}
+
 
 
 
