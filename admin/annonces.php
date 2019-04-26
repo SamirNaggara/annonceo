@@ -27,7 +27,7 @@ if(isset($_GET['modifier'])) {
   $recupAnnonces->bindParam(':id_annonce', $_GET['modifier'], PDO::PARAM_STR);
   $recupAnnonces->execute();
   $laRecupAnnonces = $recupAnnonces->fetch(PDO::FETCH_ASSOC);
-
+  echo '<pre>'; print_r($laRecupAnnonces); echo '</pre>';
   $id = checkInput($laRecupAnnonces['id_annonce']);
   $titre = checkInput($laRecupAnnonces['titre']);
   $pseudo = checkInput($laRecupAnnonces['pseudo']);
@@ -46,44 +46,25 @@ if(isset($_GET['modifier'])) {
   $photo4 = $laRecupAnnonces['photo4'];
   $photo5 = $laRecupAnnonces['photo5'];
 
-  echo '<pre>';print_r($laRecupAnnonces);echo'</pre>';
-
-  /* sleep(3);
-  $msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été modifiée.'; */
-}
-
-  $titre = '';
-  $pseudo = '';
-  $desCourte = '';
-  $desLongue = '';
-  $prix = '';
-  $pays = '';
-  $ville = '';
-  $adresse = '';
-  $cp = '';
-
-if (($titre != $_POST['titre'] || $pseudo != $_POST['pseudo'] || $desCourte != $_POST['description_courte'] || $desLongue != $_POST['description_longue'] || $prix != $_POST['prix'] || $pays != $_POST['pays'] || $ville != $_POST['ville'] || $adresse != $_POST['adresse'] || $cp != $_POST['cp']) && empty($msg)) {
-  
-  $enregistrement = $pdo->prepare("UPDATE annonce SET titre = :titre, pseudo = :pseudo, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp WHERE id_annonce = :id_annonce");
-  $enregistrement->bindParam(':titre', $titre, PDO::PARAM_STR);
-  $enregistrement->bindParam(':pseudo', $pseudo_profil, PDO::PARAM_STR);
-  $enregistrement->bindParam(':desCourte', $desCourte, PDO::PARAM_STR);
-  $enregistrement->bindParam(':desLongue', $desLongue, PDO::PARAM_STR);
-  $enregistrement->bindParam(':prix', $prix, PDO::PARAM_STR);
-  $enregistrement->bindParam(':pays', $pays, PDO::PARAM_STR);
-  $enregistrement->bindParam(':ville', $ville, PDO::PARAM_STR);
-  $enregistrement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
-  $enregistrement->bindParam(':cp', $cp, PDO::PARAM_STR);
-  $enregistrement->bindParam(':id_annonce', $id, PDO::PARAM_STR);
-  $enregistrement->execute();
-  
   //actualisation de l'annonce
-  //message que les informations ont été modifiées
-
-  $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
+  // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
+  if (($titre != $_POST['titre'] || $pseudo != $_POST['pseudo'] || $date != $_POST['date'] || $desCourte != $_POST['descriptionCourte'] || $desLongue != $_POST['descriptionLongue'] || $prix != $_POST['prix'] || $pays != $_POST['pays'] || $ville != $_POST['ville'] || $adresse != $_POST['adresse'] || $cp != $_POST['cp'])) {
+    $enregistrement = $pdo->prepare("UPDATE annonce SET titre = :titre, description_courte = :description_courte, description_longue = :description_longue, prix = :prix, pays = :pays, ville = :ville, adresse = :adresse, cp = :cp WHERE id_annonce = :id_annonce");
+    $enregistrement->bindParam(':titre', $titre, PDO::PARAM_STR);
+    $enregistrement->bindParam(':description_courte', $desCourte, PDO::PARAM_STR);
+    $enregistrement->bindParam(':description_longue', $desLongue, PDO::PARAM_STR);
+    $enregistrement->bindParam(':prix', $prix, PDO::PARAM_STR);
+    $enregistrement->bindParam(':pays', $pays, PDO::PARAM_STR);
+    $enregistrement->bindParam(':ville', $ville, PDO::PARAM_STR);
+    $enregistrement->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+    $enregistrement->bindParam(':cp', $cp, PDO::PARAM_STR);
+    $enregistrement->bindParam(':id_annonce', $id, PDO::PARAM_STR);
+    $enregistrement->execute();
+    //message que les informations ont été modifiées
+    $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
+  }
+  echo '<pre>'; print_r($_POST); echo '</pre>';
 }
-echo '<pre>'; print_r($_POST); echo '</pre>';
-
 // récuperation des categories
 $recup_categorie = $pdo->query(
   "SELECT * FROM categorie 
@@ -100,7 +81,6 @@ if(isset($_GET['categorie'])) {
     );
     $annonces->bindParam(':titre', $_GET['categorie'], PDO::PARAM_STR);
     $annonces->execute();
-
 } else {
   // recuperation des informations des annonces au complet
   $annonces = $pdo->prepare(
@@ -111,8 +91,6 @@ if(isset($_GET['categorie'])) {
   );
   $annonces->execute();
 }
-// Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
-
   include_once('inc/header.inc.php');
   include_once('inc/nav.inc.php');
 
@@ -121,8 +99,7 @@ if(isset($_GET['categorie'])) {
 <?php 
 
 if(!empty($_GET['modifier'])) {
-   ?>
-  
+  ?>
   <div class="container">
 	<div class="starter-template">
 		<h1>Modification annonces</h1>
@@ -132,7 +109,7 @@ if(!empty($_GET['modifier'])) {
 		<form method="post" action="" enctype="multipart/form-data" >
 		<!--  affichage de l'annonce pour modification -->
       <div class="form-group">
-				<input type="hidden" class="form-control" id="id" name="id" value="<?php echo $id; ?>">
+				<input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id; ?>">
 			</div>
       <div class="form-group">
 				<label for="titre">Titre de l'annonce :</label>
