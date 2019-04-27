@@ -95,8 +95,69 @@ function villes($departement, $lesVilles){
     return $listeVilles;
 }
 
+//J'ai besoin d'un fonction ou je donne une regions, et il me sors la liste de tout les codes postaux correspondant
+    
+function cpEnFonctionDeRegion($region, $lesVilles){
+    $listeVilles = [];
 
+    for ($i=2; $i<count($lesVilles);$i++){
+        if ((!empty($lesVilles[$i][4]) && $lesVilles[$i][1] == $region) || $region == 'toutes'){
+            //Si les
+            if (strlen(trim($lesVilles[$i][4])) >= 5){
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,2);
+            }else{
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,1);
+            }
+            
+            if (!in_array($cpSansEspace, $listeVilles)){
+                array_push($listeVilles,$cpSansEspace);  
+            }
+        }
+    }
+    return $listeVilles;
+    
+}
 
+//J'ai besoin d'un fonction ou je donne un departement, et il me sors la liste de tout les codes postaux correspondant
+    
+function cpEnFonctionDeDepartement($departement, $lesVilles){
+    $listeVilles = [];
+
+    for ($i=2; $i<count($lesVilles);$i++){
+        if ((!empty($lesVilles[$i][4]) && $lesVilles[$i][2] == $departement) || $departement == 'toutes'){
+            if (strlen(trim($lesVilles[$i][4])) >= 5){
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,2);
+            }else{
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,1);
+            }
+            if (!in_array($cpSansEspace, $listeVilles)){
+                array_push($listeVilles,$cpSansEspace);  
+            }
+        }
+    }
+    return $listeVilles;
+}
+   
+//J'ai besoin d'un fonction ou je donne une ville, et il me sors le code postal
+    
+function cpEnFonctionDeVille($ville, $lesVilles){
+    $listeVilles = [];
+
+    for ($i=2; $i<count($lesVilles);$i++){
+        if ((!empty($lesVilles[$i][4]) && $lesVilles[$i][3] == $ville) || $ville == 'toutes'){
+            if (strlen(trim($lesVilles[$i][4])) >= 5){
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,2);
+            }else{
+                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,1);
+            }
+            if (!in_array($cpSansEspace, $listeVilles)){
+                array_push($listeVilles,$cpSansEspace);  
+            }
+        }
+    }
+    return $listeVilles;
+}
+    
 
 
 

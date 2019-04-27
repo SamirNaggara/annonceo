@@ -88,14 +88,46 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
                                             LEFT JOIN note n ON n.membre_id2 = m.id_membre
-                                            WHERE a.titre LIKE :rechercher
+                                            WHERE (a.titre LIKE :rechercher
+                                            OR a.description_courte LIKE :rechercher
+                                            OR a.description_longue LIKE :rechercher
+                                            OR a.prix LIKE :rechercher
+                                            OR a.pays LIKE :rechercher
+                                            OR a.ville LIKE :rechercher
+                                            OR a.adresse LIKE :rechercher
+                                            OR a.cp LIKE :rechercher
+                                            OR m.pseudo LIKE :rechercher
+                                            OR m.nom LIKE :rechercher
+                                            OR m.prenom LIKE :rechercher
+                                            OR m.telephone LIKE :rechercher
+                                            OR m.email LIKE :rechercher)
+                                            AND a.categorie_id LIKE :categorie
+                                            AND SUBSTRING(a.cp,1,2) IN :region
                                             GROUP BY a.id_annonce
                                             ORDER BY a.date_enregistrement DESC");
     $pourLaRecherche = "%" . $_POST['rechercher'] . '%';
+    if ($_POST['categorie'] != 'toutes'){
+        $pourLaCategorie = $_POST['categorie'];
+    }else{
+        $pourLaCategorie = '%';
+    }
+    
+//    $pourLaRegion = "(";
+//    foreach(cpEnFonctionDeRegion('corse', $lesVilles) as $leCp){
+//        $pourLaRegion .= $leCp . ',';
+//        
+//    }
+    //Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
+//    $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
+//    $pourLaRegion .= ')';
+//    $tab['afficher'] .= $pourLaRegion
+    
+    
+    
 	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':categorie', $_POST['categorie'], PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':region', $_POST['region'], PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':departement', $_POST['departement'], PDO::PARAM_STR);
+	$requeteAffichage->bindParam(':categorie', $pourLaCategorie, PDO::PARAM_STR);
+	$requeteAffichage->bindParam(':region', "("75")", PDO::PARAM_STR);
+//	$requeteAffichage->bindParam(':departement', $pourLaRegion , PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':ville', $_POST['ville'], PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':prixMin', $_POST['prixMin'], PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':prixMax', $_POST['prixMax'], PDO::PARAM_STR);

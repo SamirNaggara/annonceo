@@ -55,6 +55,22 @@ for ($i=2; $i<count($lesVilles);$i++){
     }      
 }
 
+ $pourLaRegion = "(";
+    foreach(cpEnFonctionDeRegion('Île-de-France', $lesVilles) as $leCp){
+        $pourLaRegion .= $leCp . ',';
+    }
+    //Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
+    $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
+    $pourLaRegion .= ')';
+    
+            echo $pourLaRegion;
+//AND SUBSTRING(a.cp,1,2) IN :region
+
+
+//echo '<pre>';
+//print_r(cpEnFonctionDeVille('toutes', $lesVilles));
+//echo '</pre>';
+
 // Faisons la requete des annonces presente au chargement de la page acceuil
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a

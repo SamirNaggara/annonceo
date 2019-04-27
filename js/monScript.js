@@ -52,7 +52,9 @@ $(function() {
         $.post('traitement.php', param, function(reponse) {
             $('#contenerResultat').html(reponse.afficher);
             $('#contenerReponseRequete').html(reponse.reponseRequete);
+            console.log(reponse.afficher);
             }, 'json');
+            
     });
     
     
@@ -70,7 +72,13 @@ $(function() {
             if (reponse.faireDisparaitreVille == "ok"){
                 $('.champVille').hide();
             }; 
-            }, 'json');
+            }, 'json')
+        
+        .fail(function(xhr, status, error){
+            console.log(xhr);
+            console.log(status);
+            console.log(error);
+        })
     });
     
     //Ajax Departement, qui fait apparaitre la ville et en change la liste
