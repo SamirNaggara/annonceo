@@ -88,9 +88,11 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
                                             LEFT JOIN note n ON n.membre_id2 = m.id_membre
+                                            WHERE a.titre LIKE :rechercher
                                             GROUP BY a.id_annonce
                                             ORDER BY a.date_enregistrement DESC");
-//	$requeteAffichage->bindParam(':rechercher', $_POST['rechercher'], PDO::PARAM_STR);
+    $pourLaRecherche = "%" . $_POST['rechercher'] . '%';
+	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':categorie', $_POST['categorie'], PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':region', $_POST['region'], PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':departement', $_POST['departement'], PDO::PARAM_STR);
