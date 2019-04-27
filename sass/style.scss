@@ -86,3 +86,18 @@
     }
 }
 
+//----------------Page acceuil-------------------
+
+#contenerReponseRequete>.blocRequete>.texte>.footerAnnonce{
+    @media screen AND (min-width:768px){
+        position:absolute;
+        bottom:0px;
+    }
+}
+
+#contenerReponseRequete>.blocRequete>.texte>p{
+    @media screen AND (max-width:968px){
+        overflow: hidden;
+//        height:140px;
+    }
+}

@@ -53,4 +53,13 @@
   margin-right: 0px;
   margin-left: 0px; }
 
+@media screen and (min-width: 768px) {
+  #contenerReponseRequete > .blocRequete > .texte > .footerAnnonce {
+    position: absolute;
+    bottom: 0px; } }
+
+@media screen and (max-width: 968px) {
+  #contenerReponseRequete > .blocRequete > .texte > p {
+    overflow: hidden; } }
+
 /*# sourceMappingURL=style.css.map */

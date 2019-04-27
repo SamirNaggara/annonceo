@@ -55,16 +55,25 @@ for ($i=2; $i<count($lesVilles);$i++){
     }      
 }
 
+// Faisons la requete des annonces presente au chargement de la page acceuil
+$requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
+                                            FROM annonce a
+                                            LEFT JOIN membre m ON m.id_membre = a.membre_id
+                                            LEFT JOIN note n ON n.membre_id2 = m.id_membre
+                                            GROUP BY a.id_annonce
+                                            ORDER BY a.date_enregistrement DESC
+                                            LIMIT 10");
+$requeteAffichage->execute();
 
-     
+$requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
 
-<div class="containerPage container-fluid row border border-primary">
-    <div class="contenerResultat" id="contenerResultat"></div>
+<div class="containerPage container-fluid row">
+    <div class="contenerResultat d-none" id="contenerResultat"></div>
     <?php 
 //    echo '<pre>';
 //    print_r($_POST);
@@ -163,64 +172,47 @@ include_once('inc/nav.inc.php');
         </div>
     </nav>
     <!-- Affichage des annonces en pages d'accueil -->
-    <div class="container annonce-index col-lg-8 border border-primary mt-3">
+    <div class="container annonce-index col-lg-8 mt-3">
         <div class="starter-template">
             <h1><i class="fas fa-shopping-cart mes_icones"></i> Bienvenue sur Annonceo <i class="fas fa-shopping-cart mes_icones"></i></h1>
             <p class="lead">
                 <?php echo $msg;?>
             </p>
         </div>
-        <div class="row no-gutters bg-light position-relative">
-            <div class="col-md-6 mb-md-0 p-md-4">
-                <img src="images/img1.jpg" class="w-100 img-fluid" alt="...">
+
+        <div id="contenerReponseRequete" class="mx-auto">
+            <?php 
+            foreach($requeteAffichage as $uneLigne){
+               ?>
+            <div class="blocRequete row no-gutters bg-light position-relative mx-auto">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <a href="<?php echo URL; ?>annonce?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
+                        <img src="<?php echo $uneLigne['photo']; ?>" class="w-100 img-fluid" alt="photo annonceo">
+                    </a>
+                </div>
+                <div class="col-md-6 texte position-relative p-0 pl-md-0">
+                    <h5 class="mt-0 p-3 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
+                    <p class="p-3 text-center text-md-left w-100 mx-auto">
+                        <?php echo ucfirst($uneLigne['description_courte']); ?>
+                    </p>
+                    <div class="footerAnnonce row mx-auto w-100 p-3 mb-2">
+                        <span class="d-inline-block col-md-6 m-0 p-2 text-center text-md-left">
+                            <?php echo ucfirst($uneLigne['pseudo']); ?> : <?php echo round($uneLigne['moyenneNote'],1); ?> /5</span>
+                        <span class="d-inline-block m-0 p-2 col-md-6 text-center text-md-right">
+                            <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 position-static p-4 pl-md-0">
-                <h5 class="mt-0">Columns with stretched link</h5>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                <a href="<?php echo URL . " annonce.php?id_annonce=2"; ?>" class="stretched-link">Go somewhere</a>
-            </div>
-        </div>
-        <div class="row no-gutters bg-light position-relative">
-            <div class="col-md-6 mb-md-0 p-md-4">
-                <img src="images/img1.jpg" class="w-100 img-fluid" alt="...">
-            </div>
-            <div class="col-md-6 position-static p-4 pl-md-0">
-                <h5 class="mt-0">Columns with stretched link</h5>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                <a href="#" class="stretched-link">Go somewhere</a>
-            </div>
-        </div>
-        <div class="row no-gutters bg-light position-relative">
-            <div class="col-md-6 mb-md-0 p-md-4">
-                <img src="images/img1.jpg" class="w-100 img-fluid" alt="...">
-            </div>
-            <div class="col-md-6 position-static p-4 pl-md-0">
-                <h5 class="mt-0">Columns with stretched link</h5>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                <a href="#" class="stretched-link">Go somewhere</a>
-            </div>
-        </div>
-        <div class="row no-gutters bg-light position-relative">
-            <div class="col-md-6 mb-md-0 p-md-4">
-                <img src="images/img1.jpg" class="w-100 img-fluid" alt="...">
-            </div>
-            <div class="col-md-6 position-static p-4 pl-md-0">
-                <h5 class="mt-0">Columns with stretched link</h5>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                <a href="#" class="stretched-link">Go somewhere</a>
-            </div>
-        </div>
-        <div class="row no-gutters bg-light position-relative">
-            <div class="col-md-6 mb-md-0 p-md-4">
-                <img src="images/img1.jpg" class="w-100 img-fluid" alt="...">
-            </div>
-            <div class="col-md-6 position-static p-4 pl-md-0">
-                <h5 class="mt-0">Columns with stretched link</h5>
-                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                <a href="#" class="stretched-link">Go somewhere</a>
-            </div>
+            <?php
+            }
+            
+
+            ?>
+
         </div>
     </div>
+
 
 </div>
 <!-- Fin d'affichage des annonces en pages d'accueil -->

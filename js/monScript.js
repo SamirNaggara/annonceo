@@ -51,6 +51,7 @@ $(function() {
 
         $.post('traitement.php', param, function(reponse) {
             $('#contenerResultat').html(reponse.afficher);
+            $('#contenerReponseRequete').html(reponse.reponseRequete);
             }, 'json');
     });
     
