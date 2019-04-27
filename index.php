@@ -72,10 +72,14 @@ include_once('inc/nav.inc.php');
 
     ?>
     <nav class="col-lg-4 mt-3">
+        <div class="form-group">
+            <label for="champsRechercher">Rechercher</label>
+            <input type="email" class="form-control ajaxGlobale" id="champsRechercher" placeholder="Tapez votre recherche ici">
+        </div>
         <form method="post" action="#">
             <div class="form-group">
                 <label for="categorie">Categorie</label>
-                <select class="ajaxCategorie custom-select" id="categorie" name="categorie">
+                <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
                     <option value="toutes">Toutes les catégories</option>
                     <?php 
 
@@ -88,7 +92,7 @@ include_once('inc/nav.inc.php');
             </div>
             <div class="form-group">
                 <label for="region">Regions</label>
-                <select class="ajaxIndex custom-select" id="region" name="region">
+                <select class="ajaxGlobale custom-select" id="region" name="region">
                     <option value="toutes">Toutes les regions</option>
                     <?php foreach($listeRegions as $laRegion){
                     echo '<option>' . $laRegion . '</option>';
@@ -98,7 +102,7 @@ include_once('inc/nav.inc.php');
             </div>
             <div class="form-group">
                 <label for="departement">Departement</label>
-                <select class="custom-select selectDepartement" id="departement" name="departement">
+                <select class="ajaxGlobale selectDepartement custom-select" id="departement" name="departement">
                     <option value="toutes">Tout les departements</option>
                     <?php foreach(departements('toutes', $lesVilles) as $leDepartement){
                     echo '<option>' . $leDepartement . '</option>';
@@ -106,27 +110,57 @@ include_once('inc/nav.inc.php');
                     ?>
                 </select>
             </div>
-            <div class="form-group champVille ajaxIndex">
+            <div class="ajaxGlobale form-group champVille">
                 <label for="ville">Ville</label>
                 <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
 
                 </select>
-            
+
 
             </div>
             <div class="form-group">
                 <label for="prixMinimum">Prix minimum</label>
-                <input type="range" class="ajaxIndex rangeMin" id="prixMinimum" name="prixMin" min="0" max="1000" step="10" value="0" />
-                <output id="prixMin" name="resultMin"></output>
+                <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="1000" step="10" value="0" />
+                <output class="" id="prixMin" name="resultMin"></output>
             </div>
             <div class="form-group">
                 <label for="prixMaximum">Prix maximum</label>
-                <input type="range" class="ajaxIndex rangeMax" id="prixMaximum" name="prixMax" min="0" max="1000" step="10" value="1000" />
-                <output id="prixMax" class="resultMax" name="resultMax"></output>
+                <input type="range" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="1000" step="10" value="1000" />
+                <output id="prixMax" class="" name="resultMax"></output>
             </div>
             <!--           <button type="submit" name="enregistrement">Valider</button>-->
         </form>
-
+        <h3>Options de trie</h3>
+        <div class="form-check">
+            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parDateDesc" value="parDateDesc" checked>
+            <label class="form-check-label" for="parDateDesc">
+                Les plus récentes
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parDateAsc" value="parDateAsc">
+            <label class="form-check-label" for="parDateAsc">
+                Les plus anciennes
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parPrixDesc" value="parPrixDesc">
+            <label class="form-check-label" for="parPrixDesc">
+                Les moins chères
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parPrixAsc" value="parPrixAsc">
+            <label class="form-check-label" for="parPrixAsc">
+                Les plus chères
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parVendeur" value="parVendeur">
+            <label class="form-check-label" for="parVendeur">
+                Les meilleurs vendeurs
+            </label>
+        </div>
     </nav>
     <!-- Affichage des annonces en pages d'accueil -->
     <div class="container annonce-index col-lg-8 border border-primary mt-3">

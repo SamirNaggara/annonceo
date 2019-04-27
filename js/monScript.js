@@ -28,33 +28,51 @@ $(function() {
     //-----------------Ajax page d'acceuil-----------------------------
     
     
-    //Ajax Categorie
-    $('#categorie').on('change',function(){
-        var choixCategorie = $(this).val();
+    //Ajax Globale qui renvoie notre requete
+    $('.ajaxGlobale').on('change',function(){
+        var inputRechercher = $('#champsRechercher').val()
+        var choixCategorie = $('#categorie').val();
+        var choixRegion = $('#region').val();
+        var choixDepartement = $('#departement').val();
+        var choixVille = $('#ville').val();
+        var choixPrixMin = $('#prixMin').val();
+        var choixPrixMax = $('#prixMax').val();
+        var choixTrie = $("input[name='trie']:checked").val();
             var param = {
-                categorie:choixCategorie
+                rechercher:inputRechercher,
+                categorie:choixCategorie,
+                region:choixRegion,
+                departement:choixDepartement,
+                ville:choixVille,
+                prixMin:choixPrixMin,
+                prixMax:choixPrixMax,
+                trie:choixTrie
             }
 
-        $.post('traitementCategorie.php', param, function(reponse) {
-            $('#contenerResultat').html(reponse.afficher);            
+        $.post('traitement.php', param, function(reponse) {
+            $('#contenerResultat').html(reponse.afficher);
             }, 'json');
     });
     
     
-    //Ajax Region
+    //Ajax Region, qui change la liste de departement
     $('#region').on('change',function(){
         var choixRegion = $(this).val();
+        console.log(choixRegion);
             var param = {
                 region:choixRegion
             }
 
         $.post('traitementRegion.php', param, function(reponse) {
-            $('.selectDepartement').html(reponse.pourLeChampDepartement);
-            $('#contenerResultat').html(reponse.afficher);            
+            $('.selectDepartement').html(reponse.pourLeChampDepartement);   
+            console.log(reponse.pourLeChampDepartement);
+            if (reponse.faireDisparaitreVille == "ok"){
+                $('.champVille').hide();
+            }; 
             }, 'json');
     });
     
-    //Ajax Departement
+    //Ajax Departement, qui fait apparaitre la ville et en change la liste
     $('#departement').on('change',function(){
         var choixDepartement = $(this).val();
             var param = {
@@ -63,51 +81,18 @@ $(function() {
 
         $.post('traitementDepartement.php', param, function(reponse) {
             $('.selectVille').html(reponse.pourLeChampVille);
-            console.log(reponse.faireApparaitreVille);
             if (reponse.faireApparaitreVille == "ok"){
                 $('.champVille').show();
-            }
-            $('#contenerResultat').html(reponse.afficher); 
+            }; 
             
             }, 'json');
     });
     
-        //Ajax Ville
-    $('#ville').on('change',function(){
-        var choixVille = $(this).val();
-            var param = {
-                ville:choixVille
-            }
 
-        $.post('traitementVille.php', param, function(reponse) {
-             $('#contenerResultat').html(reponse.afficher); 
-            
-            }, 'json');
-    });
     
-    //Ajax prixMinimum
-    $('#prixMinimum').on('change',function(){
-        var choixPrixMin = $(this).val();
-            var param = {
-                prixMin:choixPrixMin
-            }
-
-        $.post('traitementPrixMin.php', param, function(reponse) {
-             $('#contenerResultat').html(reponse.afficher);             
-            }, 'json');
-    });    
+   
     
-    //Ajax prixMaximum
-    $('#prixMaximum').on('change',function(){
-        var choixPrixMax = $(this).val();
-            var param = {
-                prixMax:choixPrixMax
-            }
 
-        $.post('traitementPrixMax.php', param, function(reponse) {
-             $('#contenerResultat').html(reponse.afficher);             
-            }, 'json');
-    });
     
     
                 

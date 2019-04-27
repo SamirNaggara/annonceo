@@ -48,12 +48,11 @@ for ($i=2; $i<count($lesVilles);$i++){
 
 $tab = array();
 
-$tab['afficher'] = '';
 $tab['pourLeChampDepartement'] = '';
+$tab['faireDisparaitreVille'] = '';
 
 
 if (isset($_POST['region'])){
-    $tab['afficher'] .= $_POST['region'];
     $optionDeMaBoucle = "";
     
         foreach(departements($_POST['region'], $lesVilles) as $leDepartement){
@@ -61,6 +60,10 @@ if (isset($_POST['region'])){
     }
         
     $tab['pourLeChampDepartement'] .= '<option value="toutes">Tout les departements</option>' . $optionDeMaBoucle;          
+}
+
+if (isset($_POST['region']) && $_POST['region'] == 'toutes'){
+    $tab['faireDisparaitreVille'] = 'ok';
 }
 
 
