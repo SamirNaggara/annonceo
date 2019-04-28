@@ -62,4 +62,9 @@
   #contenerReponseRequete > .blocRequete > .texte > p {
     overflow: hidden; } }
 
+#contenerReponseRequete > .blocRequete a img {
+  display: block;
+  max-height: 280px;
+  min-height: 240px; }
+
 /*# sourceMappingURL=style.css.map */

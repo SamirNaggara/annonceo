@@ -98,10 +98,18 @@
 }
 
 #contenerReponseRequete>.blocRequete>.texte>p{
+//    position:relative;
+//    top:-18px;
     @media screen AND (max-width:968px){
         overflow: hidden;
 //        height:140px;
     }
+}
+
+#contenerReponseRequete>.blocRequete a img{
+    display: block;
+    max-height: 280px;
+    min-height:240px;
 }
 
 

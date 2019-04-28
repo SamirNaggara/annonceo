@@ -199,11 +199,11 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                 <a href="' . URL . 'annonce?id_annonce=' . $laLigne['id_annonce'] . '"><img src="' . $laLigne['photo'] . '" class="w-100 img-fluid" alt="..."></a>' . 
                             '</div>
                             <div class="col-md-6 texte position-relative p-0 pl-md-0">
-                                <h5 class="mt-0 p-3 pb-1 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
-                                <p class="p-3 pb-1 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
-                                <div class="footerAnnonce row mx-auto w-100 p-3 mb-2">' . 
-                                    '<span class="d-inline-block col-md-6 m-0 p-2 text-center text-md-left">' . ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
-                                    <span class="d-inline-block m-0 p-2 col-md-6 text-center text-md-right">' . $laLigne['prix'] . ' <i class="fas fa-euro-sign"></i></span>' .                                    
+                                <h5 class="mt-0 p-0 pt-3 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
+                                <p class="p-0 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
+                                <div class="footerAnnonce row mx-auto w-100 pb-4 mb-2 pr-3">' . 
+                                    '<span class="d-inline-block col-md-6 m-0 p-0 pb-1 text-center text-md-left">' . ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
+                                    <span class="d-inline-block m-0 p-0 pb-1 col-md-6 text-center text-md-right">' . $laLigne['prix'] . ' <i class="fas fa-euro-sign"></i></span>' .                                    
                                 '</div>
                             </div>
                          </div>';

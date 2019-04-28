@@ -78,7 +78,7 @@ $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_c
                                             LEFT JOIN note n ON n.membre_id2 = m.id_membre
                                             GROUP BY a.id_annonce
                                             ORDER BY a.date_enregistrement DESC
-                                            LIMIT 10");
+                                            LIMIT 30");
 $requeteAffichage->execute();
 
 $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
@@ -207,14 +207,14 @@ include_once('inc/nav.inc.php');
                     </a>
                 </div>
                 <div class="col-md-6 texte position-relative p-0 pl-md-0">
-                    <h5 class="mt-0 p-3 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
-                    <p class="p-3 text-center text-md-left w-100 mx-auto">
+                    <h5 class="mt-0 p-0 pt-3 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
+                    <p class="p-0 text-center text-md-left w-100 mx-auto">
                         <?php echo ucfirst($uneLigne['description_courte']); ?>
                     </p>
-                    <div class="footerAnnonce row mx-auto w-100 p-3 mb-2">
-                        <span class="d-inline-block col-md-6 m-0 p-2 text-center text-md-left">
-                            <?php echo ucfirst($uneLigne['pseudo']); ?> : <?php echo round($uneLigne['moyenneNote'],1); ?> /5</span>
-                        <span class="d-inline-block m-0 p-2 col-md-6 text-center text-md-right">
+                    <div class="footerAnnonce row mx-auto w-100 pb-4 mb-2 pr-3">
+                        <span class="d-inline-block col-md-6 m-0 p-0 pb-1 text-center text-md-left">
+                            <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                        <span class="d-inline-block m-0 p-0 pb-1 col-md-6 text-center text-md-right">
                             <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
                         </span>
                     </div>
