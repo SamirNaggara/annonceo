@@ -19,12 +19,7 @@ $maChaine = fread($myfile,filesize("communes1.csv"));
 //On crée une liste, en creant un nouvel element a chaque oint virgule
 $maListe = explode(";", $maChaine);
 array_shift($maListe);
-//echo $maChaine;
-//echo count($maListe);
-//echo '<pre>';
-//print_r($maListe);
-//echo '</pre>';
-//fclose($myfile);
+
 
 //On crée une liste qui contient toute les informations d'une ville'
 $lesVilles = [];
@@ -38,12 +33,7 @@ for ($i=0; $i<count($maListe);$i++){
 //    A chaque tour, j'ajoute l'element a ma petite liste
     array_push($maPetiteListe, $maListe[$i]);
 }
-//array_shift($lesVilles);
-//echo '<pre>';
-//print_r($lesVilles);
-//echo '</pre>';
 
-//echo $lesVilles[2][1];
 
 //On recupere ici la liste de toutes les regions
 $listeRegions = [];
@@ -64,12 +54,7 @@ for ($i=2; $i<count($lesVilles);$i++){
     $pourLaRegion .= ')';
     
             echo $pourLaRegion;
-//AND SUBSTRING(a.cp,1,2) IN :region
 
-
-//echo '<pre>';
-//print_r(cpEnFonctionDeVille('toutes', $lesVilles));
-//echo '</pre>';
 
 // Faisons la requete des annonces presente au chargement de la page acceuil
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
@@ -91,9 +76,7 @@ include_once('inc/nav.inc.php');
 <div class="containerPage container-fluid row">
     <div class="contenerResultat d-none" id="contenerResultat"></div>
     <?php 
-//    echo '<pre>';
-//    print_r($_POST);
-//    echo '<pre>';
+
 
     ?>
     <nav class="col-lg-4 mt-3">

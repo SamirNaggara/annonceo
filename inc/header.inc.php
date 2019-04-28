@@ -14,6 +14,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="<?php echo URL ?>css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo URL ?>css/sb-admin.css" >
+    <link rel="stylesheet" href="<?php echo URL ?>css/jquery-ui.min.css" >
     
         <!-- Notre propre style -->
     <link rel="stylesheet" href="<?php echo URL ?>css/style.css" >

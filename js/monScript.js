@@ -52,10 +52,9 @@ $(function() {
             }
 
         $.post('traitement.php', param, function(reponse) {
-            $('#contenerResultat').html(reponse.afficher);
             $('#contenerReponseRequete').html(reponse.reponseRequete);
+//            console.log(response.afficher);
             $('contenerReponseRequete').fadeIn();
-            console.log(reponse.afficher);
             }, 'json');
             
     });
@@ -100,65 +99,25 @@ $(function() {
     
 
     
-   
+//   ---------------------------------------------AUTOCOMPLETE------------------------------------------------------------
     
 
     
-    
-                
-    
-//        $('.ajaxIndex').on('change',function(){
-//            var choixDepartement = $('#departement').val();
-////            var choixVille = $('.champsVille>select').val();
-//            var param1 = {
-//                        departement:choixDepartement
-////                        ville:choixVille
-//
-//            }
-//
-//
-//
-//            $.post('ajaxTraitement.php', param1, function (reponse) {
-//                $('.selectDepartement').html(reponse.pourLeChampDepartement);
-//
-//                
-//                        }, 'json');
-//    });	
+        //Ajax de l'autocompletion, va chercher une liste de ce qu'il y a a rechercher
+    $('#champsRechercher').on('input',function(){
+        var inputRechercher = $(this).val();
+            var param = {
+                premieresLettres:inputRechercher
+            }
 
-    /******** TEST BLOQUAGE MODAL + AFFICHAGE ERREUR *********/
-    // $(document).ready(function() {
-    //     $("#register").submit(function() {
-    //         Pseudo = $("input[name='pseudo']").val();
-    //         Fname = $("input[name='nom']").val();
-    //         Lname = $("input[name='prenom']").val();
-    //         Email = $("input[name='email']").val();
-    //         Phone = $("input[name='telephone']").val();
+        $.post('traitementAutocompletion.php', param, function(reponse) {
+            var listeAutocompletion = reponse.listeAutocompletion;
+            
+        $('#champsRechercher').autocomplete({
+        source: listeAutocompletion
+        
+    });
+            }, 'json');
+    });
 
-    //         console.log("Pseudo " + Pseudo);
-    //         console.log("First name " + Fname);
-    //         console.log("Last Name " + Lname);
-    //         console.log("Email " + Email);
-    //         console.log("Telephone " + Phone);
-
-    //         // return false;
-    //     })
-    // });
-    // function getProduitsByCategorie(categorie) {
-    //     var urlAjx = "admin/inc/annonces.ajax.inc.php";
-    //     var data = {categorie:categorie};
-    //     $.ajax({ 
-//               url:      urlAjx,
-//               dataType: "json",
-//               type:     "POST",
-//               data:     data,
-//               async:    false,
-//               success:  function(data){
-//               //console.log(data);
-//               $("#listeproduits").html(data); 
-//                },
-//                error:function(jqXHR, textStatus){
-//                var error = formatErrorMessage(jqXHR, textStatus);
-//                alert('error :' + error);
-//                }
-     });
-// };
+});

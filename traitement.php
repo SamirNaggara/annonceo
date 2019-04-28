@@ -47,39 +47,9 @@ for ($i=2; $i<count($lesVilles);$i++){
 
 
 $tab = array();
-$tab['afficher'] = '';
 $tab['reponseRequete'] = '';
 
-if (isset($_POST['rechercher'])){
-    $tab['afficher'] .= $_POST['rechercher'];
-}
-if (isset($_POST['categorie'])){
-    $tab['afficher'] .= $_POST['categorie'];
-}
 
-if (isset($_POST['region'])){
-    $tab['afficher'] .= $_POST['region'];
-}
-
-if (isset($_POST['departement'])){
-    $tab['afficher'] .= $_POST['departement'];
-}
-
-if (isset($_POST['ville'])){
-    $tab['afficher'] .= $_POST['ville'];
-}
-
-if (isset($_POST['prixMin'])){
-    $tab['afficher'] .= $_POST['prixMin'];
-}
-
-if (isset($_POST['prixMax'])){
-    $tab['afficher'] .= $_POST['prixMax'];
-}
-
-if (isset($_POST['trie'])){
-    $tab['afficher'] .= $_POST['trie'];
-}
 
 
 
@@ -101,8 +71,7 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     }
 //    Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
     $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
-    $pourLaRegion .= ')';
-//     $tab['afficher'] .= $pourLaRegion;   
+    $pourLaRegion .= ')'; 
     
     
     //Calcul de la chaine de caractere a renvoyer pour le departement
@@ -113,7 +82,6 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
 //    Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
     $pourLeDepartement = substr($pourLeDepartement,0, strlen($pourLeDepartement)-1);
     $pourLeDepartement .= ')';
-//     $tab['afficher'] .= $pourLeDepartement;   
     
     
 //        Calcul de la chaine de caractere a renvoyer pour la ville
@@ -128,7 +96,6 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     
     if ($_POST['prixMax'] != 'Illimite'){
         $pourPrixMax = $_POST['prixMax'];
-        $tab['afficher'] .= 'Je passe la' . $pourPrixMax;
     }else{
         $pourPrixMax = 1000000;
     }
@@ -179,20 +146,16 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     
 	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':categorie', $pourLaCategorie, PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':region', (75,78), PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':departement', $pourLaRegion , PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':ville', $pourLaVille, PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':prixMin', $_POST['prixMin'], PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':prixMax', $pourPrixMax, PDO::PARAM_STR);
-//	$requeteAffichage->bindColum
 	$requeteAffichage->execute();
-//    
-//    //Si il existe au moins une requete qui corresponds a la demande, c'est cool et on affiche les annocnes, sinon on envoie un message
+    
+//Si il existe au moins une requete qui corresponds a la demande, c'est cool et on affiche les annocnes, sinon on envoie un message
     if($requeteAffichage->rowCount() > 0) {
         
         $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
         
-//        $tab['reponseRequete'] = '<div class="alert alert-success mt-2" role="alert">La recherche fonctionne.' . $requeteAffichage['prix'];
         foreach($requeteAffichage as $laLigne){
             $tab['reponseRequete'] .= '<div class="blocRequete row no-gutters bg-light position-relative mx-auto">
                             <div class="col-md-6 mb-md-0 p-md-4">
