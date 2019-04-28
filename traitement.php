@@ -84,6 +84,69 @@ if (isset($_POST['trie'])){
 
 
 if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['region']) && isset($_POST['departement']) && isset($_POST['ville']) && isset($_POST['prixMin']) && isset($_POST['prixMax']) && isset($_POST['trie'])){
+    //Pour le champs recherche
+    $pourLaRecherche = "%" . $_POST['rechercher'] . '%';
+    
+    //Pour le champs categorie
+    if ($_POST['categorie'] != 'toutes'){
+        $pourLaCategorie = $_POST['categorie'];
+    }else{
+        $pourLaCategorie = '%';
+    }
+    
+    //Calcul de la chaine de caractere a renvoyer pour la region
+    $pourLaRegion = "(";
+    foreach(cpEnFonctionDeRegion($_POST['region'], $lesVilles) as $leCp){
+        $pourLaRegion .= $leCp . ',';
+    }
+//    Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
+    $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
+    $pourLaRegion .= ')';
+//     $tab['afficher'] .= $pourLaRegion;   
+    
+    
+    //Calcul de la chaine de caractere a renvoyer pour le departement
+        $pourLeDepartement = "(";
+    foreach(cpEnFonctionDeDepartement($_POST['departement'], $lesVilles) as $leCp){
+        $pourLeDepartement .= $leCp . ',';
+    }
+//    Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
+    $pourLeDepartement = substr($pourLeDepartement,0, strlen($pourLeDepartement)-1);
+    $pourLeDepartement .= ')';
+//     $tab['afficher'] .= $pourLeDepartement;   
+    
+    
+//        Calcul de la chaine de caractere a renvoyer pour la ville
+    if (!empty($_POST['ville'])){
+        $pourLaVille = cpEnFonctionDeVille('Paris', $lesVilles)[0];
+    }{
+        $pourLaVille = '%';
+    }
+      
+    
+    //Pour le champs prix max
+    
+    if ($_POST['prixMax'] != 'Illimite'){
+        $pourPrixMax = $_POST['prixMax'];
+        $tab['afficher'] .= 'Je passe la' . $pourPrixMax;
+    }else{
+        $pourPrixMax = 1000000;
+    }
+    
+    if ($_POST['trie'] == 'parDateDesc' || empty($_POST['trie'])){
+        $pourTrie = 'a.date_enregistrement DESC';
+    }elseif($_POST['trie'] == 'parDateAsc'){
+        $pourTrie = 'a.date_enregistrement ASC';    
+    }elseif($_POST['trie'] == 'parPrixDesc'){
+        $pourTrie = 'a.prix ASC';        
+    }elseif($_POST['trie'] == 'parPrixAsc'){
+        $pourTrie = 'a.prix DESC';        
+    }elseif($_POST['trie'] == 'parVendeur'){
+          $pourTrie = 'AVG(n.note) DESC';      
+    }else{
+        $pourTrie = 'a.date_enregistrement DESC';
+        
+    }
     $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
@@ -102,36 +165,26 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                             OR m.telephone LIKE :rechercher
                                             OR m.email LIKE :rechercher)
                                             AND a.categorie_id LIKE :categorie
-                                            AND SUBSTRING(a.cp,1,2) IN :region
+                                            AND SUBSTRING(a.cp,1,2) IN " . $pourLaRegion . 
+                                            " AND SUBSTRING(a.cp,1,2) IN " . $pourLeDepartement . 
+                                            " AND a.cp LIKE :ville
+                                            AND a.prix BETWEEN :prixMin AND :prixMax
                                             GROUP BY a.id_annonce
-                                            ORDER BY a.date_enregistrement DESC");
-    $pourLaRecherche = "%" . $_POST['rechercher'] . '%';
-    if ($_POST['categorie'] != 'toutes'){
-        $pourLaCategorie = $_POST['categorie'];
-    }else{
-        $pourLaCategorie = '%';
-    }
+                                            ORDER BY " . $pourTrie);
+
     
-//    $pourLaRegion = "(";
-//    foreach(cpEnFonctionDeRegion('corse', $lesVilles) as $leCp){
-//        $pourLaRegion .= $leCp . ',';
-//        
-//    }
-    //Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
-//    $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
-//    $pourLaRegion .= ')';
-//    $tab['afficher'] .= $pourLaRegion
+
     
     
     
 	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':categorie', $pourLaCategorie, PDO::PARAM_STR);
-	$requeteAffichage->bindParam(':region', "("75")", PDO::PARAM_STR);
+//	$requeteAffichage->bindParam(':region', (75,78), PDO::PARAM_STR);
 //	$requeteAffichage->bindParam(':departement', $pourLaRegion , PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':ville', $_POST['ville'], PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':prixMin', $_POST['prixMin'], PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':prixMax', $_POST['prixMax'], PDO::PARAM_STR);
-//	$requeteAffichage->bindParam(':trie', $_POST['trie'], PDO::PARAM_STR);
+	$requeteAffichage->bindParam(':ville', $pourLaVille, PDO::PARAM_STR);
+	$requeteAffichage->bindParam(':prixMin', $_POST['prixMin'], PDO::PARAM_STR);
+	$requeteAffichage->bindParam(':prixMax', $pourPrixMax, PDO::PARAM_STR);
+//	$requeteAffichage->bindColum
 	$requeteAffichage->execute();
 //    
 //    //Si il existe au moins une requete qui corresponds a la demande, c'est cool et on affiche les annocnes, sinon on envoie un message
@@ -146,8 +199,8 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                 <a href="' . URL . 'annonce?id_annonce=' . $laLigne['id_annonce'] . '"><img src="' . $laLigne['photo'] . '" class="w-100 img-fluid" alt="..."></a>' . 
                             '</div>
                             <div class="col-md-6 texte position-relative p-0 pl-md-0">
-                                <h5 class="mt-0 p-3 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
-                                <p class="p-3 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
+                                <h5 class="mt-0 p-3 pb-1 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
+                                <p class="p-3 pb-1 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
                                 <div class="footerAnnonce row mx-auto w-100 p-3 mb-2">' . 
                                     '<span class="d-inline-block col-md-6 m-0 p-2 text-center text-md-left">' . ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
                                     <span class="d-inline-block m-0 p-2 col-md-6 text-center text-md-right">' . $laLigne['prix'] . ' <i class="fas fa-euro-sign"></i></span>' .                                    

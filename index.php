@@ -145,12 +145,12 @@ include_once('inc/nav.inc.php');
             </div>
             <div class="form-group">
                 <label for="prixMinimum">Prix minimum</label>
-                <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="1000" step="10" value="0" />
+                <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
                 <output class="" id="prixMin" name="resultMin"></output>
             </div>
             <div class="form-group">
                 <label for="prixMaximum">Prix maximum</label>
-                <input type="range" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="1000" step="10" value="1000" />
+                <input type="range" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="5000" step="10" value="5000" />
                 <output id="prixMax" class="" name="resultMax"></output>
             </div>
             <!--           <button type="submit" name="enregistrement">Valider</button>-->

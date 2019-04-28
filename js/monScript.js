@@ -1,24 +1,26 @@
 $('.champVille').hide();
 $(document).ready(function() {
-    
+    $('.blocRequete').fadeIn();
+
     //Affichage Prix minimum
 $(function() {
 	$('.rangeMin').next().text('0'); // Valeur par défaut
 	$('.rangeMin').on('input', function() {
 		var $set = $(this).val();
 		$(this).next().text($set);
+        $('.rangeMax').attr('min', $set); 
 	});
 });
 
 
 //Affichage Prix maximum
 $(function() {
-	$('.rangeMax').next().text('Illimité'); // Valeur par défaut
+	$('.rangeMax').next().text('Illimite'); // Valeur par défaut
 	$('.rangeMax').on('input', function() {
 		var $set = $(this).val();
 		$(this).next().text($set);
-        if ($set == 1000){
-            $(this).next().text('Illimité');
+        if ($set == 5000){
+            $(this).next().text('Illimite');
         }
 	});
 });
@@ -52,6 +54,7 @@ $(function() {
         $.post('traitement.php', param, function(reponse) {
             $('#contenerResultat').html(reponse.afficher);
             $('#contenerReponseRequete').html(reponse.reponseRequete);
+            $('contenerReponseRequete').fadeIn();
             console.log(reponse.afficher);
             }, 'json');
             
@@ -61,23 +64,21 @@ $(function() {
     //Ajax Region, qui change la liste de departement
     $('#region').on('change',function(){
         var choixRegion = $(this).val();
-        console.log(choixRegion);
             var param = {
                 region:choixRegion
             }
 
         $.post('traitementRegion.php', param, function(reponse) {
             $('.selectDepartement').html(reponse.pourLeChampDepartement);   
-            console.log(reponse.pourLeChampDepartement);
             if (reponse.faireDisparaitreVille == "ok"){
                 $('.champVille').hide();
             }; 
             }, 'json')
         
         .fail(function(xhr, status, error){
-            console.log(xhr);
-            console.log(status);
-            console.log(error);
+//            console.log(xhr);
+//            console.log(status);
+//            console.log(error);
         })
     });
     
@@ -91,7 +92,7 @@ $(function() {
         $.post('traitementDepartement.php', param, function(reponse) {
             $('.selectVille').html(reponse.pourLeChampVille);
             if (reponse.faireApparaitreVille == "ok"){
-                $('.champVille').show();
+                $('.champVille').fadeIn();
             }; 
             
             }, 'json');

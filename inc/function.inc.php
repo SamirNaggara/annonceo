@@ -138,7 +138,7 @@ function cpEnFonctionDeDepartement($departement, $lesVilles){
     return $listeVilles;
 }
    
-//J'ai besoin d'un fonction ou je donne une ville, et il me sors le code postal
+//J'ai besoin d'un fonction ou je donne une ville, et il me sors le code postal entier
     
 function cpEnFonctionDeVille($ville, $lesVilles){
     $listeVilles = [];
@@ -146,9 +146,9 @@ function cpEnFonctionDeVille($ville, $lesVilles){
     for ($i=2; $i<count($lesVilles);$i++){
         if ((!empty($lesVilles[$i][4]) && $lesVilles[$i][3] == $ville) || $ville == 'toutes'){
             if (strlen(trim($lesVilles[$i][4])) >= 5){
-                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,2);
+                $cpSansEspace=str_replace(' ','',$lesVilles[$i][4]);
             }else{
-                $cpSansEspace=substr(str_replace(' ','',$lesVilles[$i][4]),0,1);
+                $cpSansEspace=str_replace(' ','',$lesVilles[$i][4]);
             }
             if (!in_array($cpSansEspace, $listeVilles)){
                 array_push($listeVilles,$cpSansEspace);  
