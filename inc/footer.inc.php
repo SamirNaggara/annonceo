@@ -98,7 +98,7 @@ include_once('inc/modal.inc.php');
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
             <span>Copyright © Annonceo 2019 </span>
-            <span><a href="<?php echo URL ?>mentions-legales.php">Mentions légales </a></span>
+            <span class="mx-2"><a href="<?php echo URL ?>mentions-legales.php">Mentions légales </a></span>
             <span><a href="<?php echo URL ?>conditions-generales-de-ventes.php">Conditions générales de ventes </a></span>
         </div>
     </div>

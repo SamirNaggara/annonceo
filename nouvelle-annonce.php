@@ -73,6 +73,7 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	///////////////////////////////////////////
 	// Début vérification des extensions photo
 	///////////////////////////////////////////
+
 	// verification de la photo principal avant enregistrement
 	if(empty($msg2) && !empty($_FILES['photo']['name'])) {
 		
@@ -254,6 +255,9 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°5 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
+	///////////////////////////////////////////
+	// Fin vérification des extensions photo
+	///////////////////////////////////////////
 	// enregistrement annonce en bdd
 	if(!empty($_POST['titre']) && !empty($_POST['descriptionCourte']) && !empty($_POST['descriptionLongue']) && !empty($_POST['prix']) && !empty($_POST['categorie']) && !empty($_POST['pays']) && !empty($_POST['ville']) && !empty($_POST['adresse']) && !empty($_POST['cp']) && isset($_POST['enregistrement']) && empty($msg)) {
 		echo 'je suis dans enregistrement en bdd';
@@ -299,7 +303,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 						$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
 						$id_annonce = $infos_annonce['id_annonce'];
 					}
-				header('location:'. URL . 'annonce.php?id_annonce=' . $id_annonce);
+					$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistrée redirection dans 2sec.</div>';
+				header('Refresh:2; url='. URL . 'annonce.php?id_annonce=' . $id_annonce);
 			}
 		}	
 	}

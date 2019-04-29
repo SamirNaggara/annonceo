@@ -64,6 +64,11 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention ce pseudo est deja utilisé.<br>Veuillez en choisir un autre</div>';
 	}   
     
+    // controle sur le password doit contenir au minimum 8 caractères 1 majuscule 1 chiffre
+	if (!preg_match('#^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#', $mdp)) {
+		$msg .= '<div class="alert alert-danger mt-2" role="alert">Votre mot de passe doit contenir au minimum, 8 caratères, 1 majuscule et 1 chiffre<br> Veuillez recommencer</div>';
+	}
+
     // vérification du format de l'email
 	if(!filter_var($email_profil, FILTER_VALIDATE_EMAIL)) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
