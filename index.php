@@ -60,6 +60,14 @@ include_once('inc/modal.inc.php');
 // Faisons la requete des annonces presente au chargement de la page acceuil
 //****************************************************************************
 
+/* On calcule donc le numéro du premier enregistrement */
+
+/* $page = $_GET['page'];
+$limite = 6;
+$debut = ($page - 1) * $limite;
+LIMIT :limite OFFSET :debut");
+$requeteAffichage->bindValue('limite', $limite, PDO::PARAM_INT);
+$requeteAffichage->bindValue('debut', $debut, PDO::PARAM_INT); */
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
@@ -188,7 +196,7 @@ include_once('inc/nav.inc.php');
             <?php 
             foreach($requeteAffichage as $uneLigne){
                ?>
-            <div class="blocRequete row no-gutters bg-light position-relative mx-auto">
+            <div class="blocRequete row no-gutters bg-light position-relative mx-auto mb-4">
                 <div class="col-md-6 mb-md-0 p-md-4">
                     <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
                         <img src="<?php echo $uneLigne['photo']; ?>" class="w-100 img-fluid" alt="photo annonceo">
@@ -211,7 +219,6 @@ include_once('inc/nav.inc.php');
             <?php
             }
             ?>
-
         </div>
     </div>
 
