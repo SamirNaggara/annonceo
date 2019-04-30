@@ -1,36 +1,38 @@
-$('.champVille').hide();
+
 $(document).ready(function() {
-    $('.blocRequete').fadeIn();
+    
+    
+    $('.champVille').hide();
 
-    //Affichage Prix minimum
-$(function() {
-	$('.rangeMin').next().text('0'); // Valeur par défaut
-	$('.rangeMin').on('input', function() {
-		var $set = $(this).val();
-		$(this).next().text($set);
-        $('.rangeMax').attr('min', $set); 
-	});
-});
+    //Affichage Prix minimum sur le coté de la barre
+    $(function() {
+        $('.rangeMin').next().text('0'); // Valeur par défaut
+        $('.rangeMin').on('input', function() {
+            var $set = $(this).val();
+            $(this).next().text($set);
+            $('.rangeMax').attr('min', $set); 
+        });
+    });
 
 
-//Affichage Prix maximum
-$(function() {
-	$('.rangeMax').next().text('Illimite'); // Valeur par défaut
-	$('.rangeMax').on('input', function() {
-		var $set = $(this).val();
-		$(this).next().text($set);
-        if ($set == 5000){
-            $(this).next().text('Illimite');
-        }
-	});
-});
+    //Affichage Prix maximum sur le coté de la bar
+    $(function() {
+        $('.rangeMax').next().text('Illimite'); // Valeur par défaut
+        $('.rangeMax').on('input', function() {
+            var $set = $(this).val();
+            $(this).next().text($set);
+            if ($set == 5000){
+                $(this).next().text('Illimite');
+            }
+        });
+    });
 
     
     
     //-----------------Ajax page d'acceuil-----------------------------
     
     
-    //Ajax Globale qui renvoie notre requete
+    //Ajax Globale qui renvoie l'affichage des annonces en fonction des parametres de tries
     $('.ajaxGlobale').on('change',function(){
         var inputRechercher = $('#champsRechercher').val()
         var choixCategorie = $('#categorie').val();
@@ -74,11 +76,6 @@ $(function() {
             }; 
             }, 'json')
         
-        .fail(function(xhr, status, error){
-//            console.log(xhr);
-//            console.log(status);
-//            console.log(error);
-        })
     });
     
     //Ajax Departement, qui fait apparaitre la ville et en change la liste

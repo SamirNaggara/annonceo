@@ -22,6 +22,7 @@ if (isset($_POST['prixMin'])){
 if (isset($_POST['prixMax'])){
     $tab['resultat'] .= $_POST['prixMax'];
 }
+
 echo json_encode($tab);
 
 
