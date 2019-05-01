@@ -1,10 +1,10 @@
 <?php
 include_once('inc/init.inc.php');
+include_once('inc/function.inc.php');
 
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
-
 
 //Recuperons les informations de la table annonce de l'id_anonce en question
 
@@ -17,7 +17,6 @@ if($infosAnnonce->rowCount() < 1) {
     header('location:' . URL);
 }else{
     $cetteAnnonce = $infosAnnonce->fetch(PDO::FETCH_ASSOC);
-
 
     //Recuperons les information de la table membre, avec l'id qui est dans la table annonce
 
@@ -52,7 +51,6 @@ if($infosAnnonce->rowCount() < 1) {
 
     $moyenneNote = round($moyenneNote['moyenneNote'],1);
         
-        
     //Recuperons les informations e la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
 
     $infosCommentaires = $pdo->prepare("SELECT
@@ -68,7 +66,6 @@ if($infosAnnonce->rowCount() < 1) {
 
     $lesCommentaires = $infosCommentaires->fetchAll(PDO::FETCH_ASSOC);
 
-
     //Recuperation des 4 dernières annonces de la categories
 
     $infosAutresAnnonces = $pdo->prepare("SELECT * FROM annonce WHERE categorie_id = :categorie_id AND id_annonce != :id_annonce ORDER BY date_enregistrement limit 4");
@@ -78,26 +75,24 @@ if($infosAnnonce->rowCount() < 1) {
 
     $autresAnnonces = $infosAutresAnnonces->fetchAll(PDO::FETCH_ASSOC);   
         
-        
     // Formulaire de l'avis
     $inputNote = "";
     $inputAvis = "";
-    //Enregister l'avis dans la bse de données
+    //Enregister l'avis dans la base de données
     if(isset($_POST['inputNote']) && is_numeric($_POST['inputNote']) && isset($_POST['inputAvis']) && isset($_POST['envoyerAvis'])){
         $inputNote = $_POST['inputNote'];
-        $inputAvis = $_POST['inputAvis'];
+        $inputAvis = checkInput($_POST['inputAvis']);
 
         //Verifions si l'utilisateur à deja laissé un avis
 
         $recuperationAvis = $pdo->prepare("SELECT membre_id1 FROM note WHERE membre_id1 = :membre_id1 AND date_enregistrement > DATE_SUB(NOW(), INTERVAL 1 WEEK)");
         $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
 
-
         $recuperationAvis->execute();
 
         print_r($recuperationAvis);
 
-        //           S'il y a une ligne, cela signifie qu'un resultat à été trouvé, donc il ne faut pas enregistrer le poste, mais envoyer un message d'erreur
+        //S'il y a une ligne, cela signifie qu'un resultat à été trouvé, donc il ne faut pas enregistrer le poste, mais envoyer un message d'erreur
             if ($recuperationAvis->rowCount() > 0){
                 $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous avez deja laissé un avis à cette personne dans la semaine.<br> Veuillez attendre 1 semaine avant de recommencer</div>';
             }else{
@@ -117,25 +112,25 @@ if($infosAnnonce->rowCount() < 1) {
                 }
             }           
         }
-        
+
         // Envoyer le mail
         if(isset($_POST['monMessage']) && isset($_POST['envoyerMessage'])){
-	       $destinataire = $ceVendeur['email'];
-	       $expediteur = $_SESSION['utilisateur']['email'];
-	       $sujet = 'Vous avez reçut un message de ' . $_SESSION['utilisateur']['pseudo'];
-	       $message = $_POST['monMessage'];
+            $destinataire = $ceVendeur['email'];
+            $expediteur = $_SESSION['utilisateur']['email'];
+            $sujet = 'Vous avez reçut un message de ' . $_SESSION['utilisateur']['pseudo'];
+            $message = $_POST['monMessage'];
             
             $expediteur = 'From: ' . $expediteur;
             mail($destinataire, $sujet, $message, $expediteur);
         }
         
-        //Enovoyer un nouveau commentaire
+        //Envoyer un nouveau commentaire
         
         if(isset($_POST['inputCommentaire']) && isset($_POST['envoyerCommentaire'])){
             $enregistrementCommentaire = $pdo->prepare("INSERT INTO commentaire (membre_id, annonce_id, commentaire, date_enregistrement) VALUES (:membre_id, :annonce_id, :commentaire, NOW())");
             $enregistrementCommentaire->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
             $enregistrementCommentaire->bindParam(':annonce_id', $cetteAnnonce['id_annonce'], PDO::PARAM_STR);
-            $enregistrementCommentaire->bindParam(':commentaire', $_POST['inputCommentaire'], PDO::PARAM_STR);
+            $enregistrementCommentaire->bindParam(':commentaire', checkInput($_POST['inputCommentaire']), PDO::PARAM_STR);
             $enregistrementCommentaire->execute();
             
             header('Location: '.$_SERVER['REQUEST_URI']);
@@ -202,8 +197,6 @@ include_once('inc/nav.inc.php');
                             <?php echo $uneNote['avis'] ?>
                         </p>
 
-
-
                         <?php
                         //On ferme l'accolade du foreach des notes
                 }
@@ -211,7 +204,6 @@ include_once('inc/nav.inc.php');
                     </div>
                 </div>
             </div>
-
 
             <div class="conteneurBoutons col-lg-6 row align-items-start m-0 p-3">
                 <a class="contacter btn btn-success col-6 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
@@ -317,7 +309,7 @@ include_once('inc/nav.inc.php');
             ?>
     </div>
 
-   <!--   Partie ou l'on affiche les commentaires-->
+    <!--   Partie ou l'on affiche les commentaires-->
     <div class="commentaires">
         <h2>Commentaires</h2>
         <form id="avis" method="post" action="">
