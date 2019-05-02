@@ -13,9 +13,10 @@ $msg2 = '';
 
 session_start();
 include_once('function.inc.php');
+//define('URL', 'http://localhost/teamRocket/trunk/');
 define('URL', 'http://localhost/teamRocket/trunk/');
 
 //Constante de l'adresse mail à laquelle la page contact renvoie un mail a annonceo
 define('EMAILANNONCEO', 'samirm.nagg@gmail.com');
 
-define('RACINE_SERVEUR', $_SERVER['DOCUMENT_ROOT'] . '/teamRocket/trunk/'); 
+define('RACINE_SERVEUR', $_SERVER['DOCUMENT_ROOT'] . '/teamRocket/trunk//'); 
