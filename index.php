@@ -147,7 +147,7 @@ include_once('inc/nav.inc.php');
             </div>
             <!--           <button type="submit" name="enregistrement">Valider</button>-->
         </form>
-        <h3>Options de trie</h3>
+        <h3>Options de tri</h3>
         <div class="form-check">
             <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parDateDesc" value="parDateDesc" checked>
             <label class="form-check-label" for="parDateDesc">
