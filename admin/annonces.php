@@ -27,7 +27,7 @@ $cp = ''; */
 // DEBUT UPDATE D'ANNONCE
 //***************************
 
-if (isset($_POST['titre']) && isset($_POST['pseudo']) && isset($_POST['date']) && isset($_POST['description_courte']) && isset($_POST['description_longue']) && isset($_POST['prix']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
+if (isset($_POST['titre']) && isset($_POST['id_annonce']) && isset($_POST['photo_id']) && isset($_POST['pseudo']) && isset($_POST['date']) && isset($_POST['description_courte']) && isset($_POST['description_longue']) && isset($_POST['prix']) && isset($_POST['pays']) && isset($_POST['ville']) && isset($_POST['adresse']) && isset($_POST['cp'])) {
 
 
     // dans le cas d'un modif on conserve l'ancienne photo_principal avant de tester si une nouvelle photo à été chargé dans le formulaire
@@ -223,14 +223,19 @@ if (isset($_POST['titre']) && isset($_POST['pseudo']) && isset($_POST['date']) &
             $msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo n°5 n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
         }
     }
+    if(empty($msg)) {
 
+        if(!empty($_POST['id_annonce'])) {
+
+        
     // modification annonce en bdd
-        $enregistrement_photo = $pdo->prepare("UPDATE photo SET photo1 = :photo1, photo2 = :photo2, photo3 = :photo3, photo4 = :photo4, photo5 = :photo5");
+        $enregistrement_photo = $pdo->prepare("UPDATE photo SET photo1 = :photo1, photo2 = :photo2, photo3 = :photo3, photo4 = :photo4, photo5 = :photo5 WHERE id_photo = :photo_id");
         $enregistrement_photo->bindParam(':photo1', $photo_bdd1, PDO::PARAM_STR);
         $enregistrement_photo->bindParam(':photo2', $photo_bdd2, PDO::PARAM_STR);
         $enregistrement_photo->bindParam(':photo3', $photo_bdd3, PDO::PARAM_STR);
         $enregistrement_photo->bindParam(':photo4', $photo_bdd4, PDO::PARAM_STR);
         $enregistrement_photo->bindParam(':photo5', $photo_bdd5, PDO::PARAM_STR);
+        $enregistrement_photo->bindParam(':photo_id', $_POST['photo_id'], PDO::PARAM_STR);
         $enregistrement_photo ->execute();
 
         $photo_id = $pdo->lastInsertId();
@@ -250,7 +255,9 @@ if (isset($_POST['titre']) && isset($_POST['pseudo']) && isset($_POST['date']) &
         $enregistrement->execute();
     //message indiquant que les informations ont été modifiées
     $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
-    header('Refresh:2; url='. URL . 'admin/annonces.php');
+    //header('Refresh:2; url='. URL . 'admin/annonces.php');
+        }
+    }
 }
 //***************************
 // FIN UPDATE D'ANNONCE
@@ -281,6 +288,7 @@ if(isset($_GET['modifier'])) {
 
         $laRecupAnnonces = $recupAnnonces->fetch(PDO::FETCH_ASSOC);
         $id_annonce = checkInput($laRecupAnnonces['id_annonce']);
+        $id_photo = $laRecupAnnonces['photo_id'];
         $titre = checkInput($laRecupAnnonces['titre']);
         $pseudo = checkInput($laRecupAnnonces['pseudo']);
         $date = checkInput($laRecupAnnonces['date_enregistrement']);
@@ -346,7 +354,10 @@ if(isset($_GET['modifier'])) {
             <form method="post" action="" enctype="multipart/form-data" class="d-flex" >
                 <div class="section1 col-4 offset-1">
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
+                        <input type="text" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="id_annonce" name="photo_id" value="<?php echo $id_photo; ?>">
                     </div>
                     <div class="form-group">
                         <label for="titre">Titre de l'annonce :</label>

@@ -261,11 +261,11 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// enregistrement annonce en bdd
 	if(!empty($_POST['titre']) && !empty($_POST['descriptionCourte']) && !empty($_POST['descriptionLongue']) && !empty($_POST['prix']) && !empty($_POST['categorie']) && !empty($_POST['pays']) && !empty($_POST['ville']) && !empty($_POST['adresse']) && !empty($_POST['cp']) && isset($_POST['enregistrement']) && empty($msg)) {
 		echo 'je suis dans enregistrement en bdd';
-		if(!empty($id_annonce)) {
-			// modification de l'annonce
-			$enregistrement_annonce = $pdo->prepare("UPDATE annonce SET id_annonce = :id_annonce, categorie = :categorie, titre = :titre, descriptionCourte = :descriptionCourte, descriptionLongue = :descriptionLongue, prix = :prix, pays = :pays, ville = :ville, photo = :photo WHERE id_annonce = :id_annonce");
-			$enregistrement_annonce->bindParam(':id_annonce', $id_annonce, PDO::PARAM_STR);
-		} else {
+		// if(!empty($id_annonce)) {
+		// 	// modification de l'annonce
+		// 	$enregistrement_annonce = $pdo->prepare("UPDATE annonce SET id_annonce = :id_annonce, categorie = :categorie, titre = :titre, descriptionCourte = :descriptionCourte, descriptionLongue = :descriptionLongue, prix = :prix, pays = :pays, ville = :ville, photo = :photo WHERE id_annonce = :id_annonce");
+		// 	$enregistrement_annonce->bindParam(':id_annonce', $id_annonce, PDO::PARAM_STR);
+		// } else {
 			// enregistrement des 5 photos dans la table photo
 			$enregistrement_photo = $pdo->prepare("INSERT INTO photo (photo1, photo2, photo3, photo4, photo5) VALUES (:photo1, :photo2, :photo3, :photo4, :photo5)");
 			$enregistrement_photo->bindParam(':photo1', $photo_bdd1, PDO::PARAM_STR);
