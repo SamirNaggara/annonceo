@@ -65,6 +65,13 @@ function checkInput ($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+function isEmail($data) {
+    return filter_var($data, FILTER_VALIDATE_EMAIL);
+}
+// regex contenant les caractères autorisé dans nos champs
+function nickName($data) {
+    return preg_match('#^[a-zA-Z0-9._-]+$#', $data);
+}
 
 
 function departements($region, $lesVilles){

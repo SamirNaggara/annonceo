@@ -1,19 +1,12 @@
-
-/** contact.php **/
-#contactForm {
-    margin-top: 150px;
-}
-
 /** footer.inc.php **/
 .footerMembre {
     width: 100% !important;
     position: inherit !important;
+    bottom: 0;
 }
 
 /** admin/footer.in.php **/
 .adminFooter {
-    position: inherit !important;
-    width: 100% !important;
     display: none !important;
 }
 
@@ -21,26 +14,24 @@
 /* conteneur principal englobant les annonces*/
 .annonce-index,
 .container {
-    margin-top: 150px;
+    margin-top: 100px;
     margin-bottom: 150px;
 }
 
 /** titres des pages affiche les message d'erreur */
 .starter-template {
     text-align: center;
+
+    h1 {
+        text-decoration: underline;
+    }
 }
-
-
-
-
 
 //--------------page annonce---------------
 
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
     font-size: 10px;
 }
-
-
 
 .monAnnonce .conteneurCarouselTexte .carousel img {
     height: 500px !important;
@@ -58,7 +49,6 @@
 .monAnnonce .conteneurCarouselTexte .description {
     position: relative;
 
-
     .footerDescription {
         @media screen AND (min-width:990px){
             bottom: 0;
@@ -71,13 +61,24 @@
     font-size:10px;
 }
 
-
 .monAnnonce header .titreAnnonce .conteneurConten{
     max-width:400px;
 }
 
+//--------------depot annonce---------------------
+
+#newAnnonce {
+    margin-top: 30px;
+
+    textarea {
+        border: none;
+        border: 1px solid rgba(128, 128, 128, 0.404);
+        border-radius: 5px;
+    }
+}
+
 //--------------page admin/annonces---------------
- 
+
 .tableAnnonces {
 
     .row {
@@ -94,15 +95,11 @@
         bottom:0px;
     }
     
-    
 }
 
 #contenerReponseRequete>.blocRequete>.texte>p{
-//    position:relative;
-//    top:-18px;
     @media screen AND (max-width:968px){
         overflow: hidden;
-//        height:140px;
     }
 }
 
@@ -112,4 +109,24 @@
     min-height:240px;
 }
 
-
+#contactForm {
+    margin-top: 50px;
+    margin-bottom: 22px;
+    label {
+        font-weight: bold;
+    }
+    .blue {
+        color: #0069d6;
+    }
+    .comment {
+        font-style: italic;
+        font-size: 16px;
+        color: #d82c2e;
+    }
+    .thank-you {
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 22px;
+    }
+}

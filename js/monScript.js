@@ -118,3 +118,34 @@ $(document).ready(function() {
     });
 
 });
+   //   ----------------------------------------------CONTACT-------------------------------------------------------------------
+
+        // Ajax du formulaire de contact
+        $('#contactForm').submit(function(e) {
+            e.preventDefault();
+            $('.comment').empty();
+            var postdata = $('#contactForm').serialize();
+            //console.log(result);
+            $.ajax({
+                type: 'POST',
+                url: 'ajax-contact.php',
+                data: postdata,
+                dataType: 'json',
+                success: function(result) {
+                    console.log(postdata);
+                    if(result.isSuccess) {
+                        console.log('test');
+                        $('#contactForm').append("<p class='thank-you'>Votre message a bien été envoyé. Merci de m'avoir contacté :)</p>");
+                        $('#contactForm')[0].reset();
+                        console.log(result);
+                    } else {
+                        $('#contactNom + .comment').html(result.contactNomError);
+                        $('#contactPrenom + .comment').html(result.contactPrenomError);
+                        $('#contactObjet + .comment').html(result.contactObjetError);
+                        $('#contactEmail + .comment').html(result.contactEmailError);
+                        $('#contactMessage + .comment').html(result.contactMessageError);
+                        console.log('result');
+                    }
+                }
+            });
+        });

@@ -17,11 +17,6 @@ $( function() {
         allText = txtFile.responseText;
         allTextLines = allText.split(/\r\n|\n/);
     };
-    
-
-    console.log(allTextLines);
-    console.log(allText);
-   console.log(txtFile);
 //    };      
 
 } );
