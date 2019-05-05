@@ -7,25 +7,24 @@ if(!user_is_connected()) {
     exit();
 }
 // déclaration de variable pour afficher les valeurs dans les values de nos champs egales aux sessions 
-
-$id_membre_profil = $_SESSION['utilisateur']['id_membre'];
-$pseudo_profil = $_SESSION['utilisateur']['pseudo'];
-$nom_profil = $_SESSION['utilisateur']['nom'];
-$prenom_profil = $_SESSION['utilisateur']['prenom'];
+$id_membre_profil = is_numeric($_SESSION['utilisateur']['id_membre']);
+$pseudo_profil = checkInput($_SESSION['utilisateur']['pseudo']);
+$nom_profil = checkInput($_SESSION['utilisateur']['nom']);
+$prenom_profil = checkInput($_SESSION['utilisateur']['prenom']);
 $telephone_profil = $_SESSION['utilisateur']['telephone'];
 $email_profil = $_SESSION['utilisateur']['email'];
-$civilite_profil = $_SESSION['utilisateur']['civilite'];
-$statut_profil = $_SESSION['utilisateur']['statut'];
-$date_enregistrement_profil = $_SESSION['utilisateur']['date_enregistrement'];  
+$civilite_profil = checkInput($_SESSION['utilisateur']['civilite']);
+$statut_profil = is_numeric($_SESSION['utilisateur']['statut']);
+$date_enregistrement_profil = checkInput($_SESSION['utilisateur']['date_enregistrement']);  
 
 if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST['prenom_profil']) && isset($_POST['telephone_profil']) && isset($_POST['email_profil']) && isset($_POST['civilite_profil']) && isset($_POST['validerMembre'])) {
+
     // on enlève les espace en début et fin de chaine avec trim()
 	foreach($_POST AS $indice => $valeur) {
 		$_POST[$indice] = trim($_POST[$indice]);
 	} 
     
     // controle sur la taille du pseudo entre 4 et 14 caractères inclus
-
 	if(iconv_strlen($pseudo_profil) < 4 || iconv_strlen($pseudo_profil) > 14) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention, Le pseudo doit avoir entre 4 et 14 caractères inclus.<br>Veuillez recommencer</div>';
 	}    
@@ -70,7 +69,7 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 	}
 
     // vérification du format de l'email
-	if(!filter_var($email_profil, FILTER_VALIDATE_EMAIL)) {
+	if(!isEmail($email_profil)) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
 	}
     
@@ -99,20 +98,12 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
         $_SESSION['utilisateur']['email'] = $email_profil;
         $_SESSION['utilisateur']['civilite'] = $civilite_profil;
         
-        //message que les informations ont été modifiées
-
+        //message pour dire que les informations ont été modifiées
         $msg .= '<div class="alert alert-success mt-2" role="alert">Une ou plusieurs de vos informations personnelles ont correctement été modifiée</div>';
-    
-
     }
 }
 
-
 //Partie sur le changement de mot de passe
-
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
 
 $actuelMdp = "";
 $nouveauMdp= "";;
@@ -122,12 +113,10 @@ if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset
     // L'enregistrement ne s'effectuera que si les deux mots de passe correspondent, sinon, l'on renvoie un message d'erreur que les deux ne correspondent pas
     if ($_POST['inputNouveauMdp1'] == $_POST['inputNouveauMdp2']){
         
-        $nouveauMdp = $_POST['inputNouveauMdp1'];
-        $actuelMdp = $_POST['inputActuelMdp'];
-        //L'on verifie que le mot de passe actuel est le bon
-        
-        
-        
+        $nouveauMdp = checkInput($_POST['inputNouveauMdp1']);
+        $actuelMdp = checkInput($_POST['inputActuelMdp']);
+
+        //on verifie que le mot de passe actuel est le bon
         $infoMdp = $pdo-> prepare("SELECT mdp FROM membre WHERE id_membre = :id_membre");
         $infoMdp-> bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
         $infoMdp -> execute();
@@ -141,46 +130,32 @@ if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset
             $mdp = password_hash($nouveauMdp, PASSWORD_DEFAULT);
             
             //Puis on update le nouveau mdp
-            
             $updateMdp = $pdo-> prepare("UPDATE membre SET mdp = :mdp WHERE id_membre = :id_membre");
             $updateMdp-> bindParam(':mdp', $mdp, PDO::PARAM_STR);
             $updateMdp-> bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
             $updateMdp -> execute();
-            
-            
-            
             $msg .= '<div class="alert alert-success mt-2" role="alert">Le nouveau a été attribué avec succes.</div>';
         }else{
-          $msg .= '<div class="alert alert-danger mt-2" role="alert">Le mot de passe actuel n\'est pas le bon.<br>Veuillez recommencer</div>';  
+            $msg .= '<div class="alert alert-danger mt-2" role="alert">Le mot de passe actuel n\'est pas le bon.<br>Veuillez recommencer</div>';  
         }
-        
-        
     }else{
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Les deux mots de passes ne correspondent pas.<br>Veuillez recommencer</div>';
-
     }
 }
-
 
 //Recuperons les information de la table note, avec le note_id2 qui est egale a  membre_id de la table annonce
         
 $infosNotes = $pdo->prepare("SELECT * FROM note WHERE membre_id1 = :id_membre OR membre_id2 = :id_membre");
 $infosNotes->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 $infosNotes->execute();
-
 $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
-
 
 //Requette qui recupere la moyenne des notes
 $moyenneNote = $pdo->prepare("SELECT AVG(note) AS moyenneNote FROM note WHERE membre_id2 = :id_membre");
 $moyenneNote->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 $moyenneNote->execute();
-
 $moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);  
-
 $moyenneNote = round($moyenneNote['moyenneNote'],1);
-
-
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
@@ -200,70 +175,68 @@ include_once('inc/nav.inc.php');
 <!--Formulaires des informations personnels-->
 
 <?php
-
 // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
 if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !isset($_GET['action'])){    
-    
 ?>
-<div class="container">
-<div class="col-6 mx-auto">
-    <form action="" method="post">
-        <div class="form-group">
-            <label for="id_membre_profil">Identifiant</label>
-            <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
-        </div>
-        <div class="form-group">
-            <label for="pseudo_profil">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
-        </div>
-        <div class="form-group">
-            <label for="nom_profil">Nom</label>
-            <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
-        </div>
-        <div class="form-group">
-            <label for="prenom_profil">Prenom</label>
-            <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
-        </div>
-        <div class="form-group">
-            <label for="telephone_profil">Telephone</label>
-            <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
-        </div>
-        <div class="form-group">
-            <label for="email_profil">Email</label>
-            <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
-        </div>
-        <div class="form-group">
-            <label for="civilite_profil">Sexe</label>
-            <select class="form-control" id="civilite_profil" name="civilite_profil">
-                <option value="m">masculin</option>
-                <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="date_enregistrement_profil">Date d'inscription</label>
-            <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
-        </div>
-        <button type="submit" class="btn btn-primary" name="validerMembre">Valider</button>
-    </form>
-    
-<!--    /Form pour le mot de passe-->
-    <form action="" method="post">
-        <div class="form-group">
-            <label for="id_membre_profil">Mot de passe actuel</label>
-            <input type="text" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
-        </div>
-        <div class="form-group">
-            <label for="pseudo_profil">Nouveau mot de passe</label>
-            <input type="text" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
-        </div>
-        <div class="form-group">
-            <label for="nom_profil">Nouveau mot de passe (Verification)</label>
-            <input type="text" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
-        </div>
-        <button type="submit" class="btn btn-primary" name="enregistrementMdp">Enregistrer nouveau mot de passe</button>
 
-    </form>
-</div>
+<div class="container">
+    <div class="col-6 mx-auto">
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="id_membre_profil">Identifiant</label>
+                <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
+            </div>
+            <div class="form-group">
+                <label for="pseudo_profil">Pseudo</label>
+                <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+            </div>
+            <div class="form-group">
+                <label for="nom_profil">Nom</label>
+                <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
+            </div>
+            <div class="form-group">
+                <label for="prenom_profil">Prenom</label>
+                <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
+            </div>
+            <div class="form-group">
+                <label for="telephone_profil">Telephone</label>
+                <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
+            </div>
+            <div class="form-group">
+                <label for="email_profil">Email</label>
+                <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
+            </div>
+            <div class="form-group">
+                <label for="civilite_profil">Sexe</label>
+                <select class="form-control" id="civilite_profil" name="civilite_profil">
+                    <option value="m">masculin</option>
+                    <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date_enregistrement_profil">Date d'inscription</label>
+                <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
+            </div>
+            <button type="submit" class="btn btn-primary" name="validerMembre">Valider</button>
+        </form>
+        
+        <!--Form pour le mot de passe-->
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="id_membre_profil">Mot de passe actuel</label>
+                <input type="text" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
+            </div>
+            <div class="form-group">
+                <label for="pseudo_profil">Nouveau mot de passe</label>
+                <input type="text" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
+            </div>
+            <div class="form-group">
+                <label for="nom_profil">Nouveau mot de passe (Verification)</label>
+                <input type="text" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
+            </div>
+            <button type="submit" class="btn btn-primary" name="enregistrementMdp">Enregistrer nouveau mot de passe</button>
+        </form>
+    </div>
 </div>
 <?php
     //Fermeture du if de l'onglet informations personnels
@@ -285,95 +258,72 @@ if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){
             <?php
         $premiereLigne = true;
         foreach($lesNotes as $uneNote){
-               
+        
         //On affiche uniquement les commentaire que la personne à reçut
-    if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
+            if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
             //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
                     
-            if ($premiereLigne){
-                $premiereLigne = false;
-            }else{
+                if ($premiereLigne){
+                    $premiereLigne = false;
+                }else{
                 echo '<hr>';
             }
             ?>
-
             <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
-                    
-
-                    
                     
             $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
             $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
             $infosMembreAvis->execute();
-
             $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
                     
             echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
-
             <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
             <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
-
             <?php } ?>
 
-
-
-            <?php
-                //On ferme l'accolade du foreach des notes
-            }
-            ?>
+        <?php
+        //On ferme l'accolade du foreach des notes
+        }
+        ?>
     </div>
 
     <div class="starter-template">
         <h2>Les avis donnés</h2>
     </div>
-
     <div class="card card-body listingNote">
             <?php
         $premiereLigne = true;
         foreach($lesNotes as $uneNote){
-               
         //On affiche uniquement les commentaire que la personne à reçut
-    if ($uneNote["membre_id1"] == $_SESSION['utilisateur']['id_membre']){
+            if ($uneNote["membre_id1"] == $_SESSION['utilisateur']['id_membre']){
             //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
-                    
+
             if ($premiereLigne){
                 $premiereLigne = false;
             }else{
                 echo '<hr>';
             }
             ?>
-
             <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
-                    
-
-                    
                     
             $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
             $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
             $infosMembreAvis->execute();
-
             $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
-                    
             echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
-
             <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
             <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
 
             <?php } ?>
 
-
-
-            <?php
-                //On ferme l'accolade du foreach des notes
-            }
-            ?>
+        <?php
+        //On ferme l'accolade du foreach des notes
+        }
+        ?>
     </div>
-            <?php
+    <?php
     }
     ?>
 
-
-
 <?php
 include_once('inc/footer.inc.php');
-?>

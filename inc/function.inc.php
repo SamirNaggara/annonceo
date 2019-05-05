@@ -1,7 +1,7 @@
 <?php
 // Renvoie true si un utilisateur est connecter, false sion
 function user_is_connected() {
-	if(isset($_SESSION['utilisateur'])) {
+	if(isset($_SESSION['utilisateur']['statut'])) {
 		return true;
 	}
 	return false;
@@ -72,7 +72,6 @@ function isEmail($data) {
 function nickName($data) {
     return preg_match('#^[a-zA-Z0-9._-]+$#', $data);
 }
-
 
 function departements($region, $lesVilles){
 //    Renvoie la liste des depatements de la region rentré en premiere argument, dans la liste $lesVilles rentré en deuxieme arguments

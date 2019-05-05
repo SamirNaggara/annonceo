@@ -24,6 +24,7 @@
 
     h1 {
         text-decoration: underline;
+        font-size: 30px;
     }
 }
 
@@ -128,5 +129,69 @@
         margin-top: 15px;
         font-weight: bold;
         font-size: 22px;
+    }
+}
+
+//------------mention légales-------------------
+
+#mentions_conteneur, #cgv_conteneur {
+
+    h3 {
+        background-color: #343a40;
+        color: white;
+        height: 30px;
+        line-height: 30px;
+        font-size: 18px;
+        padding-left: 5px;
+    }
+    p {
+        font-size: 14px;
+    }
+}
+#cgv_conteneur {
+    margin-top: 50px;
+
+    .info {
+        text-align: center;
+    }
+}
+
+//--------------reset password-------------------
+
+.login-form {
+    width: 25%;
+	margin: 70px auto;
+	background: white;
+	padding: 10px;
+    border-radius: 3px;
+    
+    .form-title {
+        text-align: center;
+    }
+    input {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 8px;
+    }
+    .form-group {
+        margin: 10px auto;
+    }
+    button {
+        width: 100%;
+        border: none;
+        color: white;
+        background: #3b5998;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .msg {
+        margin: 5px auto;
+        border-radius: 5px;
+        border: 1px solid red;
+        background: pink;
+        text-align: left;
+        color: brown;
+        padding: 10px;
     }
 }

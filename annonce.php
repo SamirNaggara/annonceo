@@ -1,7 +1,6 @@
 <?php
 include_once('inc/init.inc.php');
 include_once('inc/function.inc.php');
-
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
@@ -12,47 +11,38 @@ $infosAnnonce = $pdo->prepare("SELECT * FROM annonce WHERE id_annonce = :id_anno
 $infosAnnonce->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
 $infosAnnonce->execute();
     
-//Si la base de données ne trrouve pas de correspondance, on renvoie vers la page d'acceuil, sinon, on recupere les infos dans
+//Si la base de données ne trouve pas de correspondance, on renvoie vers la page d'acceuil, sinon, on recupere les infos
 if($infosAnnonce->rowCount() < 1) {
     header('location:' . URL);
 }else{
     $cetteAnnonce = $infosAnnonce->fetch(PDO::FETCH_ASSOC);
 
     //Recuperons les information de la table membre, avec l'id qui est dans la table annonce
-
     $infosVendeur = $pdo->prepare("SELECT * FROM membre WHERE id_membre = :id_membre");
     $infosVendeur->bindParam(':id_membre', $cetteAnnonce["membre_id"], PDO::PARAM_STR);
     $infosVendeur->execute();
-
     $ceVendeur = $infosVendeur->fetch(PDO::FETCH_ASSOC);
 
     //Recuperons les information de la table photo, avec le id_photo qui est dans la table annonce
-
     $infosPhotos = $pdo->prepare("SELECT * FROM photo WHERE id_photo = :id_photo");
     $infosPhotos->bindParam(':id_photo', $cetteAnnonce["photo_id"], PDO::PARAM_STR);
     $infosPhotos->execute();
-
     $lesPhotos = $infosPhotos->fetch(PDO::FETCH_ASSOC);
 
     //Recuperons les information de la table note, avec le note_id2 qui est egale a  membre_id de la table annonce
-
     $infosNotes = $pdo->prepare("SELECT * FROM note WHERE membre_id2 = :id_membre");
     $infosNotes->bindParam(':id_membre', $cetteAnnonce["membre_id"], PDO::PARAM_STR);
     $infosNotes->execute();
-
     $lesNotes = $infosNotes->fetchAll(PDO::FETCH_ASSOC);
 
     //Requette qui recupere la moyenne des notes
     $moyenneNote = $pdo->prepare("SELECT AVG(note) AS moyenneNote FROM note WHERE membre_id2 = :id_membre");
     $moyenneNote->bindParam(':id_membre', $cetteAnnonce["membre_id"], PDO::PARAM_STR);
     $moyenneNote->execute();
-
     $moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);  
-
     $moyenneNote = round($moyenneNote['moyenneNote'],1);
         
-    //Recuperons les informations e la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
-
+    //Recuperons les informations de la table commentaire, avec l'annonce id qui est egale a l'id de l'annonce
     $infosCommentaires = $pdo->prepare("SELECT
                                             c.commentaire,
                                             c.date_enregistrement,
@@ -63,16 +53,13 @@ if($infosAnnonce->rowCount() < 1) {
                                             ORDER BY c.date_enregistrement DESC");
     $infosCommentaires->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
     $infosCommentaires->execute();
-
     $lesCommentaires = $infosCommentaires->fetchAll(PDO::FETCH_ASSOC);
 
     //Recuperation des 4 dernières annonces de la categories
-
     $infosAutresAnnonces = $pdo->prepare("SELECT * FROM annonce WHERE categorie_id = :categorie_id AND id_annonce != :id_annonce ORDER BY date_enregistrement limit 4");
     $infosAutresAnnonces->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
     $infosAutresAnnonces->bindParam(':categorie_id', $cetteAnnonce['categorie_id'], PDO::PARAM_STR);
     $infosAutresAnnonces->execute();
-
     $autresAnnonces = $infosAutresAnnonces->fetchAll(PDO::FETCH_ASSOC);   
         
     // Formulaire de l'avis
@@ -87,7 +74,6 @@ if($infosAnnonce->rowCount() < 1) {
 
         $recuperationAvis = $pdo->prepare("SELECT membre_id1 FROM note WHERE membre_id1 = :membre_id1 AND date_enregistrement > DATE_SUB(NOW(), INTERVAL 1 WEEK)");
         $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
-
         $recuperationAvis->execute();
 
         print_r($recuperationAvis);
@@ -105,7 +91,6 @@ if($infosAnnonce->rowCount() < 1) {
                     $enregistrementAvis->bindParam(':membre_id2', $ceVendeur['id_membre'], PDO::PARAM_STR);
                     $enregistrementAvis->bindParam(':note', $inputNote, PDO::PARAM_STR);
                     $enregistrementAvis->bindParam(':avis', $inputAvis, PDO::PARAM_STR);
-
                     $enregistrementAvis->execute();
                     //On enregistrer les avis, puis on actualise la page
                     header('Location: '.$_SERVER['REQUEST_URI']);
@@ -119,20 +104,17 @@ if($infosAnnonce->rowCount() < 1) {
             $expediteur = $_SESSION['utilisateur']['email'];
             $sujet = 'Vous avez reçut un message de ' . $_SESSION['utilisateur']['pseudo'];
             $message = $_POST['monMessage'];
-            
             $expediteur = 'From: ' . $expediteur;
             mail($destinataire, $sujet, $message, $expediteur);
         }
         
         //Envoyer un nouveau commentaire
-        
         if(isset($_POST['inputCommentaire']) && isset($_POST['envoyerCommentaire'])){
             $enregistrementCommentaire = $pdo->prepare("INSERT INTO commentaire (membre_id, annonce_id, commentaire, date_enregistrement) VALUES (:membre_id, :annonce_id, :commentaire, NOW())");
             $enregistrementCommentaire->bindParam(':membre_id', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
             $enregistrementCommentaire->bindParam(':annonce_id', $cetteAnnonce['id_annonce'], PDO::PARAM_STR);
             $enregistrementCommentaire->bindParam(':commentaire', checkInput($_POST['inputCommentaire']), PDO::PARAM_STR);
             $enregistrementCommentaire->execute();
-            
             header('Location: '.$_SERVER['REQUEST_URI']);
         }      
     }
@@ -147,7 +129,7 @@ include_once('inc/nav.inc.php');
 ?>
 
 <section class="monAnnonce">
-    <!--        Ecris les messages d'erreurs-->
+    <!--Ecris les messages d'erreurs-->
     <p class="lead">
         <?php echo $msg;?>
     </p>
@@ -167,54 +149,56 @@ include_once('inc/nav.inc.php');
                 <div class="collapse" id="collapseVoirLesAvis">
                     <div class="card card-body listingNote">
                         <?php
-                $premiereLigne = true;
-                foreach($lesNotes as $uneNote){
-                    
-                    //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
-                    
-                    if ($premiereLigne){
-                        $premiereLigne = false;
-                    }else{
-                        echo '<hr>';
-                    }
-                    ?>
-                    <p class="nomEtNote m-0"><i class="far fa-user"></i>
-                            <?php 
-                    
-                    //On recupere les infos pour ecrire les notes et les avis du vendeur
-                    $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
-                    $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
-                    $infosMembreAvis->execute();
-
-                    $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
-                    
-                    echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote">
-                                <?php echo $uneNote['note'] ?>/5</span></p>
-
-                        <span class="dateNote text-secondary">
+                        $premiereLigne = true;
+                        foreach($lesNotes as $uneNote){
+                        
+                        //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                            if ($premiereLigne){
+                                $premiereLigne = false;
+                            }else{
+                                echo '<hr>';
+                            }
+                        ?>
+                            <p class="nomEtNote m-0"><i class="far fa-user"></i>
+                        <?php 
+                        
+                        //On recupere les infos pour ecrire les notes et les avis du vendeur
+                        $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+                        $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+                        $infosMembreAvis->execute();
+                        $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote">
+                            <?php echo $uneNote['note'] ?>/5</span></p>
+                            <span class="dateNote text-secondary">
                             <?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
-                        <p class="avis p-3">
+                            <p class="avis p-3">
                             <?php echo $uneNote['avis'] ?>
-                        </p>
-
+                            </p>
                         <?php
                         //On ferme l'accolade du foreach des notes
-                }
-                ?>
+                        }
+                        ?>
                     </div>
+                    <!-----Fin listingNote------------>
                 </div>
+                <!-----Fin collapseVoirLesAvis--------->
             </div>
-
+            <!------Fin conteneurTitreNote------------>
+            <?php
+            if (!user_is_connected()) { 
+            } else {?>
             <div class="conteneurBoutons col-lg-6 row align-items-start m-0 p-3">
                 <a class="contacter btn btn-success col-6 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
                     <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-
                 <a class="laisserAvis btn btn-info col-6 mx-auto" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
             </div>
+            <?php } ?>
+            <!-----Fin conteneurBoutons-------->
         </div>
+        <!-------Fin titreAnnonce---------->
     </header>
-
-<!--   Carousel et texte de l'annonce-->
+    <!-------Fin container-fluid---------->
+    <!--Carousel et texte de l'annonce-->
     <div class="conteneurCarouselTexte row mt-5 ">
         <section class="carousel col-lg-6">
             <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
@@ -259,7 +243,7 @@ include_once('inc/nav.inc.php');
                     <span class="sr-only">Next</span>
                 </a>
         </section>
-
+        <!-----Fin carousel-------------->
         <div class="description col-lg-6 p-3">
             <h3 class="p-3 text-center text-lg-left">Description</h3>
             <div class="conteneurTexte overflow-scroll p-3">
@@ -272,14 +256,11 @@ include_once('inc/nav.inc.php');
                         }else{
                             echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
                         }
-                            
                     }else{
                         echo ucfirst($cetteAnnonce['description_longue']);
                     }
-    
                     ?>
                 </p>
-
             </div>
             <div class="footerDescription position-absolute row p-3 w-100">
                 <div class="prix col-lg-4 w-100 text-center text-lg-left"><i class="fas fa-euro-sign"></i>
@@ -289,9 +270,10 @@ include_once('inc/nav.inc.php');
                 </div>
             </div>
         </div>
+        <!------Fin description------------->
     </div>
-
-<!--   Partie ou l'on affiche les autres annonces-->
+    <!------ Fin conteneurCarouselTexte-------->
+    <!--Partie ou l'on affiche les autres annonces-->
     <div class="autresAnnonces row mt-5">
         <h3 class="bold col-12 text-lg-left text-center">Autres annonces</h3>
         <?php 
@@ -308,8 +290,11 @@ include_once('inc/nav.inc.php');
         }
             ?>
     </div>
-
+    <!------Fin autresAnnonces-------------------->
     <!--   Partie ou l'on affiche les commentaires-->
+    <?php
+    if (!user_is_connected()) { 
+    } else {?>
     <div class="commentaires">
         <h2>Commentaires</h2>
         <form id="avis" method="post" action="">
@@ -340,7 +325,8 @@ include_once('inc/nav.inc.php');
                 ?>
         </div>
     </div>
-
+    <?php } ?>
+    <!------Fin commentaires----------->
     <!--Formulaire pour laisser un avis-->
     <div class="row laisserAvis">
         <form id="avis" method="post" action="">
@@ -356,9 +342,7 @@ include_once('inc/nav.inc.php');
                             </button>
                         </div>
                         <div class="modal-body">
-
                             <form action="post">
-
                                 <div class="form-group">
                                     <label for="inputNote">Notes: </label>
                                     <select class="form-control" id="inputNote" name="inputNote">
@@ -370,12 +354,9 @@ include_once('inc/nav.inc.php');
                                         <option value="5" selected>5/5</option>
                                     </select>
                                 </div>
-
                                 <div class="form-group">
                                     <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
                                 </div>
-
-
                                 <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerAvis" value="Envoyer">
                             </form>
                         </div>
@@ -384,8 +365,7 @@ include_once('inc/nav.inc.php');
             </div>
         </form>
     </div>
-
-
+    <!--------Fin laisser un avis-------------->
     <div class="row modalContacter">
         <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
             <div class="modal-dialog" role="document">
@@ -399,26 +379,19 @@ include_once('inc/nav.inc.php');
                         </button>
                     </div>
                     <div class="modal-body">
-
                         <form action="post">
                             <div class="form-group">
                                 <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
                             </div>
-
                             <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
                                 Ou obtenir le numero de téléphone
-
                             </a>
-
                             <div class="collapse" id="collapseNumeroDeTelephone">
                                 <div class="card card-body listingNote">
                                     <p class="nomEtNote m-0"><i class="fas fa-phone"></i>
                                         <?php echo $ceVendeur['telephone'] ?>
                                 </div>
                             </div>
-
-
-
                             <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerMessage" value="Envoyer">
                         </form>
                     </div>
@@ -426,9 +399,9 @@ include_once('inc/nav.inc.php');
             </div>
         </div>
     </div>
-
+    <!-------Fin modalContacter-------------->
 </section>
+<!---------Fin section mon annonce------------->
 <?php
 include_once('inc/footer.inc.php');
 
-?>

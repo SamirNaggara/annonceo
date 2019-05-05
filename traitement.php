@@ -84,8 +84,6 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     }{
         $pourLaVille = '%';
     }
-      
-    
     //Pour le champs prix max
     
     if ($_POST['prixMax'] != 'Illimite'){
@@ -104,7 +102,7 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     }elseif($_POST['trie'] == 'parPrixAsc'){
         $pourTrie = 'a.prix DESC';        
     }elseif($_POST['trie'] == 'parVendeur'){
-          $pourTrie = 'AVG(n.note) DESC';      
+        $pourTrie = 'AVG(n.note) DESC';      
     }else{
         $pourTrie = 'a.date_enregistrement DESC';
     }
@@ -151,18 +149,18 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
 //        Affichage de chacune des annonces
         foreach($requeteAffichage as $laLigne){
             $tab['reponseRequete'] .= '<div class="blocRequete row no-gutters bg-light position-relative mx-auto">
-                            <div class="col-md-6 mb-md-0 p-md-4">
-                                <a href="' . URL . 'annonce.php?id_annonce=' . $laLigne['id_annonce'] . '"><img src="' . $laLigne['photo'] . '" class="w-100 img-fluid" alt="..."></a>' . 
-                            '</div>
-                            <div class="col-md-6 texte position-relative p-0 pl-md-0">
-                                <h5 class="mt-0 p-0 pt-3 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
-                                <p class="p-0 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
-                                <div class="footerAnnonce row mx-auto w-100 pb-4 mb-2 pr-3">' . 
-                                    '<span class="d-inline-block col-md-6 m-0 p-0 pb-1 text-center text-md-left">' . ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
-                                    <span class="d-inline-block m-0 p-0 pb-1 col-md-6 text-center text-md-right">' . $laLigne['prix'] . ' <i class="fas fa-euro-sign"></i></span>' .                                    
-                                '</div>
-                            </div>
-                         </div>';
+                                            <div class="col-md-6 mb-md-0 p-md-4">
+                                                <a href="' . URL . 'annonce.php?id_annonce=' . $laLigne['id_annonce'] . '"><img src="' . $laLigne['photo'] . '" class="w-100 img-fluid" alt="..."></a>' . 
+                                            '</div>
+                                            <div class="col-md-6 texte position-relative p-0 pl-md-0">
+                                                <h5 class="mt-0 p-0 pt-3 text-center text-md-left">' . ucfirst($laLigne['titre']) . '</h5>
+                                                <p class="p-0 text-center text-md-left w-100 mx-auto">' . ucfirst($laLigne['description_courte']) . '</p>
+                                                <div class="footerAnnonce row mx-auto w-100 pb-4 mb-2 pr-3">' . 
+                                                    '<span class="d-inline-block col-md-6 m-0 p-0 pb-1 text-center text-md-left">' . ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
+                                                    <span class="d-inline-block m-0 p-0 pb-1 col-md-6 text-center text-md-right">' . $laLigne['prix'] . ' <i class="fas fa-euro-sign"></i></span>' .                                    
+                                                '</div>
+                                            </div>
+                                        </div>';
         }       
 	}
     else{

@@ -45,10 +45,8 @@ for ($i=2; $i<count($lesVilles);$i++){
     }      
 }
 
-
 $tab = array();
 $tab['afficher'] = '';
-
 
 $tab['listeAutocompletion'] = [];
 if (isset($_POST['premieresLettres']) && !empty($_POST['premieresLettres'])){
@@ -99,29 +97,7 @@ if (isset($_POST['premieresLettres']) && !empty($_POST['premieresLettres'])){
             }
         }
     }
-//                                      
-
-//        }
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
 
 //    $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
 //                                            FROM annonce a
@@ -148,17 +124,9 @@ if (isset($_POST['premieresLettres']) && !empty($_POST['premieresLettres'])){
 //                                            GROUP BY a.id_annonce
 //                                            ORDER BY " . $pourTrie);
 
-    
-
-    
-    
-    
 //	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
-
-
 //	$requeteAffichage->execute();
 //    if($requeteAffichage->rowCount() > 0) {};
-        
 //        $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
         
 echo json_encode($tab);

@@ -1,4 +1,5 @@
 <?php
+include_once('inc/init.inc.php');
 // deconnexion
 
 //Affiche un message de succes quand une inscription vient d'etre réalisé. Le message apparait une fois, puis ne réapparaitra plus

@@ -1,37 +1,16 @@
 <?php
 include_once('inc/init.inc.php');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
-
 ?>
-   
-
-
-
-
 
     <div class="starter-template">
-        <h1>CONDITIONS GÉNERALES DE VENTE</h1>
-<!--        Attention!!! Important pour ecrire les messages d'erreurs-->
-        <p class="lead"><?php echo $msg;?></p>
+        <h1>Conditions générales de ventes</h1>
     </div>
     <div class="row">
-        <div id="cgv_conteneur">
-            <p>
+        <div id="cgv_conteneur" class="col-xs-12 col-sm-10 mx-auto">
+            <p class="info">
                 Ce site est entièrement fictif, dans le cadre d'un projet d'étude pour une formation professionalisante au sein du centre de formation de l'IFOCOP. Tous les contenus, prix, offres sont nuls. L'objectif n'est pas commercial mais pédagogique. Aucun paiement ne sera demandé, dû ou réclamé.
             </p><br>
             <h3>1. Préambule</h3>

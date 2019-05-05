@@ -2,13 +2,11 @@
 include_once('inc/init.inc.php');
 include_once('inc/modal.inc.php');
 
-
-    //Recupere du nom des categorie pour le select
+    //Recuperation du nom des categories pour le select
     $infosCategorie = $pdo->prepare("SELECT titre, id_categorie FROM categorie");
     $infosCategorie->bindParam(':id_annonce', $_GET['id_annonce'], PDO::PARAM_STR);
     $infosCategorie->execute();
     $infosCategorie = $infosCategorie->fetchAll(PDO::FETCH_ASSOC);
-
 
     //*****************************************************
     //Recupération et exploitation de la liste des communes
@@ -21,7 +19,6 @@ include_once('inc/modal.inc.php');
     //On crée une liste, en creant un nouvel element a chaque oint virgule
     $maListe = explode(";", $maChaine);
     array_shift($maListe);
-
 
     //On crée une liste qui contient toute les informations d'une ville'
     $lesVilles = [];
@@ -36,7 +33,6 @@ include_once('inc/modal.inc.php');
         array_push($maPetiteListe, $maListe[$i]);
     }
 
-
     //On recupere ici la liste de toutes les regions
     $listeRegions = [];
     for ($i=2; $i<count($lesVilles);$i++){
@@ -47,14 +43,13 @@ include_once('inc/modal.inc.php');
         }      
     }
 
- $pourLaRegion = "(";
+    $pourLaRegion = "(";
     foreach(cpEnFonctionDeRegion('Île-de-France', $lesVilles) as $leCp){
         $pourLaRegion .= $leCp . ',';
     }
     //Enleve le dernier élement de la chaine, et on ajoute la parenthese fermante
     $pourLaRegion = substr($pourLaRegion,0, strlen($pourLaRegion)-1);
     $pourLaRegion .= ')';
-    
 
 //***************************************************************************
 // Faisons la requete des annonces presente au chargement de la page acceuil
@@ -102,12 +97,10 @@ include_once('inc/nav.inc.php');
                 <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
                     <option value="toutes">Toutes les catégories</option>
                     <?php 
-
                     foreach($infosCategorie AS $laCategorie){
                         echo '<option value="' . $laCategorie['id_categorie'] . '">' . $laCategorie['titre'] . '</option>';
                     }
                     ?>
-
                 </select>
             </div>
             <div class="form-group">
@@ -192,10 +185,10 @@ include_once('inc/nav.inc.php');
             </p>
         </div>
         <div id="contenerReponseRequete" class="mx-auto">
-<!--           Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
+        <!--Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
             <?php 
             foreach($requeteAffichage as $uneLigne){
-               ?>
+            ?>
             <div class="blocRequete row no-gutters bg-light position-relative mx-auto mb-4">
                 <div class="col-md-6 mb-md-0 p-md-4">
                     <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
@@ -221,10 +214,8 @@ include_once('inc/nav.inc.php');
             ?>
         </div>
     </div>
-
-
 </div>
 <!-- Fin d'affichage des annonces en pages d'accueil -->
 <?php
 include_once('inc/footer.inc.php');
-?>
+

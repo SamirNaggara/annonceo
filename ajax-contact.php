@@ -18,16 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $array["isSuccess"] = true;
     $emailText = "";
     // vérification des caractères présent dans le nom
-	if (!nickName($array["contactNom"])) {
-        $array["contactNomError"] = "Hop hop hop !!! Les caractères autorisés sont: a-z A-Z 0-9.";
+	if (empty($array["contactNom"])) {
+        $array["contactNomError"] = "Et oui je veux tout savoir. Même ton nom !";
         $array["isSuccess"] = false;
 	} else {
         $emailText .= "Nom: {$array["contactNom"]}\n";
     }
 
     // vérification des caractères présent dans le prenom
-	if (!nickName($array["contactPrenom"])) {
-        $array["contactPrenomError"] = "Hop hop hop !!! Les caractères autorisés sont: a-z A-Z 0-9.";
+	if (empty($array["contactPrenom"])) {
+        $array["contactPrenomError"] = "Je veux connaitre ton prénom !";
         $array["isSuccess"] = false;
 	} else {
         $emailText .= "Prénom: {$array["contactPrenom"]}\n";
@@ -35,23 +35,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // vérification du format de l'email
 	if(!isEmail($array["contactEmail"])) {
-        $array["contactEmailError"] = "Le format du mail n'est pas valide !";
+        $array["contactEmailError"] = "T'essaies de me rouler ? C'est pas un email ça  !";
         $array["isSuccess"] = false;
 	} else {
         $emailText .= "Email: {$array["contactEmail"]}\n";
     }
 
     // vérification du format de l'Objet
-	if(!nickName($array["contactObjet"])) {
-        $array["contactObjetError"] = "Hop hop hop !!! Les caractères autorisés sont: a-z A-Z 0-9.";
+	if(empty($array["contactObjet"])) {
+        $array["contactObjetError"] = "Hop hop hop !!! Ce ne sont pas des caractères autorisés !";
         $array["isSuccess"] = false;
 	} else {
         $emailText .= "Objet: {$array["contactObjet"]}\n";
     }
 
     // vérification du format du message
-	if(!nickName($array["contactMessage"])) {
-        $array["contactMessageError"] = "Hop hop hop !!! Les caractères autorisés sont: a-z A-Z 0-9.";
+	if(empty($array["contactMessage"])) {
+        $array["contactMessageError"] = "Soit pas timide ! Qu'est-ce que tu veux me dire ?";
         $array["isSuccess"] = false;
 	} else {
         $emailText .= "Message: {$array["contactMessage"]}\n";
@@ -73,4 +73,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     echo json_encode($array);
 }
-?>
