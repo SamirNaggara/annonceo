@@ -185,7 +185,8 @@ include_once('inc/nav.inc.php');
             </div>
             <!------Fin conteneurTitreNote------------>
             <?php
-            if (!user_is_connected()) { 
+            if (!user_is_connected()) {
+                echo '<span>Veuillez vous <a href="">connectez</a> ou vous <a href="">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
             } else {?>
             <div class="conteneurBoutons col-lg-6 row align-items-start m-0 p-3">
                 <a class="contacter btn btn-success col-6 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
