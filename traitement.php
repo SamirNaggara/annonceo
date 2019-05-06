@@ -127,8 +127,8 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                             OR m.telephone LIKE :rechercher
                                             OR m.email LIKE :rechercher)
                                             AND a.categorie_id LIKE :categorie
-                                            AND SUBSTRING(a.cp,1,2) IN :region
-                                            AND SUBSTRING(a.cp,1,2) IN " . htmlspecialchars($pourLeDepartement) . 
+                                            AND SUBSTRING(a.cp,1,2) IN " . htmlspecialchars($pourLaRegion) . 
+                                            " AND SUBSTRING(a.cp,1,2) IN " . htmlspecialchars($pourLeDepartement) . 
                                             " AND a.cp LIKE :ville
                                             AND a.prix BETWEEN :prixMin AND :prixMax
                                             GROUP BY a.id_annonce
@@ -140,7 +140,6 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
 	$requeteAffichage->bindParam(':ville', $pourLaVille, PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':prixMin', $_POST['prixMin'], PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':prixMax', $pourPrixMax, PDO::PARAM_STR);
-	$requeteAffichage->bindParam(':region', $pourLaRegion, PDO::PARAM_STR);
 	$requeteAffichage->execute();
     
     //Si il existe au moins une requete qui corresponds a la demande, c'est cool et on affiche les annonces, sinon on envoie un message
