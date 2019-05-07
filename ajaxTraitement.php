@@ -1,5 +1,4 @@
 <?php
-include_once('inc/init.inc.php');
 
 $tab = array();
 

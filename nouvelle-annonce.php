@@ -371,8 +371,8 @@ include_once('inc/nav.inc.php');
 							<span>Photos</i></span>
 						</div>
 						<div class="pdPhoto">
-						<label for="photo" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo" name="photo" value="<?php echo $_FILES['photo']['name']; ?>">
+						<label for="photo" class="label-file" ><div id="preview"></div><div>Pincipale</div></label>
+						<input type="file" class="form-control input-file" id="photo" name="photo" onchange="handleFiles(files)" value="<?php echo $_FILES['photo']['name']; ?>">
 						<?php 
 						if(isset($_FILES['photo'])) {?> 
 							<span><?php echo $_FILES['photo']['name'];?></span>
