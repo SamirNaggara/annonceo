@@ -147,7 +147,41 @@ $(document).ready(function() {
         });
 
     // ---------------------------Modal de connexion----------------------------------------
-    function handleFiles(files) {
+    function createThumbnail(sFile,sId) {
+        var oReader = new FileReader();
+        oReader.addEventListener('load', function() {
+        var oImgElement = document.createElement('img');
+        oImgElement.classList.add('imgPreview') 
+        oImgElement.src = this.result;
+        document.getElementById('preview-'+sId).appendChild(oImgElement);
+        }, false);
+    
+        oReader.readAsDataURL(sFile);
+    
+        }//function
+        function changeInputFil(oEvent){
+            var oInputFile = oEvent.currentTarget,
+                sName = oInputFile.name,
+                aFiles = oInputFile.files,
+                aAllowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
+                imgType;  
+            document.getElementById('preview-'+sName).innerHTML ='';
+            for (var i = 0 ; i < aFiles.length ; i++) {
+            imgType = aFiles[i].name.split('.');
+            imgType = imgType[imgType.length - 1];
+            if(aAllowedTypes.indexOf(imgType) != -1) {
+                createThumbnail(aFiles[i],sName);
+            }//if
+            }//for
+        }//function 
+        
+        document.addEventListener('DOMContentLoaded',function(){
+        var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
+            for(var k = 0; k < aFileInput.length;k++){
+            aFileInput[k].addEventListener('change', changeInputFil, false);
+            }//for
+        });
+/*    function handleFiles(files) {
         var imageType = /^image\//;
         for (var i = 0; i < files.length; i++) {
         var file = files[i];
@@ -170,4 +204,141 @@ $(document).ready(function() {
     reader.readAsDataURL(file);
         }
         }
-    }
+    } 
+   function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!imageType.test(file.type)) {
+            alert("veuillez sélectionner une image");
+        }else{
+            if(i == 0){
+            preview1.innerHTML = '';
+        }
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview.appendChild(img); 
+            var reader = new FileReader();
+            reader.onload = ( function(aImg) { 
+            return function(e) { 
+            aImg.src = e.target.result; 
+        }; 
+    })(img);
+    reader.readAsDataURL(file);
+        }
+        }
+    } 
+   function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!imageType.test(file.type)) {
+            alert("veuillez sélectionner une image");
+        }else{
+            if(i == 0){
+            preview.innerHTML = '';
+        }
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview2.appendChild(img); 
+            var reader = new FileReader();
+            reader.onload = ( function(aImg) { 
+            return function(e) { 
+            aImg.src = e.target.result; 
+        }; 
+    })(img);
+    reader.readAsDataURL(file);
+        }
+        }
+    } 
+   function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!imageType.test(file.type)) {
+            alert("veuillez sélectionner une image");
+        }else{
+            if(i == 0){
+            preview.innerHTML = '';
+        }
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview3.appendChild(img); 
+            var reader = new FileReader();
+            reader.onload = ( function(aImg) { 
+            return function(e) { 
+            aImg.src = e.target.result; 
+        }; 
+    })(img);
+    reader.readAsDataURL(file);
+        }
+        }
+    } 
+   function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!imageType.test(file.type)) {
+            alert("veuillez sélectionner une image");
+        }else{
+            if(i == 0){
+            preview4.innerHTML = '';
+        }
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview.appendChild(img); 
+            var reader = new FileReader();
+            reader.onload = ( function(aImg) { 
+            return function(e) { 
+            aImg.src = e.target.result; 
+        }; 
+    })(img);
+    reader.readAsDataURL(file);
+        }
+        }
+    } 
+   function handleFiles(files) {
+        var imageType = /^image\//;
+        for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!imageType.test(file.type)) {
+            alert("veuillez sélectionner une image");
+        }else{
+            if(i == 0){
+            preview5.innerHTML = '';
+        }
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview.appendChild(img); 
+            var reader = new FileReader();
+            reader.onload = ( function(aImg) { 
+            return function(e) { 
+            aImg.src = e.target.result; 
+        }; 
+    })(img);
+    reader.readAsDataURL(file);
+        }
+        }
+    }  */
+    /* function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imgId = '#preview-'+$(input).attr('id');
+                $(imgId).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+
+      $("form#mainform input[type='file']").change(function(){
+        readURL(this);
+      }); */

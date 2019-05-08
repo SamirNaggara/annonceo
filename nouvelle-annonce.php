@@ -320,8 +320,8 @@ include_once('inc/nav.inc.php');
 		<p class="lead"><?php echo $msg2;?></p>
 	</div>
 	<div class="row">
-		<div class="col-lg-12 mx-auto">
-			<form id="newAnnonce" method="post" action="" enctype="multipart/form-data" >
+		<div class="col-lg-11 mx-auto">
+			<form name="myForm" id="newAnnonce" method="post" action="" enctype="multipart/form-data" >
 				<div class="row">
 					<div class="form-group col-md-6">
 						<label for="reference">Titre de l'annonce</label>
@@ -354,59 +354,77 @@ include_once('inc/nav.inc.php');
 						<label for="cp">Code postal</label>
 						<input type="text" class="form-control" id="cp" name="cp" value="<?php echo $cp; ?>">
 					</div>
+					<div class="form-group col-md-12">
+						<label for="adresse">Adresse</label>
+						<input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo $adresse; ?>">
+					</div>
 					<div class="form-group col-md-6">
 						<label for="descriptionCourte">Description Courte</label>
 						<textarea name="descriptionCourte" id="descriptionCourte" class="w-100" rows="5"><?php echo $descriptionCourte; ?></textarea>
 					</div>
 					<div class="form-group col-md-6">
-						<label for="adresse">Adresse</label>
-						<textarea name="adresse" id="adresse" class="w-100" rows="5"><?php echo $adresse; ?></textarea>
-					</div>
-					<div class="form-group col-md-6">
 						<label for="descriptionLongue">Description Longue</label>
-						<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="9"><?php echo $descriptionLongue; ?></textarea>
+						<textarea name="descriptionLongue" id="descriptionLongue" class="w-100" rows="5"><?php echo $descriptionLongue; ?></textarea>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-12">
 						<div class="formPhoto">
-							<span>Photos</i></span>
+							<span><strong>Photos</strong> : Une annonce avec photo est 7 fois plus consultée qu'une annonce sans photo</i></span>
 						</div>
 						<div class="pdPhoto">
-						<label for="photo" class="label-file" ><div id="preview"></div><div>Pincipale</div></label>
-						<input type="file" class="form-control input-file" id="photo" name="photo" onchange="handleFiles(files)" value="<?php echo $_FILES['photo']['name']; ?>">
-						<?php 
-						if(isset($_FILES['photo'])) {?> 
-							<span><?php echo $_FILES['photo']['name'];?></span>
-						<?php } ?>
-						<label for="photo1" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo1" name="photo1" value="<?php echo $_FILES['photo1']['name']; ?>">
-						<?php 
-						if(isset($_FILES['photo1'])) {?> 
-							<span><?php echo $_FILES['photo1']['name'];?></span>
-						<?php } ?>
-						<label for="photo2" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo2" name="photo2" value="<span><?php echo $_FILES['photo2']['name']; ?>">
-						<?php 
-						if(isset($_FILES['photo2'])) {?> 
-							<span><?php echo $_FILES['photo2']['name'];?></span>
-						<?php } ?>
-						<label for="photo3" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo3" name="photo3" value="<?php echo $_FILES['photo3']['name']; ?>"><span>
-						<?php 
-						if(isset($_FILES['photo3'])) {?> 
-							<span><?php echo $_FILES['photo3']['name'];?></span>
-						<?php } ?>
-						<label for="photo4" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo4" name="photo4" value="<?php echo $_FILES['photo4']['name']; ?>">
-						<?php 
-						if(isset($_FILES['photo4'])) {?> 
-							<span><?php echo $_FILES['photo4']['name'];?></span>
-						<?php } ?>
-						<label for="photo5" class="label-file"><i class="fas fa-camera"></i></label>
-						<input type="file" class="form-control input-file" id="photo5" name="photo5" value="<?php echo $_FILES['photo5']['name']; ?>">
-						<?php 
-						if(isset($_FILES['photo5'])) {?> 
-							<span><?php echo $_FILES['photo5']['name'];?></span>
-						<?php } ?>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo" class="label-file" >Pincipale</label>
+								<div id="preview-photo" class="img-fluid"></div>
+								<input type="file" class="form-control input-file photo" name="photo" value="<?php echo $_FILES['photo']['name']; ?>">
+								<?php 
+								if(isset($_FILES['photo'])) {?> 
+									<span><?php echo $_FILES['photo']['name'];?></span>
+								<?php } ?>
+							</div>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo1" class="label-file">Photo 1</label>
+								<div id="preview-photo1"></div>
+								<input type="file" class="form-control input-file photo" name="photo1" value="<?php echo $_FILES['photo1']['name']; ?>">
+								<?php 
+								if(isset($_FILES['photo1'])) {?> 
+									<span><?php echo $_FILES['photo1']['name'];?></span>
+								<?php } ?>
+							</div>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo2" class="label-file">Photo 2</label>
+								<div id="preview-photo2"></div>
+								<input type="file" class="form-control input-file photo" name="photo2" value="<span><?php echo $_FILES['photo2']['name']; ?>">
+								<?php 
+								if(isset($_FILES['photo2'])) {?> 
+									<span><?php echo $_FILES['photo2']['name'];?></span>
+								<?php } ?>
+							</div>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo3" class="label-file">Photo 3</label>
+								<div id="preview-photo3"></div>
+								<input type="file" class="form-control input-file photo" name="photo3" value="<?php echo $_FILES['photo3']['name']; ?>"><span>
+								<?php 
+								if(isset($_FILES['photo3'])) {?> 
+									<span><?php echo $_FILES['photo3']['name'];?></span>
+								<?php } ?>
+							</div>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo4" class="label-file">Photo 4</label>
+								<div id="preview-photo4"></div>
+								<input type="file" class="form-control input-file photo" name="photo4" value="<?php echo $_FILES['photo4']['name']; ?>">
+								<?php 
+								if(isset($_FILES['photo4'])) {?> 
+									<span><?php echo $_FILES['photo4']['name'];?></span>
+								<?php } ?>
+							</div>
+							<div class="div col-sm-6 col-md-4 col-lg-2">
+								<label for="photo5" class="label-file">Photo 5</label>
+								<div id="preview-photo5"></div>
+								<input type="file" class="form-control input-file photo" name="photo5" value="<?php echo $_FILES['photo5']['name']; ?>">
+								<?php 
+								if(isset($_FILES['photo5'])) {?> 
+									<span><?php echo $_FILES['photo5']['name'];?></span>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 					<hr>

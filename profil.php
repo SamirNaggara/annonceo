@@ -7,14 +7,14 @@ if(!user_is_connected()) {
     exit();
 }
 // déclaration de variable pour afficher les valeurs dans les values de nos champs egales aux sessions 
-$id_membre_profil = is_numeric($_SESSION['utilisateur']['id_membre']);
+$id_membre_profil = $_SESSION['utilisateur']['id_membre'];
 $pseudo_profil = checkInput($_SESSION['utilisateur']['pseudo']);
 $nom_profil = checkInput($_SESSION['utilisateur']['nom']);
 $prenom_profil = checkInput($_SESSION['utilisateur']['prenom']);
 $telephone_profil = $_SESSION['utilisateur']['telephone'];
 $email_profil = $_SESSION['utilisateur']['email'];
 $civilite_profil = checkInput($_SESSION['utilisateur']['civilite']);
-$statut_profil = is_numeric($_SESSION['utilisateur']['statut']);
+$statut_profil = $_SESSION['utilisateur']['statut'];
 $date_enregistrement_profil = checkInput($_SESSION['utilisateur']['date_enregistrement']);  
 
 if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST['prenom_profil']) && isset($_POST['telephone_profil']) && isset($_POST['email_profil']) && isset($_POST['civilite_profil']) && isset($_POST['validerMembre'])) {
@@ -166,76 +166,113 @@ include_once('inc/nav.inc.php');
 <div class="starter-template">
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-    <a href="?action=informationsPersonnels" class="btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
-    <a href="?action=mesAnnonces" class="btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
-    <a href="?action=mesNotes" class="btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
+    <div class="row profil">
+    <a href="?action=informationsPersonnels" class="btnProfil btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels' || $_GET['action'] == 'modifierPassword') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
+    <a href="?action=mesAnnonces" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
+    <a href="?action=mesNotes" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
+    </div>
     <hr>
+    <a href="?action=modifierPassword" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierPassword'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mot de passe</a>
 </div>
 
 <!--Formulaires des informations personnels-->
 
+<div class="row">
+    <div class="col-sm-6">
+        <ul class="list-group">
+            <li class="list-group-item bg-dark text-white">Vos informations</li>
+            <li class="list-group-item"><span class="infos_profil">Identifiant membre: </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo $_SESSION['utilisateur']['pseudo']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo $_SESSION['utilisateur']['nom']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo $_SESSION['utilisateur']['prenom']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Email: </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'masculin'; else echo 'féminin'; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Téléphone: </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Statut: </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
+        </ul>
+    </div>
+
 <?php
 // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels") || !isset($_GET['action'])){    
+if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels" || $_GET['action'] == 'modifierPassword') || !isset($_GET['action'])){    
 ?>
 
 <div class="container">
-    <div class="col-6 mx-auto">
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="id_membre_profil">Identifiant</label>
-                <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
-            </div>
-            <div class="form-group">
-                <label for="pseudo_profil">Pseudo</label>
-                <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
-            </div>
-            <div class="form-group">
-                <label for="nom_profil">Nom</label>
-                <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
-            </div>
-            <div class="form-group">
-                <label for="prenom_profil">Prenom</label>
-                <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
-            </div>
-            <div class="form-group">
-                <label for="telephone_profil">Telephone</label>
-                <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
-            </div>
-            <div class="form-group">
-                <label for="email_profil">Email</label>
-                <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
-            </div>
-            <div class="form-group">
-                <label for="civilite_profil">Sexe</label>
-                <select class="form-control" id="civilite_profil" name="civilite_profil">
-                    <option value="m">masculin</option>
-                    <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="date_enregistrement_profil">Date d'inscription</label>
-                <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
-            </div>
-            <button type="submit" class="btn btn-primary" name="validerMembre">Valider</button>
-        </form>
-        
-        <!--Form pour le mot de passe-->
-        <form action="" method="post">
-            <div class="form-group">
-                <label for="id_membre_profil">Mot de passe actuel</label>
-                <input type="text" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
-            </div>
-            <div class="form-group">
-                <label for="pseudo_profil">Nouveau mot de passe</label>
-                <input type="text" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
-            </div>
-            <div class="form-group">
-                <label for="nom_profil">Nouveau mot de passe (Verification)</label>
-                <input type="text" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
-            </div>
-            <button type="submit" class="btn btn-primary" name="enregistrementMdp">Enregistrer nouveau mot de passe</button>
-        </form>
+    <div class="col-12">
+        <div class="row">
+            <form action="" method="post" class="col-5 mx-auto proForm">
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="id_membre_profil">Identifiant</label>
+                        <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="date_enregistrement_profil">Date d'inscription</label>
+                        <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="pseudo_profil">Pseudo</label>
+                        <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="civilite_profil">Sexe</label>
+                        <select class="form-control" id="civilite_profil" name="civilite_profil">
+                            <option value="m">masculin</option>
+                            <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="nom_profil">Nom</label>
+                        <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="telephone_profil">Telephone</label>
+                        <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="prenom_profil">Prenom</label>
+                        <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="email_profil">Email</label>
+                        <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
+                    </div>
+                    <div class="form-group col-12">
+                        <button type="submit" class="btn btn-primary col-12" name="validerMembre">Valider</button>
+                    </div>
+                </div>
+            </form>
+            <?php
+            // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+            if ((isset($_GET['action']) && $_GET['action'] == "modifierPassword")){    
+            ?>
+            <!--Form pour le mot de passe-->
+            <form action="" method="post" class="col-3 mx-auto">
+                <div class="form-group">
+                    <label for="id_membre_profil">Mot de passe actuel</label>
+                    <input type="password" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
+                </div>
+                <div class="form-group">
+                    <label for="pseudo_profil">Nouveau mot de passe</label>
+                    <input type="password" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
+                </div>
+                <div class="form-group">
+                    <label for="nom_profil">Confirmer le mot de passe</label>
+                    <input type="password" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary col-12" name="enregistrementMdp">Enregistrer</button>
+                </div>
+            </form>
+            <?php } ?>
+        </div>
     </div>
 </div>
 <?php

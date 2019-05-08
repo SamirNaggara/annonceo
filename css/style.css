@@ -117,6 +117,19 @@
   font-size: 22px;
 }
 
+.profil {
+  display: flex;
+  justify-content: center;
+}
+.profil .btnProfil {
+  min-width: 200px;
+}
+
+.proForm .form-group {
+  padding: 0;
+  padding-right: 5px;
+}
+
 #mentions_conteneur h3, #cgv_conteneur h3 {
   background-color: #343a40;
   color: white;
@@ -173,42 +186,31 @@
   padding: 10px;
 }
 
-#newAnnonce .label-file {
-  cursor: pointer;
-  color: black;
-  border: 1px solid white;
-  text-align: center;
-  transition: 0.5s ease-in-out;
-  border: 1px solid black;
-  background-image: url("https://img.icons8.com/ios/420/camera.png");
-  background-size: 100px 100px;
-  background-repeat: no-repeat;
-  background-position: center;
+#newAnnonce label {
+  font-weight: bold;
 }
-#newAnnonce .label-file:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-  color: goldenrod;
-  transition: 0.5s ease-in-out;
-}
-#newAnnonce .input-file {
-  display: none;
-}
-#newAnnonce .fa-camera {
-  font-size: 80px;
+#newAnnonce .photo {
+  box-sizing: border-box;
 }
 #newAnnonce .formPhoto {
+  box-sizing: border-box;
   margin-bottom: 10px;
 }
 #newAnnonce .pdPhoto {
-  padding: 0 52px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
 }
-#newAnnonce #preview img {
-  width: 100%;
+#newAnnonce .div {
+  padding: 5px;
+  box-sizing: border-box;
 }
-#newAnnonce #preview {
-  width: 170px;
-  margin-bottom: 15px;
-  display: inline-block;
+#newAnnonce .imgPreview {
+  box-sizing: border-box;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  max-width: 180px;
+  min-height: 150px;
 }
 
 /*# sourceMappingURL=style.css.map */
