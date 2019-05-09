@@ -1,5 +1,16 @@
 
 $(document).ready(function() {
+    function escapeHtml(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+    
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
     
         $('.fa-check').hide();
         $('.fa-times').hide();
@@ -7,10 +18,9 @@ $(document).ready(function() {
         // verif pseudo
         $('#pseudo_profil').on('keyup', function(){
             var pseudo = $('#pseudo_profil').val();
-            //var regex = /^[a-zàâéèëêïîôùüçœ\'’ -]{1,60}$/i;
+            var regex = /^[\w \-]+$/;
             var email =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
             var number = /^[-]?\d*\.?\d*$/; // Nombre
-            var length5 = /\b.{5}\b/; // Longueur de 5 caractères
             // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
             
             if(pseudo.length >= 3 && pseudo.length <= 20 && pseudo.regex) {
