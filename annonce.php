@@ -186,12 +186,14 @@ include_once('inc/nav.inc.php');
             <!------Fin conteneurTitreNote------------>
             <?php
             if (!user_is_connected()) {
-                echo '<span>Veuillez vous <a href="">connectez</a> ou vous <a href="">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
+                echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
             } else {?>
-            <div class="conteneurBoutons col-lg-6 row align-items-start m-0 p-3">
-                <a class="contacter btn btn-success col-6 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
-                    <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-                <a class="laisserAvis btn btn-info col-6 mx-auto" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
+            <div class="conteneurBoutons col-lg-6 align-items-start m-0 p-3">
+                <div class="row">
+                    <a class="contacter btn btn-success col-5 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
+                        <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
+                    <a class="laisserAvis btn btn-info col-5 mx-auto offset-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
+                </div>
             </div>
             <?php } ?>
             <!-----Fin conteneurBoutons-------->
@@ -280,7 +282,7 @@ include_once('inc/nav.inc.php');
         <?php 
         foreach($autresAnnonces as $cetteAutreAnnonce){
             ?>
-        <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce[" id_annonce"] ?>">
+        <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
                 <?php echo '<img class="img-fluid" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
                 <figcaption class="text-center text-dark">
                     <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
@@ -301,6 +303,8 @@ include_once('inc/nav.inc.php');
         <form id="avis" method="post" action="">
             <div class="form-group">
                 <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="3" placeholder="Mon commentaire..."></textarea>
+            </div>
+            <div class="form-group">
                 <input type="submit" class="btn btn-primary w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
             </div>
         </form>

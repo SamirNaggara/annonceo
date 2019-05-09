@@ -167,34 +167,38 @@ include_once('inc/nav.inc.php');
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
     <div class="row profil">
-    <a href="?action=informationsPersonnels" class="btnProfil btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels' || $_GET['action'] == 'modifierPassword') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
-    <a href="?action=mesAnnonces" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
-    <a href="?action=mesNotes" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
+        <a href="?action=informationsPersonnels" class="btnProfil btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels' || $_GET['action'] == 'modifierPassword' || $_GET['action'] == 'modifierProfil') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
+        <a href="?action=mesAnnonces" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
+        <a href="?action=mesNotes" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
     </div>
     <hr>
-    <a href="?action=modifierPassword" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierPassword'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mot de passe</a>
+    <div class="row profil mt-5">
+        <a href="?action=modifierProfil" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierProfil'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mon profil</a>
+        <a href="?action=modifierPassword" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierPassword'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mot de passe</a>
+    </div>
 </div>
 
 <!--Formulaires des informations personnels-->
-
-<div class="row">
-    <div class="col-sm-6">
+<?php
+if(!isset($_GET['action']) || $_GET['action'] == 'informationsPersonnels') {
+    ?>
+    <div class="row">
+    <div class="col-sm-6 mx-auto">
         <ul class="list-group">
-            <li class="list-group-item bg-dark text-white">Vos informations</li>
+            <li class="list-group-item bg-primary text-white">Vos informations</li>
             <li class="list-group-item"><span class="infos_profil">Identifiant membre: </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo $_SESSION['utilisateur']['pseudo']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo $_SESSION['utilisateur']['nom']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo $_SESSION['utilisateur']['prenom']; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo ucfirst($_SESSION['utilisateur']['pseudo']); ?></li>
+            <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo ucfirst($_SESSION['utilisateur']['nom']); ?></li>
+            <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo ucfirst($_SESSION['utilisateur']['prenom']); ?></li>
             <li class="list-group-item"><span class="infos_profil">Email: </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'masculin'; else echo 'féminin'; ?></li>
+            <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'Masculin'; else echo 'Féminin'; ?></li>
             <li class="list-group-item"><span class="infos_profil">Téléphone: </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
             <li class="list-group-item"><span class="infos_profil">Statut: </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
         </ul>
     </div>
-
-<?php
+<?php }
 // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels" || $_GET['action'] == 'modifierPassword') || !isset($_GET['action'])){    
+elseif(isset($_GET['action']) && $_GET['action'] == "modifierProfil") {    
 ?>
 
 <div class="container">
@@ -212,9 +216,11 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels" || $_
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-6">
+                    <div class="form-group col-6 fg-pseudo">
                         <label for="pseudo_profil">Pseudo</label>
                         <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+                        <i class="fas fa-times"></i>
+				        <i class="fas fa-check"></i>
                     </div>
                     <div class="form-group col-6">
                         <label for="civilite_profil">Sexe</label>
@@ -251,7 +257,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels" || $_
             </form>
             <?php
             // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-            if ((isset($_GET['action']) && $_GET['action'] == "modifierPassword")){    
+            } elseif(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
             ?>
             <!--Form pour le mot de passe-->
             <form action="" method="post" class="col-3 mx-auto">
@@ -277,7 +283,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "informationsPersonnels" || $_
 </div>
 <?php
     //Fermeture du if de l'onglet informations personnels
-}
+
 
 // Ouverture de l'onglet sur les commentaires
 if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){    

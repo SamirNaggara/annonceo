@@ -29,6 +29,18 @@
 }
 
 //--------------page annonce---------------
+.autresAnnonces {
+    figure {
+        img {
+            min-width: 100%;
+            max-height: 225px; 
+
+            @media screen AND (max-width: 480px) {
+                height: 100% !important;
+            }
+        }
+    }
+}
 
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
     font-size: 10px;
@@ -137,7 +149,7 @@
     justify-content: center;
 
     .btnProfil {
-        min-width: 200px;
+        min-width: 200px !important;
     }
 }
 .proForm {
@@ -235,9 +247,17 @@
     }
     .imgPreview{
         box-sizing: border-box;
-        padding-right: 5px;
-        padding-bottom: 5px;
+        padding-right: 20px;
+        padding-bottom: 10px;
         max-width:180px;
         min-height:150px;
     }
+}
+//----------------Profil -------------------------------
+.fa-check{
+	color: lightgreen;
+}
+
+.fa-times{
+	color: red;
 }

@@ -325,7 +325,7 @@ include_once('inc/nav.inc.php');
 				<div class="row">
 					<div class="form-group col-md-6">
 						<label for="reference">Titre de l'annonce</label>
-						<input type="text" class="form-control" id="titre" name="titre" value="<?php echo $titre; ?>">
+						<input type="text" class="form-control" id="titre" rel="obligatoire" name="titre" value="<?php echo $titre; ?>">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="categorie">Catégorie</label>
@@ -340,7 +340,7 @@ include_once('inc/nav.inc.php');
 					</div>
 					<div class="form-group col-md-6">
 						<label for="reference">Prix</label>
-						<input type="text" class="form-control" id="prix" name="prix" value="<?php echo $prix; ?>">
+						<input type="text" class="form-control" id="prix" rel="obligatoire" name="prix" value="<?php echo $prix; ?>">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="pays">Pays</label>
@@ -432,7 +432,7 @@ include_once('inc/nav.inc.php');
 						<input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
 					</div>
 					<div class="form-group col-md-12">
-						<input type="submit" class="form-control btn btn-warning col-md-12" id="enregistrement" name="enregistrement" value="Enregistrement">
+						<input type="submit" class="form-control btn btn-warning col-md-12" OnClick="if(check_formular()){newAnnonce.submit();}else{return false;}" id="enregistrement" name="enregistrement" value="Enregistrement">
 					</div>	
 				</div>	
 			</form>

@@ -357,7 +357,7 @@ if(isset($_GET['modifier'])) {
                         <input type="text" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="id_annonce" name="photo_id" value="<?php echo $id_photo; ?>">
+                        <input type="text" class="form-control" id="photo_id" name="photo_id" value="<?php echo $id_photo; ?>">
                     </div>
                     <div class="form-group">
                         <label for="titre">Titre de l'annonce :</label>

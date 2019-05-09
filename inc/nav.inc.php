@@ -69,7 +69,7 @@
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                           <?php 
+                            <?php 
                             // Inscription et connections ne n'apparaissent que si l'utilisateur n'est pas connecter
                             
                             if (!user_is_connected()){
@@ -87,7 +87,7 @@
                                     ?>
                                     <a class="dropdown-item" href="<?php echo URL . 'admin/index.php'; ?>" ><i class="fas fa-users-cog"></i> Administration</a>
                             <div class="dropdown-divider"></div>
-                               <?php
+                            <?php
                                 }
                             ?>
                             

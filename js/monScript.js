@@ -1,6 +1,54 @@
 
 $(document).ready(function() {
     
+        $('.fa-check').hide();
+        $('.fa-times').hide();
+        var control = 0;      
+        // verif pseudo
+        $('#pseudo_profil').on('keyup', function(){
+            var pseudo = $('#pseudo_profil').val();
+            //var regex = /^[a-zàâéèëêïîôùüçœ\'’ -]{1,60}$/i;
+            var email =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+            var number = /^[-]?\d*\.?\d*$/; // Nombre
+            var length5 = /\b.{5}\b/; // Longueur de 5 caractères
+            // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
+            
+            if(pseudo.length >= 3 && pseudo.length <= 20 && pseudo.regex) {
+                console.log('OK pour le pseudo');
+                $('.fg-pseudo .fa-check').show();
+                $('.fg-pseudo .fa-times').hide();
+                control = 1;
+            }
+            else{
+                console.log('NOK');
+                $('.fg-pseudo .fa-check').hide();
+                $('.fg-pseudo .fa-times').show();
+                $('.fg-pseudo .fa-times').html('Veuillez...');
+                control = 0;
+            }
+        });
+        
+        
+        // verif prenom 
+        $('#prenom').blur(function(){
+            var prenom = $('#prenom').val();
+            // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
+            
+            if(prenom.length >= 3 && prenom.length <= 20){
+                console.log('OK pour le prenom');
+                $('.fg-prenom .fa-check').show();
+                $('.fg-prenom .fa-check').html('OK');
+                $('.fg-prenom .fa-times').hide();
+                control = 1			
+            }
+            else{
+                console.log('OK pour le prenom');
+                $('.fg-prenom .fa-check').hide();
+                $('.fg-prenom .fa-times').show();
+                $('.fg-prenom .fa-times').html('Veuillez...');
+                control  = 0; 
+            }
+        });
     
     $('.champVille').hide();
 
@@ -146,7 +194,7 @@ $(document).ready(function() {
             });
         });
 
-    // ---------------------------Modal de connexion----------------------------------------
+    // ---------------------------Nouvelle annonce (photo)----------------------------------------
     function createThumbnail(sFile,sId) {
         var oReader = new FileReader();
         oReader.addEventListener('load', function() {
@@ -174,171 +222,13 @@ $(document).ready(function() {
             }//if
             }//for
         }//function 
-        
         document.addEventListener('DOMContentLoaded',function(){
         var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
             for(var k = 0; k < aFileInput.length;k++){
             aFileInput[k].addEventListener('change', changeInputFil, false);
             }//for
         });
-/*    function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    } 
-   function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview1.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    } 
-   function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview2.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    } 
-   function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview3.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    } 
-   function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview4.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    } 
-   function handleFiles(files) {
-        var imageType = /^image\//;
-        for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        if (!imageType.test(file.type)) {
-            alert("veuillez sélectionner une image");
-        }else{
-            if(i == 0){
-            preview5.innerHTML = '';
-        }
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview.appendChild(img); 
-            var reader = new FileReader();
-            reader.onload = ( function(aImg) { 
-            return function(e) { 
-            aImg.src = e.target.result; 
-        }; 
-    })(img);
-    reader.readAsDataURL(file);
-        }
-        }
-    }  */
-    /* function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+    //-----------------------Nouvelle annonce formulaire------------------------
 
-            reader.onload = function (e) {
-                imgId = '#preview-'+$(input).attr('id');
-                $(imgId).attr('src', e.target.result);
-            }
+        
 
-            reader.readAsDataURL(input.files[0]);
-        }
-      }
-
-
-      $("form#mainform input[type='file']").change(function(){
-        readURL(this);
-      }); */
