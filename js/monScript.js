@@ -18,12 +18,12 @@ $(document).ready(function() {
         // verif pseudo
         $('#pseudo_profil').on('keyup', function(){
             var pseudo = $('#pseudo_profil').val();
-            var regex = /^[\w \-]+$/;
+            var regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/i;
             var email =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
             var number = /^[-]?\d*\.?\d*$/; // Nombre
             // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
             
-            if(pseudo.length >= 3 && pseudo.length <= 20 && pseudo.regex) {
+            if(pseudo.length >= 3 && pseudo.length <= 20 && !regex.test(pseudo)) {
                 console.log('OK pour le pseudo');
                 $('.fg-pseudo .fa-check').show();
                 $('.fg-pseudo .fa-times').hide();

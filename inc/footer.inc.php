@@ -97,7 +97,8 @@ include_once('inc/modal.inc.php');
                             <input type="text" class="form-control" id="connexionInputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp_connexion">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Connexion</button>
-                        <p><a href="enter_email.php">Mot de passe oublié ?</a></p>
+                        <!-- lien renvoyant vers le formulaire de renouvellement de mot de passe -->
+                        <p><a href="reset-password.php">Mot de passe oublié ?</a></p>
                     </form>
                 </div>
             </div>
