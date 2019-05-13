@@ -39,11 +39,9 @@ if(isset($_POST["reset-password-submit"])) {
         $sql->execute();
 
         $sql = $pdo->prepare("DELETE FROM pwdReset WHERE pwdResetEmail = :pwdResetEmail");
-        $sql->bindParam(':pwdResetEmail', $userEmail, PDO::PARAM_STR);
+        $sql->bindParam(':pwdResetEmail', $tokenEmail, PDO::PARAM_STR);
         $sql ->execute();
-
         header("Location: reset-password.php?newpwd=passwordupdated");
-        
     }
 } else {
     header('location:'. URL .''); 

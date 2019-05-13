@@ -1,13 +1,17 @@
 <?php 
 include_once('inc/init.inc.php');
-
-
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
-
 ?>
 
 <div class="starter-template">
+	<?php
+		if(isset($_GET['newpwd']) && $_GET['newpwd'] == 'passwordupdated') {
+			echo '<div class="alert alert-success mt-2" role="alert">Votre mot de passe à bien été modifié. Redirection dans 2sec.</div>';
+			echo '<a></a>';
+		}
+		?>
+		<p class="lead"><?php echo $msg;?></p>
     <h1>Renouveller votre mot de passe</h1>
 		<p>Un email va vous être envoyé avec les instructions à suivre pour changer votre mot de passe</p>
 </div>
