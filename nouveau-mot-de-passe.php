@@ -1,6 +1,5 @@
 <?php 
 include_once('inc/init.inc.php');
-include('app_logic.php'); 
 
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
@@ -20,9 +19,9 @@ include_once('inc/nav.inc.php');
             } else {
                 if(ctype_xdigit($selector) !== false && ctype_xdigit($validator) !== false) {
                     ?>
-                    <form action="reset-password.php" method="post">
-                        <input type="hidden" name="selector" valure="<?php echo $selector;?>">
-                        <input type="hidden" name="validator" valure="<?php echo $validator;?>">
+                    <form action="reset-password.inc.php" method="post">
+                        <input type="hidden" name="selector" value="<?php echo $selector;?>">
+                        <input type="hidden" name="validator" value="<?php echo $validator;?>">
                         <input type="password" name="pwd" placeholder="Entrer votre nouveau mot de passe">
                         <input type="password" name="pwd-repeat" placeholder="Confirmer votre nouveau mot de passe">
                         <button type="submit" name="reset-password-submit">Réinitialiser votre mot de passe</button>
