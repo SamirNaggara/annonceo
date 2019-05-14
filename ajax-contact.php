@@ -67,8 +67,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($array["isSuccess"]){
         
     // Envoyer le mail
-        $expediteur = "From: {$array["contactNom"]} {$array["contactPrenom"]} <{$array["contactEmail"]}>\r\nReply-To: {$array["contactEmail"]}";
-        mail(EMAILANNONCEO, "Un message d'Annonceo", $emailText, $expediteur);
+
+        //$expediteur = "From: {$array["contactNom"]} {$array["contactPrenom"]} <{$array["contactEmail"]}>\r\nReply-To: {$array["contactEmail"]}";
+
+        $to = "{$array["contactNom"]} {$array["contactPrenom"]} <{$array["contactEmail"]}>\r\n";
+        $subject = "{$array["contactObjet"]}\r\n";
+        $message = "{$array["contactEmail"]}\r\n";
+        $headers = "From:{$array["contactEmail"]}\r\n";
+        $headers .= "Reply-To:{$array["contactEmail"]}\r\n";
+        $headers .= "Content-type: text/html\r\n";
+        $headers .= 'Content-Transfer-Encoding: 8bit';
+
+    mail(EMAILANNONCEO, $to, $subject, $message, $headers);
+        //mail(EMAILANNONCEO, $headers, "Un message d'Annonceo", $emailText, $expediteur);
         
     }
     echo json_encode($array);

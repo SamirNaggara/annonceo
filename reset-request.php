@@ -33,37 +33,38 @@ if (isset($_POST['request-reset-submit'])) {
     
     if($sql->rowCount() > 0) {
 
-    $deleteToken = $pdo->prepare("DELETE FROM pwdreset WHERE pwdResetEmail = :pwdResetEmail");
-    $deleteToken->bindParam(':pwdResetEmail', $userEmail, PDO::PARAM_STR);
-    $deleteToken ->execute();
+        $deleteToken = $pdo->prepare("DELETE FROM pwdreset WHERE pwdResetEmail = :pwdResetEmail");
+        $deleteToken->bindParam(':pwdResetEmail', $userEmail, PDO::PARAM_STR);
+        $deleteToken ->execute();
 
     } else {
 
-    $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
 
-    $insertToken = $pdo->prepare("INSERT INTO pwdreset (pwdResetEmail, pwdResetSelector, pwdResetToken, pwdResetExpires) VALUES (:pwdResetEmail, :pwdResetSelector, :pwdResetToken, :pwdResetExpires)");
-    $insertToken->bindParam(':pwdResetEmail', $userEmail, PDO::PARAM_STR);
-    $insertToken->bindParam(':pwdResetSelector', $selector, PDO::PARAM_STR);
-    $insertToken->bindParam(':pwdResetToken', $hashedToken, PDO::PARAM_STR);
-    $insertToken->bindParam(':pwdResetExpires', $expires, PDO::PARAM_STR);
-    $insertToken ->execute();
+        $insertToken = $pdo->prepare("INSERT INTO pwdreset (pwdResetEmail, pwdResetSelector, pwdResetToken, pwdResetExpires) VALUES (:pwdResetEmail, :pwdResetSelector, :pwdResetToken, :pwdResetExpires)");
+        $insertToken->bindParam(':pwdResetEmail', $userEmail, PDO::PARAM_STR);
+        $insertToken->bindParam(':pwdResetSelector', $selector, PDO::PARAM_STR);
+        $insertToken->bindParam(':pwdResetToken', $hashedToken, PDO::PARAM_STR);
+        $insertToken->bindParam(':pwdResetExpires', $expires, PDO::PARAM_STR);
+        $insertToken ->execute();
     }
 
     //Envoi du mail
     $to = $userEmail;
     $subject = "Changer votre mot de passe";
-    $message = "Nous avons reçu une demande de réinitialistion de mot de passe.\r\n Si ce n'est pas une demande de votre part. Veuillez ignorer cette email\r\n";
-    $message .= "Voici le lien pour rénitialiser votre mot de passe:\r\n";
-    $message .= "<a href=". $url .">$url</a>";
+    $message = "<html><body><p>Nous avons reçu une demande de réinitialistion de mot de passe.\r\n</p> <p>Si ce n'est pas une demande de votre part\r\n. Veuillez ignorer cette email\r\n</p>";
+    $message .= "<p>Voici le lien pour rénitialiser votre mot de passe:\r\n</p>";
+    $message .= "<a href=". $url .">$url</a></body></html>";
 
     $headers = "From:". EMAILANNONCEO ."\r\n";
     $headers .= "Reply-To:". EMAILANNONCEO ."\r\n";
     $headers .= "Content-type: text/html\r\n";
+    $headers .= 'Content-Transfer-Encoding: 8bit';
 
     mail($to, $subject, $message, $headers);
 
     header("location: reset-password.php?reset=success");
 
-}/* else {
+} else {
     header("location: http://localhost/teamRocket/trunk/");
-} */
+} 
