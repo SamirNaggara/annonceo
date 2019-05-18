@@ -166,133 +166,129 @@ include_once('inc/nav.inc.php');
 <div class="starter-template">
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-    <div class="row profil">
-        <a href="?action=informationsPersonnels" class="btnProfil btn m-3 <?php if((isset($_GET['action']) && $_GET['action']=='informationsPersonnels' || $_GET['action'] == 'modifierPassword' || $_GET['action'] == 'modifierProfil') || !isset($_GET['action'])){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Informations personnels</a>
-        <a href="?action=mesAnnonces" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesAnnonces'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes annonces</a>
-        <a href="?action=mesNotes" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='mesNotes'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Mes notes</a>
+</div>    
+<div class="row m-0">
+    <div class="profil col-4 p-0">
+            <ul class="list-group col-12 p-0">
+                <li class="list-group-item <?php if($_GET['action'] == 'informationsPersonnels') echo 'active'?>"> 
+                    <a href="?action=informationsPersonnels" class="<?php if($_GET['action'] == 'informationsPersonnels') echo 'text-white'?> d-block w-100">Informations personnels</a>
+                </li>
+                <li class="list-group-item <?php if($_GET['action'] == 'mesAnnonces') echo 'active'?>">
+                    <a href="?action=mesAnnonces" class="<?php if($_GET['action'] == 'mesAnnonces') echo 'text-white'?> d-block w-100">Mes annonces</a>
+                </li>
+                <li class="list-group-item <?php if($_GET['action'] == 'mesNotes') echo 'active'?>">
+                    <a href="?action=mesNotes" class="<?php if($_GET['action'] == 'mesNotes') echo 'text-white'?> d-block w-100">Mes notes</a>
+                </li>
+                <li class="list-group-item <?php if($_GET['action'] == 'modifierProfil') echo 'active'?>">
+                    <a href="?action=modifierProfil" class="<?php if($_GET['action'] == 'modifierProfil') echo 'text-white'?> d-block w-100">Modifier mon profil</a>
+                </li>
+                <li class="list-group-item <?php if($_GET['action'] == 'modifierPassword') echo 'active'?>">
+                    <a href="?action=modifierPassword" class="<?php if($_GET['action'] == 'modifierPassword') echo 'text-white'?> d-block w-100">Modifier mot de passe</a>
+                </li>
+            </ul>
     </div>
-    <hr>
-    <div class="row profil mt-5">
-        <a href="?action=modifierProfil" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierProfil'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mon profil</a>
-        <a href="?action=modifierPassword" class="btnProfil btn m-3 <?php if(isset($_GET['action']) && $_GET['action']=='modifierPassword'){echo 'btn-warning text-white';}else{echo 'btn-primary';} ?>">Modifier mot de passe</a>
-    </div>
-</div>
-
-<!--Formulaires des informations personnels-->
-<?php
-if(!isset($_GET['action']) || $_GET['action'] == 'informationsPersonnels') {
+    <!--Formulaires des informations personnels-->
+    <?php
+    if(!isset($_GET['action']) || $_GET['action'] == 'informationsPersonnels') {
     ?>
-    <div class="row">
-    <div class="col-sm-6 mx-auto">
-        <ul class="list-group">
-            <li class="list-group-item bg-primary text-white">Vos informations</li>
-            <li class="list-group-item"><span class="infos_profil">Identifiant membre: </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo ucfirst($_SESSION['utilisateur']['pseudo']); ?></li>
-            <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo ucfirst($_SESSION['utilisateur']['nom']); ?></li>
-            <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo ucfirst($_SESSION['utilisateur']['prenom']); ?></li>
-            <li class="list-group-item"><span class="infos_profil">Email: </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'Masculin'; else echo 'Féminin'; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Téléphone: </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
-            <li class="list-group-item"><span class="infos_profil">Statut: </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
-        </ul>
-    </div>
-<?php }
-// Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-elseif(isset($_GET['action']) && $_GET['action'] == "modifierProfil") {    
-?>
-
-<div class="container">
-    <div class="col-12">
-        <div class="row">
-            <form action="" method="post" class="col-5 mx-auto proForm">
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="id_membre_profil">Identifiant</label>
-                        <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="date_enregistrement_profil">Date d'inscription</label>
-                        <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-6 fg-pseudo">
-                        <label for="pseudo_profil">Pseudo</label>
-                        <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
-                        <i class="fas fa-times"></i>
-				        <i class="fas fa-check"></i>
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="civilite_profil">Sexe</label>
-                        <select class="form-control" id="civilite_profil" name="civilite_profil">
-                            <option value="m">masculin</option>
-                            <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="nom_profil">Nom</label>
-                        <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="telephone_profil">Telephone</label>
-                        <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="prenom_profil">Prenom</label>
-                        <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="email_profil">Email</label>
-                        <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
-                    </div>
-                    <div class="form-group col-12">
-                        <button type="submit" class="btn btn-primary col-12" name="validerMembre">Valider</button>
-                    </div>
-                </div>
-            </form>
-            <?php
-            // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-            } elseif(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
-            ?>
-            <!--Form pour le mot de passe-->
-            <form action="" method="post" class="col-3 mx-auto">
-                <div class="form-group">
-                    <label for="id_membre_profil">Mot de passe actuel</label>
-                    <input type="password" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
-                </div>
-                <div class="form-group">
-                    <label for="pseudo_profil">Nouveau mot de passe</label>
-                    <input type="password" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
-                </div>
-                <div class="form-group">
-                    <label for="nom_profil">Confirmer le mot de passe</label>
-                    <input type="password" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary col-12" name="enregistrementMdp">Enregistrer</button>
-                </div>
-            </form>
-            <?php } ?>
+    <div class="formProfil col-8">  
+            <div class="col-auto p-0">
+                <ul class="list-group">
+                    <li class="list-group-item bg-primary text-white">Vos informations</li>
+                    <li class="list-group-item"><span class="infos_profil">Identifiant membre: </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo ucfirst($_SESSION['utilisateur']['pseudo']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo ucfirst($_SESSION['utilisateur']['nom']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo ucfirst($_SESSION['utilisateur']['prenom']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Email: </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'Masculin'; else echo 'Féminin'; ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Téléphone: </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil">Statut: </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
+                </ul>
+            </div>
+    <?php }
+    // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+    elseif(isset($_GET['action']) && $_GET['action'] == "modifierProfil") {    
+    ?>
+    <form method="post" class="col-8 proForm pl-2">
+        <div class="row m-0">
+            <div class="form-group col-6">
+                <label for="id_membre_profil">Identifiant</label>
+                <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
+            </div>
+            <div class="form-group col-6">
+                <label for="date_enregistrement_profil">Date d'inscription</label>
+                <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
+            </div>
+            <div class="form-group col-6 fg-pseudo">
+                <label for="pseudo_profil">Pseudo</label>
+                <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+                <i class="fas fa-times"></i>
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="form-group col-6">
+                <label for="civilite_profil">Sexe</label>
+                <select class="form-control col-12" id="civilite_profil" name="civilite_profil">
+                    <option value="m">masculin</option>
+                    <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label for="nom_profil">Nom</label>
+                <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
+            </div>
+            <div class="form-group col-6">
+                <label for="telephone_profil">Telephone</label>
+                <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
+            </div>
+            <div class="form-group col-6">
+                <label for="prenom_profil">Prenom</label>
+                <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
+            </div>
+            <div class="form-group col-6">
+                <label for="email_profil">Email</label>
+                <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
+            </div>
+            <div class="form-group col-12">
+                <button type="submit" class="btn btn-primary col-12" name="validerMembre">Valider</button>
+            </div>
         </div>
-    </div>
-</div>
-<?php
-    //Fermeture du if de l'onglet informations personnels
-
-
-// Ouverture de l'onglet sur les commentaires
-if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){    
-    echo '<p>Je suis la page annonce</p>';
-}
-
-// Ouverture de l'onglet sur les notes
-if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){    
+    </form>
+    <?php
+    // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+    } elseif(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
     ?>
+    <!--Form pour le mot de passe-->
+    <form action="" method="post" class="col-8 pl-2">
+        <div class="form-group">
+            <label for="id_membre_profil">Mot de passe actuel</label>
+            <input type="password" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
+        </div>
+        <div class="form-group">
+            <label for="pseudo_profil">Nouveau mot de passe</label>
+            <input type="password" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
+        </div>
+        <div class="form-group">
+            <label for="nom_profil">Confirmer le mot de passe</label>
+            <input type="password" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary col-12" name="enregistrementMdp">Enregistrer</button>
+        </div>
+    </form>
+    <?php } ?>
+    <?php
+    //Fermeture du if de l'onglet informations personnels
+    // Ouverture de l'onglet sur les commentaires
+    if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>   
+    <div class="col-8">
+        <p>Mes futures annonces j'attends Samir pour les afficher</p>
+    </div>
+    <?php } ?>
+    <?php
+    // Ouverture de l'onglet sur les notes
+    if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){    
+    ?>
+    <div class="col-8 pl-2">
     <div class="starter-template">
         <h2>Mes avis</h2>
         <h3>Moyenne: <?php echo $moyenneNote; ?>/5</h3>
@@ -329,7 +325,6 @@ if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){
         }
         ?>
     </div>
-
     <div class="starter-template">
         <h2>Les avis donnés</h2>
     </div>
@@ -364,9 +359,10 @@ if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){
         }
         ?>
     </div>
+    </div>
     <?php
     }
     ?>
-
+</div>
 <?php
 include_once('inc/footer.inc.php');

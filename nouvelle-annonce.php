@@ -7,11 +7,6 @@ if (!user_is_connected()){
     exit();
 }
 
-if(!user_is_admin()) {
-	// si l'utilisateur n'est pas admin on le redirige vers l'index
-		header("location:" . URL);
-		exit();
-	}
 //***************************
 // ENREGISTREMENT ANNONCE
 //***************************
@@ -99,8 +94,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 			$photo_dossier = RACINE_SERVEUR . $photo_bdd_base; // l'emplacement où on va copier la photo
 			
 			// copy() permet de copier un fichier depuis un emplacement 1er argument, vers un autre emplacement 2eme argument
-			copy($_FILES['photo']['tmp_name'], $photo_dossier);
-		} else {
+			move_uploaded_file($_FILES['photo']['tmp_name'], $photo_dossier);
+			//move_uploaded_file($tmp_name, "$uploads_dir/$name");
 			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, l\'extension de la photo principale n\'est pas valide, extensions acceptées: png / jpg / jpeg / gif.<br>Veuillez recommencer</div>';
 		}
 	}	
@@ -441,5 +436,39 @@ include_once('inc/nav.inc.php');
 </div>
 <?php
 include_once('inc/footer.inc.php');
-
 ?>
+<script>
+function createThumbnail(sFile,sId) {
+            var oReader = new FileReader();
+            oReader.addEventListener('load', function() {
+            var oImgElement = document.createElement('img');
+            oImgElement.classList.add('imgPreview') 
+            oImgElement.src = this.result;
+            document.getElementById('preview-'+sId).appendChild(oImgElement);
+            }, false);
+        
+            oReader.readAsDataURL(sFile);
+        
+            }//function
+            function changeInputFil(oEvent){
+                var oInputFile = oEvent.currentTarget,
+                    sName = oInputFile.name,
+                    aFiles = oInputFile.files,
+                    aAllowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
+                    imgType;  
+                document.getElementById('preview-'+sName).innerHTML ='';
+                for (var i = 0 ; i < aFiles.length ; i++) {
+                imgType = aFiles[i].name.split('.');
+                imgType = imgType[imgType.length - 1];
+                if(aAllowedTypes.indexOf(imgType) != -1) {
+                    createThumbnail(aFiles[i],sName);
+                }//if
+                }//for
+            }//function 
+            document.addEventListener('DOMContentLoaded',function(){
+            var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
+                for(var k = 0; k < aFileInput.length;k++){
+                aFileInput[k].addEventListener('change', changeInputFil, false);
+                }//for
+            });
+</script>

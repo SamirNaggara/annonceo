@@ -12,12 +12,11 @@
         ?>
         
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="<?php echo URL;?>index.php">Annonceo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav">
                     <!-- Dépot d'annonce -->
                     
 <!--                    On affiche "Déposer une annonce" seulement siun utilateur est connecter-->
@@ -38,8 +37,9 @@
                         <a class="nav-link" href="contact.php">Contact</a>
                     </li>
                 </ul>
+                <div class="title text-white mx-auto"><a class="navbar-brand" href="<?php echo URL;?>index.php">Annonceo</a></div>
                 <!-- Barre de recherche -->
-                <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="get">
+                <form class="d-none d-md-inline-block form-inline mr-0 mr-md-3 my-2 my-md-0" method="get">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-addon2">
                         <div class="input-group-append">

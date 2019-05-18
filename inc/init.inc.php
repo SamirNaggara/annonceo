@@ -10,6 +10,7 @@ $pdo= new PDO($host_db, $user, $password, $options);
 
 $msg = '';
 $msg2 = '';
+$success = '';
 
 session_start();
 include_once('function.inc.php');

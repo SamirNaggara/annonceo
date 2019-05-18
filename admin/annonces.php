@@ -331,7 +331,7 @@ if(isset($_GET['categorie'])) {
     FROM annonce a, membre m, categorie c 
     WHERE m.id_membre = a.membre_id   
     AND a.categorie_id = c.id_categorie
-    ORDER BY a.id_annonce"
+    "
     );
     $annonces->execute();
 }
@@ -354,10 +354,10 @@ if(isset($_GET['modifier'])) {
             <form method="post" action="" enctype="multipart/form-data" class="d-flex" >
                 <div class="section1 col-4 offset-1">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
+                        <input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="photo_id" name="photo_id" value="<?php echo $id_photo; ?>">
+                        <input type="hidden" class="form-control" id="photo_id" name="photo_id" value="<?php echo $id_photo; ?>">
                     </div>
                     <div class="form-group">
                         <label for="titre">Titre de l'annonce :</label>
@@ -387,42 +387,42 @@ if(isset($_GET['modifier'])) {
                 <div class="section2 col-5 mx-auto flex-wrap">
                         <div class="container-fluid d-flex pt-2">
                             <?php if(!empty($photo_actuelle)) { ?>
-                            <div class="text-center">
-                                <label for="photo_actuelle">Photo principale</label><br>
+                            <div class="text-center mr-2">
+                                <label for="photo_actuelle">Principale</label><br>
                                 <img src="<?php echo URL.$photo_actuelle; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="photo_actuelle" name="photo_actuelle" value="<?php echo $photo_actuelle; ?>">
                             </div>
-                            <div class="text-center">
+                            <div class="text-center mr-2">
                                 <label for="photo_actuelle">Photo 1</label><br>
                                 <img src="<?php echo URL.$photo_actuelle1; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="photo_actuelle1" name="photo_actuelle1" value="<?php echo $photo_actuelle1; ?>">
                             </div>
-                            <div class="text-center">
+                            <div class="text-center mr-2">
                                 <label for="photo_actuelle">Photo 2</label><br>
                                 <img src="<?php echo URL.$photo_actuelle2; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="photo_actuelle2" name="photo_actuelle2" value="<?php echo $photo_actuelle2; ?>">
                             </div>
-                            <div class="text-center">
+                            <div class="text-center mr-2">
                                 <label for="photo_actuelle">Photo 3</label><br>
                                 <img src="<?php echo URL.$photo_actuelle3; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="photo_actuelle3" name="photo_actuelle3" value="<?php echo $photo_actuelle3; ?>">
                             </div>
-                            <div class="text-center">
+                            <div class="text-center mr-2">
                                 <label for="photo_actuelle">Photo 4</label><br>
                                 <img src="<?php echo URL.$photo_actuelle4; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" class="form-control" id="photo_actuelle4" name="photo_actuelle4" value="<?php echo $photo_actuelle4; ?>">
                             </div>
-                            <div class="text-center">
+                            <div class="text-center mr-2">
                                 <label for="photo_actuelle">Photo 5</label><br>
                                 <img src="<?php echo URL.$photo_actuelle5; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
                             </div>
@@ -431,7 +431,7 @@ if(isset($_GET['modifier'])) {
                             </div>
                     </div>
                     <?php } ?>
-                    <div class="container-fluid d-flex flex-wrap">
+                    <div class="row pt-4">
                         <div class="form-group col-6">
                             <label for="photo">Photo principal :</label>
                             <input type="file" class="form-control" id="photo" name="photo">

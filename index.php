@@ -79,8 +79,12 @@ $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
-
-<div class="containerPage container-fluid row">
+<div class="starter-template"><h1>Les dernieres annonces :</h1>
+            <p class="lead">
+                <?php echo $msg;?>
+            </p>
+        </div>
+<div class="containerPage row">
 <!--
     ****************************
     DEBUT DU FORMULAIRE DE TRIE
@@ -177,35 +181,33 @@ include_once('inc/nav.inc.php');
     <!-- Affichage des annonces en pages d'accueil -->
     <!-- ***************************************** -->
     
-    <div class="container annonce-index col-lg-8 mt-3">
-        <div class="starter-template">
-            <h1><i class="fas fa-shopping-cart mes_icones"></i> Bienvenue sur Annonceo <i class="fas fa-shopping-cart mes_icones"></i></h1>
-            <p class="lead">
-                <?php echo $msg;?>
-            </p>
-        </div>
-        <div id="contenerReponseRequete" class="mx-auto">
+    <div class="annonce-index col-lg-8 mt-3">
+        <div id="contenerReponseRequete" class="row">
         <!--Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
             <?php 
             foreach($requeteAffichage as $uneLigne){
             ?>
-            <div class="blocRequete row no-gutters bg-light position-relative mx-auto mb-4">
-                <div class="col-md-6 mb-md-0 p-md-4">
-                    <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
-                        <img src="<?php echo $uneLigne['photo']; ?>" class="w-100 img-fluid" alt="photo annonceo">
-                    </a>
-                </div>
-                <div class="col-md-6 texte position-relative p-0 pl-md-0">
-                    <h5 class="mt-0 p-0 pt-3 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
-                    <p class="p-0 text-center text-md-left w-100 mx-auto">
-                        <?php echo ucfirst($uneLigne['description_courte']); ?>
-                    </p>
-                    <div class="footerAnnonce row mx-auto w-100 pb-4 mb-2 pr-3">
-                        <span class="d-inline-block col-md-6 m-0 p-0 pb-1 text-center text-md-left">
-                            <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
-                        <span class="d-inline-block m-0 p-0 pb-1 col-md-6 text-center text-md-right">
-                            <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
-                        </span>
+            <div class="blocRequete no-gutters bg-light col-12 mb-4">
+                <div class="row">
+                    <div class="col-md-6 imgAnnonce">
+                        <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
+                            <div class="picture m-3">
+                                <img src="<?php echo $uneLigne['photo']; ?>" class="d-block" alt="photo annonceo">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 p-2 d-flex flex-column">
+                        <h5 class="mt-0 p-0 pt-2 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
+                        <p class="p-0 text-center text-md-left w-100 mx-auto mb-auto">
+                            <?php echo ucfirst($uneLigne['description_courte']); ?>
+                        </p>
+                        <div class="footerAnnonce row mx-auto w-100 mb-2 pr-3">
+                            <span class="d-inline-block col-md-6 p-0 text-center text-md-left">
+                                <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                            <span class="d-inline-block col-md-6 p-0 text-center text-md-right">
+                                <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

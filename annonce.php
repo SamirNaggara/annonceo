@@ -16,7 +16,6 @@ if($infosAnnonce->rowCount() < 1) {
     header('location:' . URL);
 }else{
     $cetteAnnonce = $infosAnnonce->fetch(PDO::FETCH_ASSOC);
-
     //Recuperons les information de la table membre, avec l'id qui est dans la table annonce
     $infosVendeur = $pdo->prepare("SELECT * FROM membre WHERE id_membre = :id_membre");
     $infosVendeur->bindParam(':id_membre', $cetteAnnonce["membre_id"], PDO::PARAM_STR);
@@ -184,44 +183,35 @@ include_once('inc/nav.inc.php');
                 <!-----Fin collapseVoirLesAvis--------->
             </div>
             <!------Fin conteneurTitreNote------------>
-            <?php
-            if (!user_is_connected()) {
-                echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
-            } else {?>
-            <div class="conteneurBoutons col-lg-6 align-items-start m-0 p-3">
-                <div class="row">
-                    <a class="contacter btn btn-success col-5 mx-auto" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
-                        <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-                    <a class="laisserAvis btn btn-info col-5 mx-auto offset-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
-                </div>
-            </div>
-            <?php } ?>
-            <!-----Fin conteneurBoutons-------->
         </div>
         <!-------Fin titreAnnonce---------->
     </header>
     <!-------Fin container-fluid---------->
     <!--Carousel et texte de l'annonce-->
-    <div class="conteneurCarouselTexte row mt-5 ">
+    <div class="conteneurCarouselTexte row my-5 ">
         <section class="carousel col-lg-6">
-            <div id="carouselAnnonce" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li>
+            <div id="carouselAnnonce" class="carousel slide w-90" data-ride="carousel">
+                <!-- <ol class="carousel-indicators">
+                    <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li> -->
                     <?php 
-                        $i=1;
+                        //$i=1;
                     //Pour chaque tour de boucle, la ligne <li>...</li> s'écrit uniquement si il y a une photo, et le compteur suit pour que les data-slide se suivent 
-                        foreach($lesPhotos as $ind => $laPhoto){
-                            if (!empty($laPhoto) && $ind != 'id_photo'){
-                                echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
-                                $i++;
-                            }
-                        }
+                        //foreach($lesPhotos as $ind => $laPhoto){
+                          //  if (!empty($laPhoto) && $ind != 'id_photo'){
+                            //    echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
+                              //  $i++;
+                           // }
+                       // }
                     ?>
-                </ol>
-                <div class="carousel-inner w-100">
+                <!-- </ol> -->
+                <div class="carousel-inner w-100 rounded">
                     <div class="carousel-item active">
                         <?php 
-                    echo '<img class="d-block img-fluid w-100" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
+                    echo '<div class="bg-carousel rounded">';
+                    echo '<a href="' . $cetteAnnonce["photo"] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                    echo '<img class="d-block img-fluid mx-auto" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
+                    echo '</a>';
+                    echo '</div>';
                     ?>
                     </div>
                     <?php
@@ -230,7 +220,11 @@ include_once('inc/nav.inc.php');
                     foreach($lesPhotos as $ind => $laPhoto){
                         if (!empty($laPhoto) && $ind != 'id_photo'){
                             echo '<div class="carousel-item">';
-                            echo '<img class="d-block img-fluid w-100" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
+                            echo '<div class="bg-carousel rounded">';
+                            echo '<a href="' . $lesPhotos[$listePhoto[$j]] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                            echo '<img class="d-block img-fluid mx-auto rounded" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
+                            echo '</a>';
+                            echo '</div>';
                             echo '</div>';
                             $j++;
                         }
@@ -247,9 +241,27 @@ include_once('inc/nav.inc.php');
                 </a>
         </section>
         <!-----Fin carousel-------------->
-        <div class="description col-lg-6 p-3">
-            <h3 class="p-3 text-center text-lg-left">Description</h3>
-            <div class="conteneurTexte overflow-scroll p-3">
+        <div class="description col-lg-6">
+            <?php
+            if (!user_is_connected()) {
+                echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
+            } else {?>
+            <div class="conteneurBoutons align-items-start m-0 mb-2">
+                <div class="row m-0">
+                    <div class="col-6 m-0 p-1">
+                        <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
+                        <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
+                    </div>
+                    <div class="col-6 m-0 p-1">
+                        <a class="laisserAvis btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+            <!-----Fin conteneurBoutons-------->
+            <h4 class="text-center text-lg-left">Description :</h4>
+            <hr>
+            <div class="conteneurTexte overflow-scroll">
                 <p class="p-0 m-0 text-justify" id="description">
                     <?php 
                     if (strlen($cetteAnnonce['description_longue']) > 960){
@@ -277,16 +289,23 @@ include_once('inc/nav.inc.php');
     </div>
     <!------ Fin conteneurCarouselTexte-------->
     <!--Partie ou l'on affiche les autres annonces-->
-    <div class="autresAnnonces row mt-5">
-        <h3 class="bold col-12 text-lg-left text-center">Autres annonces</h3>
+    <hr>
+    <div class="gMap py-2">
+        <iframe src="https://maps.google.it/maps?q=<?php echo $cetteAnnonce['adresse'] . $cetteAnnonce['cp'] . $cetteAnnonce['ville'] ?>&output=embed" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <hr>
+    <div class="autresAnnonces row mt-3">
+        <h4 class="bold col-12 text-lg-left text-center">Annonces similaires :</h4>
         <?php 
         foreach($autresAnnonces as $cetteAutreAnnonce){
             ?>
-        <figure class="col-sm-3 flex-column mx-auto mt-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
-                <?php echo '<img class="img-fluid" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-                <figcaption class="text-center text-dark">
-                    <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
-                </figcaption>
+        <figure class="col-sm-3 my-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
+        <div class="picture m-3 img-thumbnail">
+                <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
+                <figcaption class="text-center text-dark mt-2">
+                <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
+            </figcaption>
+                </div>
             </a>
         </figure>
         <?php
@@ -298,14 +317,15 @@ include_once('inc/nav.inc.php');
     <?php
     if (!user_is_connected()) { 
     } else {?>
-    <div class="commentaires">
-        <h2>Commentaires</h2>
-        <form id="avis" method="post" action="">
+    <div class="commentaires mt-4">
+    <hr>
+        <h4>Laisser un commentaires :</h4>
+        <form id="avis" method="post" action="" class="mt-3">
             <div class="form-group">
-                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="3" placeholder="Mon commentaire..."></textarea>
+                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
+                <input type="submit" class="btn btn-outline-dark w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
             </div>
         </form>
         <div class="conteneurCommentaire mt-5">
@@ -407,6 +427,98 @@ include_once('inc/nav.inc.php');
     <!-------Fin modalContacter-------------->
 </section>
 <!---------Fin section mon annonce------------->
+
 <?php
 include_once('inc/footer.inc.php');
+?>
+
+                    <script type="text/javascript">
+                  
+                        $(document).ready(function ($) {
+                            // delegate calls to data-toggle="lightbox"
+                            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"]):not([data-gallery="example-gallery-11"])', function(event) {
+                                event.preventDefault();
+                                return $(this).ekkoLightbox({
+                                    onShown: function() {
+                                        if (window.console) {
+                                            return console.log('');
+                                        }
+                                    },
+                                    onNavigate: function(direction, itemIndex) {
+                                        if (window.console) {
+                                            return console.log('');
+                                        }
+                                    }
+                                });
+                            });
+            
+                            // disable wrapping
+                            $(document).on('click', '[data-toggle="lightbox"][data-gallery="example-gallery-11"]', function(event) {
+                                event.preventDefault();
+                                return $(this).ekkoLightbox({
+                                    wrapping: false
+                                });
+                            });
+            
+                            //Programmatically call
+                            $('#open-image').click(function (e) {
+                                e.preventDefault();
+                                $(this).ekkoLightbox();
+                            });
+                            $('#open-youtube').click(function (e) {
+                                e.preventDefault();
+                                $(this).ekkoLightbox();
+                            });
+            
+                            // navigateTo
+                            $(document).on('click', '[data-toggle="lightbox"][data-gallery="navigateTo"]', function(event) {
+                                event.preventDefault();
+            
+                                return $(this).ekkoLightbox({
+                                    onShown: function() {
+            
+                                        this.modal().on('click', '.modal-footer a', function(e) {
+            
+                                            e.preventDefault();
+                                            this.navigateTo(2);
+            
+                                        }.bind(this));
+            
+                                    }
+                                });
+                            });
+            
+            
+                            /**
+                             * Documentation specific - ignore this
+                             */
+                            anchors.options.placement = 'left';
+                            anchors.add('h3');
+                            $('code[data-code]').each(function() {
+            
+                                var $code = $(this),
+                                    $pair = $('div[data-code="'+$code.data('code')+'"]');
+            
+                                $code.hide();
+                                var text = $code.text($pair.html()).html().trim().split("\n");
+                                var indentLength = text[text.length - 1].match(/^\s+/)
+                                indentLength = indentLength ? indentLength[0].length : 24;
+                                var indent = '';
+                                for(var i = 0; i < indentLength; i++)
+                                    indent += ' ';
+                                if($code.data('trim') == 'all') {
+                                    for (var i = 0; i < text.length; i++)
+                                        text[i] = text[i].trim();
+                                } else  {
+                                    for (var i = 0; i < text.length; i++)
+                                        text[i] = text[i].replace(indent, '    ').replace('    ', '');
+                                }
+                                text = text.join("\n");
+                                $code.html(text).show();
+            
+                            });
+                        });
+                    
+                    </script>
+
 

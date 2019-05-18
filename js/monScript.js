@@ -1,16 +1,5 @@
 
 $(document).ready(function() {
-    function escapeHtml(text) {
-        var map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-    
-        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-    }
     
         $('.fa-check').hide();
         $('.fa-times').hide();
@@ -175,7 +164,7 @@ $(document).ready(function() {
             }, 'json');
     });
 
-});
+
    //   ----------------------------------------------CONTACT-------------------------------------------------------------------
 
         // Ajax du formulaire de contact
@@ -203,41 +192,45 @@ $(document).ready(function() {
                 }
             });
         });
-
+    });
     // ---------------------------Nouvelle annonce (photo)----------------------------------------
-    function createThumbnail(sFile,sId) {
-        var oReader = new FileReader();
-        oReader.addEventListener('load', function() {
-        var oImgElement = document.createElement('img');
-        oImgElement.classList.add('imgPreview') 
-        oImgElement.src = this.result;
-        document.getElementById('preview-'+sId).appendChild(oImgElement);
-        }, false);
-    
-        oReader.readAsDataURL(sFile);
-    
-        }//function
-        function changeInputFil(oEvent){
-            var oInputFile = oEvent.currentTarget,
-                sName = oInputFile.name,
-                aFiles = oInputFile.files,
-                aAllowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
-                imgType;  
-            document.getElementById('preview-'+sName).innerHTML ='';
-            for (var i = 0 ; i < aFiles.length ; i++) {
-            imgType = aFiles[i].name.split('.');
-            imgType = imgType[imgType.length - 1];
-            if(aAllowedTypes.indexOf(imgType) != -1) {
-                createThumbnail(aFiles[i],sName);
-            }//if
-            }//for
-        }//function 
-        document.addEventListener('DOMContentLoaded',function(){
-        var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
-            for(var k = 0; k < aFileInput.length;k++){
-            aFileInput[k].addEventListener('change', changeInputFil, false);
-            }//for
-        });
+    window.onload = function () {
+        /* function createThumbnail(sFile,sId) {
+            var oReader = new FileReader();
+            oReader.addEventListener('load', function() {
+            var oImgElement = document.createElement('img');
+            oImgElement.classList.add('imgPreview') 
+            oImgElement.src = this.result;
+            document.getElementById('preview-'+sId).appendChild(oImgElement);
+            }, false);
+        
+            oReader.readAsDataURL(sFile);
+        
+            }//function
+            function changeInputFil(oEvent){
+                var oInputFile = oEvent.currentTarget,
+                    sName = oInputFile.name,
+                    aFiles = oInputFile.files,
+                    aAllowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
+                    imgType;  
+                document.getElementById('preview-'+sName).innerHTML ='';
+                for (var i = 0 ; i < aFiles.length ; i++) {
+                imgType = aFiles[i].name.split('.');
+                imgType = imgType[imgType.length - 1];
+                if(aAllowedTypes.indexOf(imgType) != -1) {
+                    createThumbnail(aFiles[i],sName);
+                }//if
+                }//for
+            }//function 
+            document.addEventListener('DOMContentLoaded',function(){
+            var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
+                for(var k = 0; k < aFileInput.length;k++){
+                aFileInput[k].addEventListener('change', changeInputFil, false);
+                }//for
+            }); */
+    }
+        
+
     //-----------------------Nouvelle annonce formulaire------------------------
 
         

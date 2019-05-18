@@ -1,8 +1,20 @@
+/** Generale **/
+body, html {
+  min-height: 100vh;
+  position: relative;
+}
+
 /** footer.inc.php **/
 .footerMembre {
   width: 100% !important;
-  position: inherit !important;
-  bottom: 0;
+}
+.footerMembre a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s ease-in-out;
+}
+.footerMembre a:hover {
+  color: #ffc107;
 }
 
 /** admin/footer.in.php **/
@@ -12,10 +24,10 @@
 
 /** index.php **/
 /* conteneur principal englobant les annonces*/
-.annonce-index,
 .container {
-  margin-top: 100px;
-  margin-bottom: 150px;
+  padding-top: 100px;
+  margin-bottom: 163px;
+  box-sizing: border-box;
 }
 
 /** titres des pages affiche les message d'erreur */
@@ -27,22 +39,41 @@
   font-size: 30px;
 }
 
+.autresAnnonces figure {
+  width: 350px;
+  height: 250px;
+}
+.autresAnnonces figure .picture {
+  width: 230px;
+  height: 100%;
+}
+.autresAnnonces figure a {
+  text-decoration: none;
+}
 .autresAnnonces figure img {
-  min-width: 100%;
-  max-height: 225px;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 100%;
 }
 @media screen and (max-width: 480px) {
   .autresAnnonces figure img {
     height: 100% !important;
   }
 }
+.autresAnnonces figure figcaption {
+  font-size: 15px;
+}
 
 .monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
   font-size: 10px;
 }
 
+.monAnnonce .conteneurCarouselTexte .carousel .bg-carousel {
+  background-color: #f8f9fa;
+}
 .monAnnonce .conteneurCarouselTexte .carousel img {
   height: 500px !important;
+  margin: 0 auto;
 }
 @media screen and (max-width: 480px) {
   .monAnnonce .conteneurCarouselTexte .carousel img {
@@ -99,10 +130,26 @@
   }
 }
 
+#contenerReponseRequete > .blocRequete {
+  height: 335px;
+}
+@media screen and (max-width: 767px) {
+  #contenerReponseRequete > .blocRequete {
+    height: auto;
+  }
+}
+
+#contenerReponseRequete > .blocRequete > .row > .imgAnnonce .picture {
+  height: 300px;
+  background-color: #f8f9fa;
+}
+
 #contenerReponseRequete > .blocRequete a img {
   display: block;
-  max-height: 280px;
-  min-height: 240px;
+  max-height: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 #contactForm {
@@ -157,6 +204,13 @@
 }
 #cgv_conteneur .info {
   text-align: center;
+}
+
+.rstPswd {
+  padding-top: 197px;
+}
+.rstPswd h1 {
+  font-size: 30px;
 }
 
 .login-form {

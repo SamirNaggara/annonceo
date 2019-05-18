@@ -33,7 +33,12 @@ include_once('inc/modal.inc.php');
                         </div>
                         <div class="form-group">
                             <label for="inputEmail">Email</label>
-                            <input type="text" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Votre email" name="email" value="<?php echo $email; ?>">
+                            <div class="input-group mb-2">
+						        <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input type="text" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Votre email" name="email" value="<?php echo $email; ?>">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPhone">Téléphone</label>
@@ -108,28 +113,33 @@ include_once('inc/modal.inc.php');
 <!-- Fin Modal de connexion -->
 </main>
 <footer class="sticky-footer footerMembre">
-    <div class="container my-auto">
+    <div class="mx-auto my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright © Annonceo 2019 </span>
-            <span class="mx-2"><a href="<?php echo URL ?>mentions-legales.php">Mentions légales </a></span>
-            <span><a href="<?php echo URL ?>conditions-generales-de-ventes.php">Conditions générales de ventes </a></span>
+            <span class="mx-2">Copyright © Annonceo 2019 </span><span> |</span>
+            <span class="mx-2"><a href="<?php echo URL?>mentions-legales.php">Mentions légales</a></span><span>|</span>
+            <span class="mx-2"><a href="<?php echo URL ?>conditions-generales-de-ventes.php">Conditions générales de ventes </a></span>
         </div>
     </div>
 </footer>
-		<script
-				src="https://code.jquery.com/jquery-3.4.0.min.js"
-				integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
-				crossorigin="anonymous">
-		</script>
+<script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous">
+</script>
+
 <script>
     window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
 
 </script>
 <script src="<?php echo URL ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo URL ?>js/sb-admin.min.js"></script>
+
 <script src="<?php echo URL ?>js/jquery-ui.min.js"></script>
+<script src="<?php echo URL ?>js/ekko-lightbox.js"></script>
+<script src="<?php echo URL ?>js/anchorjs/anchor.js"></script>
 <script src="<?php echo URL ?>js/monScript.js"></script>
 <script src="<?php echo URL ?>js/carte.js"></script>
+
 </body>
 
 </html>
