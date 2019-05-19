@@ -62,12 +62,6 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 		// s'il y a plus de 1 ligne alors le pseudo existe en plus de celui de l'identifiant en cours
 		$msg .= '<div class="alert alert-danger mt-2" role="alert">Attention ce pseudo est deja utilisé.<br>Veuillez en choisir un autre</div>';
 	}   
-    
-    // controle sur le password doit contenir au minimum 8 caractères 1 majuscule 1 chiffre
-	if (!preg_match('#^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#', $mdp)) {
-		$msg .= '<div class="alert alert-danger mt-2" role="alert">Votre mot de passe doit contenir au minimum, 8 caratères, 1 majuscule et 1 chiffre<br> Veuillez recommencer</div>';
-	}
-
     // vérification du format de l'email
 	if(!isEmail($email_profil)) {
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du mail n\'est pas valide.<br>Veuillez recommencer</div>';
@@ -78,7 +72,7 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
         $msg .= '<div class="alert alert-danger mt-2" role="alert">Attention le format du téléphone n\'est pas valide.<br>Veuillez recommencer</div>';
     }  
     // Si il y a au moins 1 changement dans le form, et que msg est vide, on enregistre les informations
-    if (($pseudo_profil != $_SESSION['utilisateur']['pseudo'] || $nom_profil != $_SESSION['utilisateur']['nom'] || $prenom_profil != $_SESSION['utilisateur']['prenom'] || $telephone_profil != $_SESSION['utilisateur']['telephone'] || $email_profil != $_SESSION['utilisateur']['email'] || $civilite_profil != $_SESSION['utilisateur']['civilite']) && empty($msg)){
+    if (($pseudo_profil != $_SESSION['utilisateur']['pseudo'] || $nom_profil != $_SESSION['utilisateur']['nom'] || $prenom_profil != $_SESSION['utilisateur']['prenom'] || $telephone_profil != $_SESSION['utilisateur']['telephone'] || $email_profil != $_SESSION['utilisateur']['email'] || $civilite_profil != $_SESSION['utilisateur']['civilite']) && isset($_POST['validerMembre']) && empty($msg)){
 
         $enregistrement = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, nom = :nom, prenom = :prenom, telephone = :telephone, email = :email, civilite = :civilite WHERE id_membre = :id_membre_profil");
         $enregistrement->bindParam(':id_membre_profil', $id_membre_profil, PDO::PARAM_STR);
@@ -106,9 +100,15 @@ if(isset($_POST['pseudo_profil']) && isset($_POST['nom_profil']) && isset($_POST
 //Partie sur le changement de mot de passe
 
 $actuelMdp = "";
-$nouveauMdp= "";;
+$nouveauMdp= "";
+// controle sur le password doit contenir au minimum 8 caractères 1 majuscule 1 chiffre
 
 if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset($_POST['inputNouveauMdp2']) && isset($_POST['enregistrementMdp'])){
+    $actuelMdp = $_POST['inputActuelMdp'];
+    $nouveauMdp= $_POST['inputNouveauMdp1'];
+    if (!preg_match('#^(?=.{6,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$#', $nouveauMdp)) {
+        $msg .= '<div class="alert alert-danger mt-2" role="alert">Votre mot de passe doit contenir au minimum, 8 caratères, 1 majuscule et 1 chiffre<br> Veuillez recommencer</div>';
+    }
     
     // L'enregistrement ne s'effectuera que si les deux mots de passe correspondent, sinon, l'on renvoie un message d'erreur que les deux ne correspondent pas
     if ($_POST['inputNouveauMdp1'] == $_POST['inputNouveauMdp2']){
@@ -122,7 +122,6 @@ if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset
         $infoMdp -> execute();
         
         $ligneMdpActuel = $infoMdp -> fetch(PDO::FETCH_ASSOC);
-        echo $ligneMdpActuel['mdp'];
         
         //On verifie si le mdp est bon, s'il est bon on update dans la page de donnée et on envoie un message de succes, et si non, on envoie un message que le mdp n'est pas bon
         if(password_verify($actuelMdp, $ligneMdpActuel['mdp'])){
@@ -134,7 +133,7 @@ if(isset($_POST['inputActuelMdp']) && isset($_POST['inputNouveauMdp1']) && isset
             $updateMdp-> bindParam(':mdp', $mdp, PDO::PARAM_STR);
             $updateMdp-> bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
             $updateMdp -> execute();
-            $msg .= '<div class="alert alert-success mt-2" role="alert">Le nouveau a été attribué avec succes.</div>';
+            $msg .= '<div class="alert alert-success mt-2" role="alert">Votre mot de passe à été modifié.</div>';
         }else{
             $msg .= '<div class="alert alert-danger mt-2" role="alert">Le mot de passe actuel n\'est pas le bon.<br>Veuillez recommencer</div>';  
         }
@@ -255,7 +254,10 @@ include_once('inc/nav.inc.php');
     </form>
     <?php
     // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-    } elseif(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
+    } 
+    ?>
+    <?php
+    if(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
     ?>
     <!--Form pour le mot de passe-->
     <form action="" method="post" class="col-8 pl-2">
