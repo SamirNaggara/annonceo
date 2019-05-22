@@ -79,141 +79,126 @@ $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
-<div class="starter-template"><h1>Les dernieres annonces :</h1>
-            <p class="lead">
-                <?php echo $msg;?>
-            </p>
-        </div>
-<div class="containerPage row">
-<!--
-    ****************************
-    DEBUT DU FORMULAIRE DE TRIE
-    ****************************
--->
-    <nav class="col-lg-4 mt-3">
-        <div class="form-group">
-            <label for="champsRechercher">Rechercher</label>
-            <input type="email" class="form-control ajaxGlobale" id="champsRechercher" placeholder="Tapez votre recherche ici">
-        </div>
-        <form method="post" action="#">
-            <div class="form-group">
-                <label for="categorie">Categorie</label>
-                <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
-                    <option value="toutes">Toutes les catégories</option>
-                    <?php 
-                    foreach($infosCategorie AS $laCategorie){
-                        echo '<option value="' . $laCategorie['id_categorie'] . '">' . $laCategorie['titre'] . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="region">Regions</label>
-                <select class="ajaxGlobale custom-select" id="region" name="region">
-                    <option value="toutes">Toutes les regions</option>
-                    <?php foreach($listeRegions as $laRegion){
-                    echo '<option>' . $laRegion . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="departement">Departement</label>
-                <select class="ajaxGlobale selectDepartement custom-select" id="departement" name="departement">
-                    <option value="toutes">Tout les departements</option>
-                    <?php foreach(departements('toutes', $lesVilles) as $leDepartement){
-                    echo '<option>' . $leDepartement . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="ajaxGlobale form-group champVille">
-                <label for="ville">Ville</label>
-                <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="prixMinimum">Prix minimum</label>
-                <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
-                <output class="" id="prixMin" name="resultMin"></output>
-            </div>
-            <div class="form-group">
-                <label for="prixMaximum">Prix maximum</label>
-                <input type="range" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="5000" step="10" value="5000" />
-                <output id="prixMax" class="" name="resultMax"></output>
-            </div>
-            <!--           <button type="submit" name="enregistrement">Valider</button>-->
-        </form>
-        <h3>Options de tri</h3>
-        <div class="form-check">
-            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parDateDesc" value="parDateDesc" checked>
-            <label class="form-check-label" for="parDateDesc">
-                Les plus récentes
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parDateAsc" value="parDateAsc">
-            <label class="form-check-label" for="parDateAsc">
-                Les plus anciennes
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parPrixDesc" value="parPrixDesc">
-            <label class="form-check-label" for="parPrixDesc">
-                Les moins chères
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parPrixAsc" value="parPrixAsc">
-            <label class="form-check-label" for="parPrixAsc">
-                Les plus chères
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input ajaxGlobale" type="radio" name="trie" id="parVendeur" value="parVendeur">
-            <label class="form-check-label" for="parVendeur">
-                Les meilleurs vendeurs
-            </label>
-        </div>
-    </nav>
-    
-    <!-- ***************************************** -->
-    <!-- Affichage des annonces en pages d'accueil -->
-    <!-- ***************************************** -->
-    
-    <div class="annonce-index col-lg-8 mt-3">
-        <div id="contenerReponseRequete" class="row">
-        <!--Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
-            <?php 
-            foreach($requeteAffichage as $uneLigne){
-            ?>
-            <div class="blocRequete no-gutters bg-light col-12 mb-4">
-                <div class="row">
-                    <div class="col-md-6 imgAnnonce">
-                        <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
-                            <div class="picture m-3">
-                                <img src="<?php echo $uneLigne['photo']; ?>" class="d-block" alt="photo annonceo">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-6 p-2 d-flex flex-column">
-                        <h5 class="mt-0 p-0 pt-2 text-center text-md-left"><?php echo ucfirst($uneLigne['titre']); ?></h5>
-                        <p class="p-0 text-center text-md-left w-100 mx-auto mb-auto">
-                            <?php echo ucfirst($uneLigne['description_courte']); ?>
-                        </p>
-                        <div class="footerAnnonce row mx-auto w-100 mb-2 pr-3">
-                            <span class="d-inline-block col-md-6 p-0 text-center text-md-left">
-                                <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
-                            <span class="d-inline-block col-md-6 p-0 text-center text-md-right">
-                                <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
-                            </span>
+    <div class="container-fluid">
+        <div class="bgIndex d-flex align-item-center" style="background-image: url('images/indexbgc.jpg');">
+            <form method="post" action="#" class="indexForm col-8 mx-auto d-flex flex-wrap justify-content-center align-content-center">
+            <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
+                <div class="bgForm col-11">
+                    <div class="row">
+                        <div class="form-group col-3">
+                            <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
+                                <option value="toutes">Par catégories</option>
+                                <?php 
+                                foreach($infosCategorie AS $laCategorie){
+                                    echo '<option value="' . $laCategorie['id_categorie'] . '">' . $laCategorie['titre'] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <select class="ajaxGlobale custom-select" id="region" name="region">
+                                <option value="toutes">Par regions</option>
+                                <?php foreach($listeRegions as $laRegion){
+                                echo '<option>' . $laRegion . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <select class="ajaxGlobale selectDepartement custom-select" id="departement" name="departement">
+                                <option value="toutes">Par departements</option>
+                                <?php foreach(departements('toutes', $lesVilles) as $leDepartement){
+                                echo '<option>' . $leDepartement . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="ajaxGlobale form-group champVille">
+                            <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <select class="ajaxGlobale custom-select" id="optionTrie" name="trie">
+                                <option value="parDateDesc">Les plus récentes</option>
+                                <option value="parDateAsc">Les plus anciennes</option>
+                                <option value="parPrixDesc">Les moins chères</option>
+                                <option value="parPrixAsc">Les plus chères</option>
+                                <option value="parVendeur">Les meilleurs vendeurs</option>
+                            </select>
                         </div>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>  
+    <!-- ***************************************** -->
+    <!-- Affichage des annonces en pages d'accueil -->
+    <!-- ***************************************** --> 
+    <div class="pageIndex">
+        <div class="container">
+            <div class="starter-template">
+                <p class="lead">
+                    <?php echo $msg;?>
+                </p>
             </div>
-            <?php
-            }
-            ?>
+            <div class="row">
+            <!--
+        ****************************
+        DEBUT DU FORMULAIRE DE TRIE
+        ****************************
+        -->
+            <nav class="col-lg-4 mt-3">
+                <h4>Filtrer par prix</h4>
+                <div class="form-group">
+                    <label for="prixMinimum">Prix minimum</label>
+                    <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
+                    <output class="" id="prixMin" name="resultMin"></output>
+                </div>
+                <div class="form-group">
+                    <label for="prixMaximum">Prix maximum</label>
+                    <input type="range" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="5000" step="10" value="5000" />
+                    <output id="prixMax" class="" name="resultMax"></output>
+                </div>
+            </nav>
+        
+            <div class="annonce-index col-lg-8 mt-3">
+                <div id="contenerReponseRequete" class="row">
+                <!--Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
+                    <?php 
+                    foreach($requeteAffichage as $uneLigne){
+                    ?>
+                    <div class="blocRequete no-gutters bg-light col-12 mb-4">
+                        <div class="row">
+                            <div class="col-md-6 imgAnnonce">
+                                <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
+                                    <div class="picture m-3">
+                                        <img src="<?php echo $uneLigne['photo']; ?>" class="d-block" alt="photo annonceo">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6 p-2 d-flex flex-column textAnnonce">
+                                <h5 class="mt-0 p-0 pt-2 d-flex justify-content-between"><?php echo ucfirst($uneLigne['titre']); ?>
+                                    <span class="d-inline-block col-md-6 p-0 text-center text-md-right euroText">
+                                        <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
+                                    </span>
+                                </h5>
+                                
+                                <p class="p-0 text-center text-md-left w-100 mx-auto mb-auto">
+                                    <?php echo ucfirst($uneLigne['description_courte']); ?>
+                                </p>
+                                <div class="footerAnnonce row mx-auto w-100 mb-2 pr-3">
+                                    <span class="d-inline-block col-md-6 p-0 text-center text-md-left">
+                                        <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

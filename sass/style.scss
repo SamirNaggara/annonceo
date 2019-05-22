@@ -20,8 +20,51 @@ body,html {
 .adminFooter {
     display: none !important;
 }
-
 /** index.php **/
+.container-fluid {
+    height: 400px;
+    padding: 0;
+}
+.bgIndex {
+    position: relative;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    &:before {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-color: rgba(24, 22, 22, 0.39);
+    }
+    .indexForm {
+        h1 {
+            color: white;
+        }
+        .bgForm {
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.746);
+            .row {
+                line-height: 80px;
+                margin: 0 20px;
+            }
+        }
+    }
+    
+}
+
+.pageIndex {
+    padding: 0;
+    background-color: #80808014;
+    .container {
+        padding-top : 40px;
+    }
+}
+.colorLetter {
+    color: orange;
+}
 /* conteneur principal englobant les annonces*/
 .container {
     padding-top: 100px;
@@ -146,8 +189,19 @@ body,html {
 
 #contenerReponseRequete>.blocRequete {
     height: 335px;
+    box-sizing: border-box;
+    border: 1px solid rgba(187, 182, 182, 0.678);
+    border-radius: 3px;
     @media screen AND (max-width: 767px){
         height: auto;
+    }
+    .textAnnonce {
+        box-sizing: border-box;
+        background-color: rgba(128, 128, 128, 0.116);
+        .euroText {
+            font-size: 16px;
+            font-weight: 400;
+        }
     }
 }
 #contenerReponseRequete>.blocRequete>.row>.imgAnnonce .picture {

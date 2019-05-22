@@ -173,7 +173,7 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
         $tab['reponseRequete'] = '<div class="alert alert-info mt-2" role="alert">La recherche que vous avez effectué ne présente pas de correspondance.';
     }
 }
-//Encore et renvoie du resultat
+//Encode et renvoie du resultat
 echo json_encode($tab);
 
 

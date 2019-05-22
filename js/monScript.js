@@ -77,17 +77,6 @@ $(document).ready(function() {
     
     
     //-----------------Ajax page d'acceuil-----------------------------
-    $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 75, 300 ],
-        slide: function( event, ui ) {
-          $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        }
-      });
-      $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
     
     //Ajax Globale qui renvoie l'affichage des annonces en fonction des parametres de tries
     $('.ajaxGlobale').on('change',function(){
@@ -97,8 +86,9 @@ $(document).ready(function() {
         var choixDepartement = $('#departement').val();
         var choixVille = $('#ville').val();
         var choixPrixMin = $('#prixMin').val();
-        var choixPrixMax = $('#prixMax').val();
-        var choixTrie = $("input[name='trie']:checked").val();
+        var choixPrixMax = $('#prixMax').val(); 
+        var choixTrie = $('#optionTrie').val();
+        /* var choixTrie = $("input[name='trie']:checked").val(); */
             var param = {
                 rechercher:inputRechercher,
                 categorie:choixCategorie,
@@ -203,45 +193,6 @@ $(document).ready(function() {
             });
         });
     });
-    // ---------------------------Nouvelle annonce (photo)----------------------------------------
-    window.onload = function () {
-        /* function createThumbnail(sFile,sId) {
-            var oReader = new FileReader();
-            oReader.addEventListener('load', function() {
-            var oImgElement = document.createElement('img');
-            oImgElement.classList.add('imgPreview') 
-            oImgElement.src = this.result;
-            document.getElementById('preview-'+sId).appendChild(oImgElement);
-            }, false);
-        
-            oReader.readAsDataURL(sFile);
-        
-            }//function
-            function changeInputFil(oEvent){
-                var oInputFile = oEvent.currentTarget,
-                    sName = oInputFile.name,
-                    aFiles = oInputFile.files,
-                    aAllowedTypes = ['png', 'jpg', 'jpeg', 'gif'],
-                    imgType;  
-                document.getElementById('preview-'+sName).innerHTML ='';
-                for (var i = 0 ; i < aFiles.length ; i++) {
-                imgType = aFiles[i].name.split('.');
-                imgType = imgType[imgType.length - 1];
-                if(aAllowedTypes.indexOf(imgType) != -1) {
-                    createThumbnail(aFiles[i],sName);
-                }//if
-                }//for
-            }//function 
-            document.addEventListener('DOMContentLoaded',function(){
-            var aFileInput = document.forms['myForm'].querySelectorAll('[type=file]');
-                for(var k = 0; k < aFileInput.length;k++){
-                aFileInput[k].addEventListener('change', changeInputFil, false);
-                }//for
-            }); */
-    }
-        
-
-    //-----------------------Nouvelle annonce formulaire------------------------
 
         
 

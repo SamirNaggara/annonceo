@@ -75,8 +75,6 @@ if($infosAnnonce->rowCount() < 1) {
         $recuperationAvis->bindParam(':membre_id1', $_SESSION['utilisateur']['id_membre'] , PDO::PARAM_STR);
         $recuperationAvis->execute();
 
-        print_r($recuperationAvis);
-
         //S'il y a une ligne, cela signifie qu'un resultat à été trouvé, donc il ne faut pas enregistrer le poste, mais envoyer un message d'erreur
             if ($recuperationAvis->rowCount() > 0){
                 $msg .= '<div class="alert alert-danger mt-2" role="alert">Vous avez deja laissé un avis à cette personne dans la semaine.<br> Veuillez attendre 1 semaine avant de recommencer</div>';
