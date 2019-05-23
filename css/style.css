@@ -4,6 +4,19 @@ body, html {
   position: relative;
 }
 
+/** navbar **/
+.navbar {
+  box-sizing: border-box;
+}
+.navbar .hover {
+  border-bottom: 2px solid #343a40;
+  box-sizing: border-box;
+}
+.navbar .hover:hover {
+  box-sizing: border-box;
+  border-bottom: 2px solid white;
+}
+
 /** footer.inc.php **/
 .footerMembre {
   width: 100% !important;
@@ -70,7 +83,7 @@ body, html {
 /* conteneur principal englobant les annonces*/
 .container {
   padding-top: 100px;
-  margin-bottom: 163px;
+  margin-bottom: 80px;
   box-sizing: border-box;
 }
 
@@ -126,8 +139,8 @@ body, html {
 }
 
 .monAnnonce #collapseVoirLesAvis .listingNote {
-  max-height: 500px;
-  overflow: scroll;
+  max-height: 382px;
+  overflow: auto;
 }
 
 .monAnnonce .conteneurCarouselTexte .description {
@@ -145,6 +158,14 @@ body, html {
 
 .monAnnonce header .titreAnnonce .conteneurConten {
   max-width: 400px;
+}
+
+.vendeur {
+  line-height: 40px;
+}
+
+.addAvis {
+  font-size: 14px !important;
 }
 
 #newAnnonce {
@@ -175,36 +196,41 @@ body, html {
 }
 
 #contenerReponseRequete > .blocRequete {
-  height: 335px;
+  height: 218px;
   box-sizing: border-box;
-  border: 1px solid rgba(187, 182, 182, 0.678);
+  border: 1px solid rgba(209, 206, 206, 0.678);
   border-radius: 3px;
+}
+#contenerReponseRequete > .blocRequete:hover {
+  box-shadow: 1px 1px 10px 1px rgba(122, 122, 122, 0.794);
 }
 @media screen and (max-width: 767px) {
   #contenerReponseRequete > .blocRequete {
     height: auto;
   }
 }
-#contenerReponseRequete > .blocRequete .textAnnonce {
+#contenerReponseRequete > .blocRequete .imgAnnonce {
+  background-color: rgba(219, 219, 219, 0.794);
+}
+#contenerReponseRequete > .blocRequete .imgAnnonce .picture {
+  height: 216px;
+  width: 100%;
   box-sizing: border-box;
-  background-color: rgba(128, 128, 128, 0.116);
 }
-#contenerReponseRequete > .blocRequete .textAnnonce .euroText {
-  font-size: 16px;
-  font-weight: 400;
-}
-
-#contenerReponseRequete > .blocRequete > .row > .imgAnnonce .picture {
-  height: 300px;
-  background-color: #f8f9fa;
-}
-
-#contenerReponseRequete > .blocRequete a img {
-  display: block;
+#contenerReponseRequete > .blocRequete .imgAnnonce .picture img {
+  box-sizing: border-box;
   max-height: 100%;
   min-height: 100%;
   max-width: 100%;
   margin: 0 auto;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce {
+  box-sizing: border-box;
+  /*  background-color: rgba(128, 128, 128, 0.116); */
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .euroText {
+  font-size: 16px;
+  font-weight: 400;
 }
 
 #contactForm {

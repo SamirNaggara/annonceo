@@ -169,14 +169,14 @@ include_once('inc/nav.inc.php');
                     ?>
                     <div class="blocRequete no-gutters bg-light col-12 mb-4">
                         <div class="row">
-                            <div class="col-md-6 imgAnnonce">
+                            <div class="col-md-4 imgAnnonce">
                                 <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
-                                    <div class="picture m-3">
-                                        <img src="<?php echo $uneLigne['photo']; ?>" class="d-block" alt="photo annonceo">
+                                    <div class="picture">
+                                        <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="photo annonceo">
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-md-6 p-2 d-flex flex-column textAnnonce">
+                            <div class="col-md-8 p-2 d-flex flex-column textAnnonce">
                                 <h5 class="mt-0 p-0 pt-2 d-flex justify-content-between"><?php echo ucfirst($uneLigne['titre']); ?>
                                     <span class="d-inline-block col-md-6 p-0 text-center text-md-right euroText">
                                         <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
@@ -186,10 +186,10 @@ include_once('inc/nav.inc.php');
                                 <p class="p-0 text-center text-md-left w-100 mx-auto mb-auto">
                                     <?php echo ucfirst($uneLigne['description_courte']); ?>
                                 </p>
-                                <div class="footerAnnonce row mx-auto w-100 mb-2 pr-3">
-                                    <span class="d-inline-block col-md-6 p-0 text-center text-md-left">
+                                <div class="footerAnnonce row mx-auto w-100 mb-2">
+                                    <span class="d-inline-block col-md-6 p-0 text-center text-md-left mr-auto"><i class="far fa-user"></i>
                                         <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
-                                    
+                                    <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>" class="btn btn-outline-dark">Voir l'annonce</a>
                                 </div>
                             </div>
                         </div>

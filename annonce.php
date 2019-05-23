@@ -4,7 +4,7 @@ include_once('inc/function.inc.php');
 if(!isset($_GET['id_annonce'])) {
 	header('location:' . URL);
 }
-
+$id_annonce = $_GET['id_annonce'];
 //Recuperons les informations de la table annonce de l'id_anonce en question
 
 $infosAnnonce = $pdo->prepare("SELECT * FROM annonce WHERE id_annonce = :id_annonce");
@@ -126,238 +126,311 @@ include_once('inc/nav.inc.php');
 ?>
 
 <section class="monAnnonce">
-    <!--Ecris les messages d'erreurs-->
-    <p class="lead">
-        <?php echo $msg;?>
-    </p>
-    
-    <header class="container-fluid">
-        <div class="titreAnnonce row justify-content-between">
-            <div class="conteneurTitreNote col-lg-6 w-100 container-fluid ml-auto mx-left mx-lg-0">
-                <h1 class="d-block text-lg-left text-center">
-                    <?php echo ucfirst($cetteAnnonce["titre"]); ?>
-                </h1>
-                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark text-lg-left text-center m-3 m-lg-0" data-toggle="collapse" href="#collapseVoirLesAvis" role="button" aria-expanded="false" aria-controls="collapseVoirLesAvis">
-                    <strong class="vendeur mx-auto"><i class="fas fa-user"></i>
-                        <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
-                    <span class="laMoyenne mx-auto">
-                        <?php echo $moyenneNote ?>/5 (voir les avis)</span>
-                </a>
-                <div class="collapse" id="collapseVoirLesAvis">
-                    <div class="card card-body listingNote">
+    <div class="container">
+        <!--Ecris les messages d'erreurs-->
+        <p class="lead">
+            <?php echo $msg;?>
+        </p>
+        
+        <header>
+            <div class="titreAnnonce row justify-content-between">
+                <div class="conteneurTitreNote col-lg-6 w-100 ml-auto mx-left mx-lg-0">
+                    <h1 class="d-block text-lg-left text-center">
+                        <?php echo ucfirst($cetteAnnonce["titre"]); ?>
+                    </h1>
+                    
+                    <!-----Fin collapseVoirLesAvis--------->
+                </div>
+                <!------Fin conteneurTitreNote------------>
+            </div>
+            <!-------Fin titreAnnonce---------->
+        </header>
+        <!-------Fin container-fluid---------->
+        <!--Carousel et texte de l'annonce-->
+        <div class="conteneurCarouselTexte row my-5 ">
+            <section class="carousel col-lg-6">
+                <div id="carouselAnnonce" class="carousel slide w-90" data-ride="carousel">
+                    <!-- <ol class="carousel-indicators">
+                        <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li> -->
+                        <?php 
+                            //$i=1;
+                        //Pour chaque tour de boucle, la ligne <li>...</li> s'écrit uniquement si il y a une photo, et le compteur suit pour que les data-slide se suivent 
+                            //foreach($lesPhotos as $ind => $laPhoto){
+                            //  if (!empty($laPhoto) && $ind != 'id_photo'){
+                                //    echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
+                                //  $i++;
+                            // }
+                        // }
+                        ?>
+                    <!-- </ol> -->
+                    <div class="carousel-inner w-100 rounded">
+                        <div class="carousel-item active">
+                            <?php 
+                        echo '<div class="bg-carousel rounded">';
+                        echo '<a href="' . $cetteAnnonce["photo"] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                        echo '<img class="d-block img-fluid mx-auto" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
+                        echo '</a>';
+                        echo '</div>';
+                        ?>
+                        </div>
                         <?php
-                        $premiereLigne = true;
-                        foreach($lesNotes as $uneNote){
-                        
-                        //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
-                            if ($premiereLigne){
-                                $premiereLigne = false;
-                            }else{
-                                echo '<hr>';
+                        $j=0;
+                        $listePhoto = ['photo1', 'photo2', 'photo3', 'photo4', 'photo5'];
+                        foreach($lesPhotos as $ind => $laPhoto){
+                            if (!empty($laPhoto) && $ind != 'id_photo'){
+                                echo '<div class="carousel-item">';
+                                echo '<div class="bg-carousel rounded">';
+                                echo '<a href="' . $lesPhotos[$listePhoto[$j]] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                                echo '<img class="d-block img-fluid mx-auto rounded" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
+                                echo '</a>';
+                                echo '</div>';
+                                echo '</div>';
+                                $j++;
                             }
-                        ?>
-                            <p class="nomEtNote m-0"><i class="far fa-user"></i>
-                        <?php 
+                        }
+                    ?>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+            </section>
+            <!-----Fin carousel-------------->
+            <div class="description col-lg-6">
+                <div class="card ">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link <?php if($_GET['action'] == '') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php if($_GET['action'] == 'avis') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=avis">Le vendeur</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php if($_GET['action'] == 'contact') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=contact">Contact</a>
+                        </li>
+                        <span class="nav-item ml-auto">
+                            <strong class="vendeur"><i class="fas fa-user"></i>
+                                <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
+                            <span class="laMoyenne">
+                                <?php echo $moyenneNote ?>/5</span>
+                        </span>
+                        </ul>
+                    </div>
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'contact') { ?>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Laisser un message à <?=ucfirst($ceVendeur["pseudo"])?></h5>
+                        <div class="col-6 m-0 p-1 mx-auto">
+                            <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter</a>
+                        </div>
+                    </div>
+                    <?php } elseif(isset($_GET['action']) && $_GET['action'] == 'avis') {?>
+                        <?php if (!user_is_connected()) { 
+                            echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
+                        } else {?>
+                    <div  id="collapseVoirLesAvis">
+                        <div class="listingNote">
+                            <?php
+                            $premiereLigne = true;
+                            foreach($lesNotes as $uneNote){
+                            
+                            //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                                if ($premiereLigne){
+                                    $premiereLigne = false;
+                                }else{
+                                    echo '<hr>';
+                                }
+                            ?>
+                                <p class="nomEtNote ml-3 mt-1 text-left">De <i class="far fa-user"></i> 
+                            <?php 
+                            
+                            //On recupere les infos pour ecrire les notes et les avis du vendeur
+                            $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+                            $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+                            $infosMembreAvis->execute();
+                            $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                                echo ucfirst($leMembreAvis["pseudo"]) ?> ( <span class="laNote">
+                                <?php echo $uneNote['note'] ?>/5)</span>
+                                <span class="dateNote text-secondary">
+                                <?php echo 'Le '.date("d-m-Y", strtotime($uneNote['date_enregistrement'])).' :'  ?></span></p>
+                                <p class="avis p-3">
+                                <?php echo $uneNote['avis'] ?>
+                                </p>
+                            <?php
+                            //On ferme l'accolade du foreach des notes
+                            }
+                            ?>
+                       
+                        <!-----Fin listingNote------------>
                         
-                        //On recupere les infos pour ecrire les notes et les avis du vendeur
-                        $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
-                        $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
-                        $infosMembreAvis->execute();
-                        $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
-                            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote">
-                            <?php echo $uneNote['note'] ?>/5</span></p>
-                            <span class="dateNote text-secondary">
-                            <?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
-                            <p class="avis p-3">
-                            <?php echo $uneNote['avis'] ?>
-                            </p>
-                        <?php
-                        //On ferme l'accolade du foreach des notes
+                    </div>
+                    
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                <h5 class="card-title col-lg-6 addAvis">Laisser une note et un avis à <?=ucfirst($ceVendeur["pseudo"])?></h5>
+                                    <div class="col-lg-6">
+                                        <a class="laisserAvis btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Envoyer</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <div class="conteneurTexte overflow-scroll">
+                                <p class="card-text p-0 m-0 text-justify" id="description">
+                                <?php 
+                                if (strlen($cetteAnnonce['description_longue']) > 960){
+                                    $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
+                                    if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
+                                        echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
+                                    }else{
+                                        echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
+                                    }
+                                }else{
+                                    echo ucfirst($cetteAnnonce['description_longue']);
+                                }
+                                ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                            <div class="col-lg-6 text-center text-lg-left py-auto"><i class="fas fa-map-marker-alt"></i>
+                            <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?>
+                        </div>
+                                <div class="prix col-lg-6 text-center text-lg-right">
+                                    <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> <i class="fas fa-euro-sign"></i></div>
+                                
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+                <?php
+                if (!user_is_connected()) {
+                    echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
+                } ?>
+                <!-----Fin conteneurBoutons-------->
+                
+            </div>
+            <!------Fin description------------->
+        </div>
+        <!------ Fin conteneurCarouselTexte-------->
+        <!--Partie ou l'on affiche les autres annonces-->
+        <hr>
+        <div class="gMap py-2">
+            <iframe src="https://maps.google.it/maps?q=<?php echo $cetteAnnonce['adresse'] . $cetteAnnonce['cp'] . $cetteAnnonce['ville'] ?>&output=embed" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <hr>
+        <div class="autresAnnonces row mt-3">
+            <h4 class="bold col-12 text-lg-left text-center">Annonces similaires :</h4>
+            <?php 
+            foreach($autresAnnonces as $cetteAutreAnnonce){
+                ?>
+            <figure class="col-sm-3 my-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
+            <div class="picture m-3 img-thumbnail">
+                    <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
+                    <figcaption class="text-center text-dark mt-2">
+                    <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
+                </figcaption>
+                    </div>
+                </a>
+            </figure>
+            <?php
+            }
+                ?>
+        </div>
+        <!------Fin autresAnnonces-------------------->
+        <!--   Partie ou l'on affiche les commentaires-->
+        <?php
+        if (!user_is_connected()) { 
+        } else {?>
+        <div class="commentaires mt-4">
+        <hr>
+            <h4>Laisser un commentaires :</h4>
+            <form id="avis" method="post" action="" class="mt-3">
+                <div class="form-group">
+                    <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-outline-dark w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
+                </div>
+            </form>
+            <div class="conteneurCommentaire mt-5">
+                <?php
+                    $premiereLigne2 = true;
+                    foreach($lesCommentaires as $ceCommentaire){
+                        if ($premiereLigne2){
+                            $premiereLigne = false;
+                        }else{
+                            echo '<hr>';
                         }
                         ?>
-                    </div>
-                    <!-----Fin listingNote------------>
-                </div>
-                <!-----Fin collapseVoirLesAvis--------->
-            </div>
-            <!------Fin conteneurTitreNote------------>
-        </div>
-        <!-------Fin titreAnnonce---------->
-    </header>
-    <!-------Fin container-fluid---------->
-    <!--Carousel et texte de l'annonce-->
-    <div class="conteneurCarouselTexte row my-5 ">
-        <section class="carousel col-lg-6">
-            <div id="carouselAnnonce" class="carousel slide w-90" data-ride="carousel">
-                <!-- <ol class="carousel-indicators">
-                    <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li> -->
-                    <?php 
-                        //$i=1;
-                    //Pour chaque tour de boucle, la ligne <li>...</li> s'écrit uniquement si il y a une photo, et le compteur suit pour que les data-slide se suivent 
-                        //foreach($lesPhotos as $ind => $laPhoto){
-                          //  if (!empty($laPhoto) && $ind != 'id_photo'){
-                            //    echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
-                              //  $i++;
-                           // }
-                       // }
-                    ?>
-                <!-- </ol> -->
-                <div class="carousel-inner w-100 rounded">
-                    <div class="carousel-item active">
-                        <?php 
-                    echo '<div class="bg-carousel rounded">';
-                    echo '<a href="' . $cetteAnnonce["photo"] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
-                    echo '<img class="d-block img-fluid mx-auto" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
-                    echo '</a>';
-                    echo '</div>';
-                    ?>
-                    </div>
-                    <?php
-                    $j=0;
-                    $listePhoto = ['photo1', 'photo2', 'photo3', 'photo4', 'photo5'];
-                    foreach($lesPhotos as $ind => $laPhoto){
-                        if (!empty($laPhoto) && $ind != 'id_photo'){
-                            echo '<div class="carousel-item">';
-                            echo '<div class="bg-carousel rounded">';
-                            echo '<a href="' . $lesPhotos[$listePhoto[$j]] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
-                            echo '<img class="d-block img-fluid mx-auto rounded" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
-                            echo '</a>';
-                            echo '</div>';
-                            echo '</div>';
-                            $j++;
-                        }
-                    }
-                ?>
-                </div>
-                <a class="carousel-control-prev" href="#carouselAnnonce" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselAnnonce" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-        </section>
-        <!-----Fin carousel-------------->
-        <div class="description col-lg-6">
-            <?php
-            if (!user_is_connected()) {
-                echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
-            } else {?>
-            <div class="conteneurBoutons align-items-start m-0 mb-2">
-                <div class="row m-0">
-                    <div class="col-6 m-0 p-1">
-                        <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter
-                        <?php echo ucfirst($ceVendeur["pseudo"]); ?></a>
-                    </div>
-                    <div class="col-6 m-0 p-1">
-                        <a class="laisserAvis btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Laisser un avis</a>
-                    </div>
-                </div>
-            </div>
-            <?php } ?>
-            <!-----Fin conteneurBoutons-------->
-            <h4 class="text-center text-lg-left">Description :</h4>
-            <hr>
-            <div class="conteneurTexte overflow-scroll">
-                <p class="p-0 m-0 text-justify" id="description">
-                    <?php 
-                    if (strlen($cetteAnnonce['description_longue']) > 960){
-                        $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
-                        if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
-                            echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
-                        }else{
-                            echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
-                        }
-                    }else{
-                        echo ucfirst($cetteAnnonce['description_longue']);
-                    }
-                    ?>
+                <span class="pseudo">
+                    <?php echo ucfirst($ceCommentaire['pseudo']); ?></span>
+                <span class="date text-secondary">
+                    <?php echo formatStandardTotal($ceCommentaire['date_enregistrement']); ?></span>
+                <p class="texteCommentaire">
+                    <?php echo $ceCommentaire['commentaire']; ?>
                 </p>
-            </div>
-            <div class="footerDescription position-absolute row p-3 w-100">
-                <div class="prix col-lg-4 w-100 text-center text-lg-left"><i class="fas fa-euro-sign"></i>
-                    <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> €</div>
-                <div class="adresse col-lg-8 text-center text-lg-right"><i class="fas fa-map-marker-alt"></i>
-                    <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?>
-                </div>
-            </div>
-        </div>
-        <!------Fin description------------->
-    </div>
-    <!------ Fin conteneurCarouselTexte-------->
-    <!--Partie ou l'on affiche les autres annonces-->
-    <hr>
-    <div class="gMap py-2">
-        <iframe src="https://maps.google.it/maps?q=<?php echo $cetteAnnonce['adresse'] . $cetteAnnonce['cp'] . $cetteAnnonce['ville'] ?>&output=embed" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <hr>
-    <div class="autresAnnonces row mt-3">
-        <h4 class="bold col-12 text-lg-left text-center">Annonces similaires :</h4>
-        <?php 
-        foreach($autresAnnonces as $cetteAutreAnnonce){
-            ?>
-        <figure class="col-sm-3 my-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
-        <div class="picture m-3 img-thumbnail">
-                <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-                <figcaption class="text-center text-dark mt-2">
-                <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
-            </figcaption>
-                </div>
-            </a>
-        </figure>
-        <?php
-        }
-            ?>
-    </div>
-    <!------Fin autresAnnonces-------------------->
-    <!--   Partie ou l'on affiche les commentaires-->
-    <?php
-    if (!user_is_connected()) { 
-    } else {?>
-    <div class="commentaires mt-4">
-    <hr>
-        <h4>Laisser un commentaires :</h4>
-        <form id="avis" method="post" action="" class="mt-3">
-            <div class="form-group">
-                <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-outline-dark w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
-            </div>
-        </form>
-        <div class="conteneurCommentaire mt-5">
-            <?php
-                $premiereLigne2 = true;
-                foreach($lesCommentaires as $ceCommentaire){
-                    if ($premiereLigne2){
-                        $premiereLigne = false;
-                    }else{
-                        echo '<hr>';
+                <?php
                     }
                     ?>
-            <span class="pseudo">
-                <?php echo ucfirst($ceCommentaire['pseudo']); ?></span>
-            <span class="date text-secondary">
-                <?php echo formatStandardTotal($ceCommentaire['date_enregistrement']); ?></span>
-            <p class="texteCommentaire">
-                <?php echo $ceCommentaire['commentaire']; ?>
-            </p>
-            <?php
-                }
-                ?>
+            </div>
         </div>
-    </div>
-    <?php } ?>
-    <!------Fin commentaires----------->
-    <!--Formulaire pour laisser un avis-->
-    <div class="row laisserAvis">
-        <form id="avis" method="post" action="">
-            <div class="modal fade" id="laisserAvis" tabindex="-1" role="dialog" aria-labelledby="laisserAvis" aria-hidden="true" class="col-sm-4">
+        <?php } ?>
+        <!------Fin commentaires----------->
+        <!--Formulaire pour laisser un avis-->
+        <div class="row laisserAvis">
+            <form id="avis" method="post" action="">
+                <div class="modal fade" id="laisserAvis" tabindex="-1" role="dialog" aria-labelledby="laisserAvis" aria-hidden="true" class="col-sm-4">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Laisser un avis à
+                                    <?php echo ucfirst($ceVendeur["pseudo"]); ?>
+                                </h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="post">
+                                    <div class="form-group">
+                                        <label for="inputNote">Notes: </label>
+                                        <select class="form-control" id="inputNote" name="inputNote">
+                                            <option value="0">0/5</option>
+                                            <option value="1">1/5</option>
+                                            <option value="2">2/5</option>
+                                            <option value="3">3/5</option>
+                                            <option value="4">4/5</option>
+                                            <option value="5" selected>5/5</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerAvis" value="Envoyer">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--------Fin laisser un avis-------------->
+        <div class="row modalContacter">
+            <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Laisser un avis à
+                            <h5 class="modal-title" id="exampleModalLabel">Contacter
                                 <?php echo ucfirst($ceVendeur["pseudo"]); ?>
                             </h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -367,56 +440,20 @@ include_once('inc/nav.inc.php');
                         <div class="modal-body">
                             <form action="post">
                                 <div class="form-group">
-                                    <label for="inputNote">Notes: </label>
-                                    <select class="form-control" id="inputNote" name="inputNote">
-                                        <option value="0">0/5</option>
-                                        <option value="1">1/5</option>
-                                        <option value="2">2/5</option>
-                                        <option value="3">3/5</option>
-                                        <option value="4">4/5</option>
-                                        <option value="5" selected>5/5</option>
-                                    </select>
+                                    <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
+                                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
+                                    Ou obtenir le numero de téléphone
+                                </a>
+                                <div class="collapse" id="collapseNumeroDeTelephone">
+                                    <div class="card card-body listingNote">
+                                        <p class="nomEtNote m-0"><i class="fas fa-phone"></i>
+                                            <?php echo $ceVendeur['telephone'] ?>
+                                    </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerAvis" value="Envoyer">
+                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerMessage" value="Envoyer">
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <!--------Fin laisser un avis-------------->
-    <div class="row modalContacter">
-        <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Contacter
-                            <?php echo ucfirst($ceVendeur["pseudo"]); ?>
-                        </h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="post">
-                            <div class="form-group">
-                                <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
-                            </div>
-                            <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
-                                Ou obtenir le numero de téléphone
-                            </a>
-                            <div class="collapse" id="collapseNumeroDeTelephone">
-                                <div class="card card-body listingNote">
-                                    <p class="nomEtNote m-0"><i class="fas fa-phone"></i>
-                                        <?php echo $ceVendeur['telephone'] ?>
-                                </div>
-                            </div>
-                            <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerMessage" value="Envoyer">
-                        </form>
                     </div>
                 </div>
             </div>

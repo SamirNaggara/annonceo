@@ -18,20 +18,20 @@
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarsExampleDefault">
                 <ul class="navbar-nav">
                     <div class="title text-white">
-                        <a class="navbar-brand" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
+                        <a class="navbar-brand hover" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Qui-sommes-nous ?</a>
+                        <a class="nav-link hover" href="contact.php">Qui-sommes-nous ?</a>
                     </li>
                     <!-- Contact -->
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link hover" href="contact.php">Contact</a>
                     </li>
                     <!-- Dépot d'annonce -->
                     <!-- On affiche "Déposer une annonce" seulement siun utilateur est connecter-->
                     <?php if (user_is_connected()){ ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="nouvelle-annonce.php">Déposer une annonce</a>
+                        <a class="nav-link hover" href="nouvelle-annonce.php">Déposer une annonce</a>
                     </li>
                     <?php } ?>
                 </ul>
@@ -57,7 +57,7 @@
                         </li>';
                         }?>
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle hover" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user-circle fa-fw"></i>
                                 <?php 
                                 // Si l'utilisateur n'est pas connecter on ecrit "se connecter", sinon on n'ecris le pseudo du membre, et entre parenthese s'il est admin ou non
