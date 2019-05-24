@@ -221,8 +221,6 @@ include_once('inc/nav.inc.php');
             <div class="form-group col-6 fg-pseudo">
                 <label for="pseudo_profil">Pseudo</label>
                 <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
-                <i class="fas fa-times"></i>
-                <i class="fas fa-check"></i>
             </div>
             <div class="form-group col-6">
                 <label for="civilite_profil">Sexe</label>

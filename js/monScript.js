@@ -1,53 +1,71 @@
 
 $(document).ready(function() {
-    
-        $('.fa-check').hide();
-        $('.fa-times').hide();
+
+        // Début verif formulaire profil
         var control = 0;      
-        // verif pseudo
-        $('#pseudo_profil').on('keyup', function(){
+        $('.proForm').on('keyup', function(){
             var pseudo = $('#pseudo_profil').val();
-            var regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/i;
-            var email =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
-            var number = /^[-]?\d*\.?\d*$/; // Nombre
+            var nom = $('#nom_profil').val();
+            var prenom = $('#prenom_profil').val();
+            var phone = $('#telephone_profil').val();
+            var email = $('#email_profil').val();
+            var regex = /["<>&]/g;
+            var isEmail =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+            var isNumber = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/; // Nombre
             // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
             
-            if(pseudo.length >= 3 && pseudo.length <= 20 && !regex.test(pseudo)) {
-                console.log('OK pour le pseudo');
-                $('.fg-pseudo .fa-check').show();
-                $('.fg-pseudo .fa-times').hide();
+            if(pseudo.length >= 3 && pseudo.length <= 20 && !pseudo.match(regex)) {
+                $('#pseudo_profil').removeClass('is-invalid');
+                $('#pseudo_profil').addClass('is-valid');
                 control = 1;
+            } else {
+                $('#pseudo_profil').removeClass('is-valid');
+                $('#pseudo_profil').addClass('is-invalid');
+                control = 0;
             }
-            else{
-                console.log('NOK');
-                $('.fg-pseudo .fa-check').hide();
-                $('.fg-pseudo .fa-times').show();
-                $('.fg-pseudo .fa-times').html('Veuillez...');
+
+            if(prenom.length >= 3 && prenom.length <= 20 && !prenom.match(regex)) {
+                $('#prenom_profil').removeClass('is-invalid');
+                $('#prenom_profil').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#prenom_profil').removeClass('is-valid');
+                $('#prenom_profil').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(nom.length >= 3 && nom.length <= 20 && !nom.match(regex)) {
+                $('#nom_profil').removeClass('is-invalid');
+                $('#nom_profil').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#nom_profil').removeClass('is-valid');
+                $('#nom_profil').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(email.match(isEmail)) {
+                $('#email_profil').removeClass('is-invalid');
+                $('#email_profil').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#email_profil').removeClass('is-valid');
+                $('#email_profil').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(phone.match(isNumber)) {
+                $('#telephone_profil').removeClass('is-invalid');
+                $('#telephone_profil').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#telephone_profil').removeClass('is-valid');
+                $('#telephone_profil').addClass('is-invalid');
                 control = 0;
             }
         });
+        // Fin verif formulaire profil
         
-        
-        // verif prenom 
-        $('#prenom').blur(function(){
-            var prenom = $('#prenom').val();
-            // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
-            
-            if(prenom.length >= 3 && prenom.length <= 20){
-                console.log('OK pour le prenom');
-                $('.fg-prenom .fa-check').show();
-                $('.fg-prenom .fa-check').html('OK');
-                $('.fg-prenom .fa-times').hide();
-                control = 1			
-            }
-            else{
-                console.log('OK pour le prenom');
-                $('.fg-prenom .fa-check').hide();
-                $('.fg-prenom .fa-times').show();
-                $('.fg-prenom .fa-times').html('Veuillez...');
-                control  = 0; 
-            }
-        });
     
     $('.champVille').hide();
 
