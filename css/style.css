@@ -287,10 +287,10 @@ body, html {
   text-align: center;
 }
 
-.rstPswd {
+.rstPswd, .newPass {
   padding-top: 197px;
 }
-.rstPswd h1 {
+.rstPswd h1, .newPass h1 {
   font-size: 30px;
 }
 

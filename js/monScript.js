@@ -1,8 +1,11 @@
 
 $(document).ready(function() {
 
-        // Début verif formulaire profil
-        var control = 0;      
+        // Début verif de tous les formulaires
+        // initialisation de la variable de controle
+        var control = 0; 
+        
+        // Verif formulaire profil
         $('.proForm').on('keyup', function(){
             var pseudo = $('#pseudo_profil').val();
             var nom = $('#nom_profil').val();
@@ -11,7 +14,7 @@ $(document).ready(function() {
             var email = $('#email_profil').val();
             var regex = /["<>&]/g;
             var isEmail =    /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
-            var isNumber = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/; // Nombre
+            var isPhone = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/; // Nombre
             // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
             
             if(pseudo.length >= 3 && pseudo.length <= 20 && !pseudo.match(regex)) {
@@ -54,7 +57,7 @@ $(document).ready(function() {
                 control = 0;
             }
 
-            if(phone.match(isNumber)) {
+            if(phone.match(isPhone)) {
                 $('#telephone_profil').removeClass('is-invalid');
                 $('#telephone_profil').addClass('is-valid');
                 control = 1;
@@ -65,6 +68,217 @@ $(document).ready(function() {
             }
         });
         // Fin verif formulaire profil
+
+        // Verif formulaire de contact
+        $('#contactForm').on('keyup', function(){
+            var nom = $('#contactNom').val();
+            var prenom = $('#contactPrenom').val();
+            var objet = $('#contactObjet').val();
+            var message = $( "#contactForm" ).find( "textarea" ).val();
+            var email = $('#contactEmail').val();
+            var regex = /["<>&]/g;
+            var isEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+            
+            if(prenom.length >= 3 && prenom.length <= 20 && !prenom.match(regex)) {
+                $('#contactPrenom').removeClass('is-invalid');
+                $('#contactPrenom').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#contactPrenom').removeClass('is-valid');
+                $('#contactPrenom').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(nom.length >= 3 && nom.length <= 20 && !nom.match(regex)) {
+                $('#contactNom').removeClass('is-invalid');
+                $('#contactNom').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#contactNom').removeClass('is-valid');
+                $('#contactNom').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(email.match(isEmail)) {
+                $('#contactEmail').removeClass('is-invalid');
+                $('#contactEmail').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#contactEmail').removeClass('is-valid');
+                $('#contactEmail').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(!objet.match(regex) && objet != "") {
+                $('#contactObjet').removeClass('is-invalid');
+                $('#contactObjet').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#contactObjet').removeClass('is-valid');
+                $('#contactObjet').addClass('is-invalid');
+                control = 0;
+            }
+            if(!message.match(regex) && message != "") {
+                $('#contactMessage').removeClass('is-invalid');
+                $('#contactMessage').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#contactMessage').removeClass('is-valid');
+                $('#contactMessage').addClass('is-invalid');
+                control = 0;
+            }
+        });
+        // Fin verif formulaire de contact
+
+        // Verif formulaire d'inscription
+        $('#inscriptionModal').on('keyup', function(){
+            var pseudo = $('#inputPseudo').val();
+            var password = $('#registerinputPassword').val();
+            var nom = $('#inputName').val();
+            var prenom = $('#inputFirstName').val();
+            var registeremail = $('#registerinputEmail').val();
+            var telephone = $('#registerinputPhone').val();
+
+            var regex = /["<>&]/g;
+            var regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+            var isEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+            var isPhone = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/;
+
+            if(pseudo.length >= 3 && pseudo.length <= 20 && !pseudo.match(regex) && pseudo != "") {
+                $('#inputPseudo').removeClass('is-invalid');
+                $('#inputPseudo').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#inputPseudo').removeClass('is-valid');
+                $('#inputPseudo').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(prenom.length >= 3 && prenom.length <= 20 && !prenom.match(regex) && prenom != "") {
+                $('#inputFirstName').removeClass('is-invalid');
+                $('#inputFirstName').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#inputFirstName').removeClass('is-valid');
+                $('#inputFirstName').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(nom.length >= 3 && nom.length <= 20 && !nom.match(regex) && nom != "") {
+                $('#inputName').removeClass('is-invalid');
+                $('#inputName').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#inputName').removeClass('is-valid');
+                $('#inputName').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(registeremail.match(isEmail)) {
+                $('#registerinputEmail').removeClass('is-invalid');
+                $('#registerinputEmail').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#registerinputEmail').removeClass('is-valid');
+                $('#registerinputEmail').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(password.match(regexPassword) && password != "") {
+                $('#registerinputPassword').removeClass('is-invalid');
+                $('#registerinputPassword').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#registerinputPassword').removeClass('is-valid');
+                $('#registerinputPassword').addClass('is-invalid');
+                control = 0;
+            }
+            if(telephone.match(isPhone) && telephone != "") {
+                $('#registerinputPhone').removeClass('is-invalid');
+                $('#registerinputPhone').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#registerinputPhone').removeClass('is-valid');
+                $('#registerinputPhone').addClass('is-invalid');
+                control = 0;
+            }
+        });
+
+        // Verif formulaire d'envoi de réinitialisation de mdp
+        $('.rstPswd').on('keyup', function(){
+            var resetEmail = $('#inlineFormInputGroup').val();
+            var isEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/; 
+
+            if(resetEmail.match(isEmail)) {
+                $('#inlineFormInputGroup').removeClass('is-invalid');
+                $('#inlineFormInputGroup').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#inlineFormInputGroup').removeClass('is-valid');
+                $('#inlineFormInputGroup').addClass('is-invalid');
+                control = 0;
+            }
+        });
+        // Fin verif formulaire d'envoi de réinitialisation de mdp
+
+        // Verif formulaire de modification de mdp
+        $('.newPass').on('keyup', function(){
+            var password = $('#pwd1').val();
+            var password2 = $('#pwd2').val();
+            var regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+            if(password.match(regexPassword)) {
+                $('#pwd1').removeClass('is-invalid');
+                $('#pwd1').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#pwd1').removeClass('is-valid');
+                $('#pwd1').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(password2.match(regexPassword)) {
+                $('#pwd2').removeClass('is-invalid');
+                $('#pwd2').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#pwd2').removeClass('is-valid');
+                $('#pwd2').addClass('is-invalid');
+                control = 0;
+            }
+        });
+        // Fin verif formulaire de modification de mdp
+
+        // Verif formulaire de connexion
+        $('#connexionModal').on('keyup', function(){
+            var pseudo = $('#connecxionInputPseudo').val();
+            var password = $('#connexionInputPassword').val();
+            var regex = /["<>&]/g;
+            var regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+            
+            // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
+            
+            if(pseudo.length >= 3 && pseudo.length <= 20 && !pseudo.match(regex)) {
+                $('#connecxionInputPseudo').removeClass('is-invalid');
+                $('#connecxionInputPseudo').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#connecxionInputPseudo').removeClass('is-valid');
+                $('#connecxionInputPseudo').addClass('is-invalid');
+                control = 0;
+            }
+
+            if(password.match(regexPassword)) {
+                $('#connexionInputPassword').removeClass('is-invalid');
+                $('#connexionInputPassword').addClass('is-valid');
+                control = 1;
+            } else {
+                $('#connexionInputPassword').removeClass('is-valid');
+                $('#connexionInputPassword').addClass('is-invalid');
+                control = 0;
+            }
+        });
+        // Fin verif formulaire de connexion
         
     
     $('.champVille').hide();
@@ -161,7 +375,7 @@ $(document).ready(function() {
     
 
     
-//   ---------------------------------------------AUTOCOMPLETE------------------------------------------------------------
+//   ------------------AUTOCOMPLETE-------------------------------
     
 
     
@@ -183,7 +397,7 @@ $(document).ready(function() {
     });
 
 
-   //   ----------------------------------------------CONTACT-------------------------------------------------------------------
+   //   -------------------CONTACT-------------------------------------
 
         // Ajax du formulaire de contact
         $('#contactForm').submit(function(e) {
@@ -200,6 +414,11 @@ $(document).ready(function() {
                     if(result.isSuccess) {
                         $('#contactForm').append("<p class='thank-you'>Votre message a bien été envoyé. Merci de m'avoir contacté :)</p>");
                         $('#contactForm')[0].reset();
+                        $('#contactNom').attr('class', 'form-control');
+                        $('#contactPrenom').attr('class', 'form-control');
+                        $('#contactObjet').attr('class', 'form-control');
+                        $('#contactEmail').attr('class', 'form-control');
+                        $('#contactMessage').attr('class', 'form-control col-md-12');
                     } else {
                         $('#contactNom + .comment').html(result.contactNomError);
                         $('#contactPrenom + .comment').html(result.contactPrenomError);
@@ -210,7 +429,42 @@ $(document).ready(function() {
                 }
             });
         });
+        var timestart = 3;
+var downloadTimer = setInterval(function(){
+  document.getElementById("crono").innerHTML = timestart + " sec";
+  timestart -= 1;
+  if(timestart <= 0){
+    clearInterval(downloadTimer);
+  }
+}, 1000);
     });
+//------------ Début script décompte ------------------
+/* var cpt = 3 ;
+var compt = document.getElementById("crono");
 
-        
+function decompte() {
+    if(cpt>=0) {
+        compt.innerHTML = cpt ;
+        cpt-- ;
+        setInterval(decompte,300);
+    }
+} */
+//------------ Fin script décompte ------------------
+/* var spanTime= document.getElementById('crono');
+var time= '3';
 
+function refreshTimer () {
+
+    
+    if (time > 1) {
+        spanTime.innerHTML= time +' sec';
+        time--;
+    } else {
+        clearInterval(x);
+    }
+}
+
+setInterval(refreshTimer, 100); */ 
+
+
+	

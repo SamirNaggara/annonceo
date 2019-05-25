@@ -2,7 +2,7 @@
 include_once('inc/init.inc.php');
 
 if (isset($_POST['request-reset-submit'])) {
-    echo 'texs';
+
     // création de 2 tokens pour minimiser les attaques en brute force (timing attaque)
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);

@@ -4,7 +4,7 @@ include_once('inc/modal.inc.php');
 ?>
 <!-- Début Modal d'inscription -->
 <div class="row">
-    <form id="register" method="post" action="">
+    
         <div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="inscriptionModalLabel" aria-hidden="true" class="col-sm-4">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -15,45 +15,47 @@ include_once('inc/modal.inc.php');
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputPseudo">Pseudo</label>
-                            <input type="text" class="form-control" id="inputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo" name="pseudo" value="<?php echo $pseudo; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword">Mot de passe</label>
-                            <input type="text" class="form-control" id="inputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp" value="<?php echo $mdp; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputName">Nom</label>
-                            <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Votre nom" name="nom" value="<?php echo $nom; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputFirstName">Prénom</label>
-                            <input type="text" class="form-control" id="inputFirstName" aria-describedby="firstNameHelp" placeholder="Votre prénom" name="prenom" value="<?php echo $prenom; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail">Email</label>
-                            <div class="input-group mb-2">
-						        <div class="input-group-prepend">
-                                    <div class="input-group-text">@</div>
-                                </div>
-                                <input type="text" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Votre email" name="email" value="<?php echo $email; ?>">
+                        <form id="register" method="post">
+                            <div class="form-group">
+                                <label for="inputPseudo">Pseudo</label>
+                                <input type="text" class="form-control" id="inputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo" name="pseudo" value="<?php echo $pseudo; ?>">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPhone">Téléphone</label>
-                            <input type="text" class="form-control" id="inputPhone" placeholder="Votre téléphone" name="telephone" value="<?php echo $telephone; ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputSelect">Civilité</label>
-                            <select class="custom-select" id="inputSelect" name="civilite">
-                                <option value="m">Homme</option>
-                                <option value="f" <?php if($civilite == 'f') echo 'selected';?>>Femme</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="inscription" value="Inscription">
-                        </div>
+                            <div class="form-group">
+                                <label for="registerinputPassword">Mot de passe</label>
+                                <input type="password" class="form-control" id="registerinputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp" value="<?php echo $mdp; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName">Nom</label>
+                                <input type="text" class="form-control" id="inputName" aria-describedby="nameHelp" placeholder="Votre nom" name="nom" value="<?php echo $nom; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputFirstName">Prénom</label>
+                                <input type="text" class="form-control" id="inputFirstName" aria-describedby="firstNameHelp" placeholder="Votre prénom" name="prenom" value="<?php echo $prenom; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerinputEmail">Email</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">@</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="registerinputEmail" aria-describedby="emailHelp" placeholder="Votre email" name="email" value="<?php echo $email; ?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="registerinputPhone">Téléphone</label>
+                                <input type="phone" class="form-control" id="registerinputPhone" placeholder="Votre téléphone" name="telephone" value="<?php echo $telephone; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputSelect">Civilité</label>
+                                <select class="custom-select" id="inputSelect" name="civilite">
+                                    <option value="m">Homme</option>
+                                    <option value="f" <?php if($civilite == 'f') echo 'selected';?>>Femme</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="inscription" value="Inscription">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -94,12 +96,12 @@ include_once('inc/modal.inc.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="">
+                    <form method="post" id="formCon">
                         <div class="form-group">
                             <input type="text" class="form-control" id="connecxionInputPseudo" aria-describedby="pseudoHelp" placeholder="Votre pseudo" name="pseudo_connexion">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="connexionInputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp_connexion">
+                            <input type="password" class="form-control" id="connexionInputPassword" aria-describedby="passwordHelp" placeholder="Votre mot de passe" name="mdp_connexion">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Connexion</button>
                         <!-- lien renvoyant vers le formulaire de renouvellement de mot de passe -->

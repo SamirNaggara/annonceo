@@ -1,13 +1,13 @@
 <?php 
 include_once('inc/init.inc.php');
-
+echo '<pre>'; print_r($_POST); echo '</pre>';   
 if(isset($_POST["reset-password-submit"])) {
-    echo 'test';
     $selector = $_POST["selector"];
     $validator = $_POST["validator"];
     $password = $_POST["pwd"];
     $passwordReapeat = $_POST["pwd-repeat"];
-    echo '<pre>'; var_dump($validator); echo '</pre>';
+    echo 'test';
+    echo '<pre>'; print_r($_POST); echo '</pre>'; 
     if(empty($password) || empty($passwordReapeat)) {
         header("Location: nouveau-mot-de-passe.php?newpwd=empty");
     } elseif($password != $passwordReapeat) {
@@ -15,6 +15,7 @@ if(isset($_POST["reset-password-submit"])) {
     }
 
     $currentDate = date("U");
+    echo $currentDate;
 
     $sql = $pdo->prepare("SELECT * FROM pwdReset WHERE pwdResetSelector = :pwdResetSelector AND pwdResetExpires >= :pwdResetExpires");
     $sql->bindParam(':pwdResetSelector', $selector, PDO::PARAM_STR);
@@ -43,6 +44,7 @@ if(isset($_POST["reset-password-submit"])) {
         $sql ->execute();
         header("Location: reset-password.php?newpwd=passwordupdated");
     }
-} else {
-    header('location:'. URL .''); 
-}
+} //else {
+    //echo 'NOK';
+    //header('location:'. URL .''); 
+//}

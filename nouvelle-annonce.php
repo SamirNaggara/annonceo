@@ -309,6 +309,7 @@ include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 
 ?>
+<div class="container">
 	<div class="starter-template col-lg-10 mx-auto text-center">
 		<h1>Déposer une annonce</h1>
 		<p class="lead"><?php echo $msg;?></p>

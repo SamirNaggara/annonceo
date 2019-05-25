@@ -5,7 +5,7 @@ include_once('inc/init.inc.php');
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
-
+<div class="container">
     <div class="starter-template col-lg-10 mx-auto text-center">
         <h1>Contact</h1>
 <!--        Attention!!! Important pour ecrire les messages d'erreurs-->
@@ -38,7 +38,7 @@ include_once('inc/nav.inc.php');
                 </div>
                 <div class="form-group col-md-12">
                     <label for="contactMessage">Message <span class="blue">*</span></label>
-                    <textarea id="contactMessage" class="col-md-12" name="contactMessage" rows="4" placeholder="Votre message"></textarea>
+                    <textarea id="contactMessage" class="form-control col-md-12" name="contactMessage" rows="4" placeholder="Votre message"></textarea>
                     <p class="comment"></p>
                 </div>
                 <div class="col-md-12">

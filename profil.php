@@ -161,7 +161,7 @@ include_once('inc/nav.inc.php');
 ?>
 
 <!--Titre et boutons de navigations-->
-
+<div class="container">
 <div class="starter-template">
     <h1>Profil</h1>
     <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
