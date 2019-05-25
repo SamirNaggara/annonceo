@@ -15,7 +15,7 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarsExampleDefault">
+            <div class="collapse navbar-collapse d-md-flex justify-content-md-between" id="navbarsExampleDefault">
                 <ul class="navbar-nav">
                     <div class="title text-white">
                         <a class="navbar-brand hover" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
@@ -56,7 +56,7 @@
                             <a class="nav-link" href="'.URL.'/admin/index.php" id="dropdown02" aria-haspopup="true" aria-expanded="false">Administration</a>
                         </li>';
                         }?>
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow mr-2">
                             <a class="nav-link dropdown-toggle hover" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user-circle fa-fw"></i>
                                 <?php 

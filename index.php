@@ -83,7 +83,7 @@ include_once('inc/nav.inc.php');
         <div class="bgIndex d-flex align-item-center" style="background-image: url('images/indexbgc.jpg');">
             <form method="post" action="#" class="indexForm col-8 mx-auto d-flex flex-wrap justify-content-center align-content-center">
             <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
-                <div class="bgForm col-11">
+                <div class="bgForm col-12">
                     <div class="row">
                         <div class="form-group col-3">
                             <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
@@ -112,11 +112,17 @@ include_once('inc/nav.inc.php');
                                 }
                                 ?>
                             </select>
+                            <div class="ajaxGlobale form-group champVille">
+                                <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
+                                </select>
+                            </div>
                         </div>
-                        <div class="ajaxGlobale form-group champVille">
-                            <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
-                            </select>
-                        </div>
+                        <!-- <div class="form-group col-2">
+                            <div class="ajaxGlobale form-group champVille">
+                                <select class="custom-select ajaxIndex selectVille" id="ville" name="ville">
+                                </select>
+                            </div>
+                        </div>  -->
                         <div class="form-group col-3">
                             <select class="ajaxGlobale custom-select" id="optionTrie" name="trie">
                                 <option value="parDateDesc">Les plus récentes</option>

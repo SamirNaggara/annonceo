@@ -221,19 +221,29 @@ include_once('inc/nav.inc.php');
                         </span>
                         </ul>
                     </div>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'contact') { ?>
                     <div class="card-body">
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'contact') { ?>
                         <h5 class="card-title text-center">Laisser un message à <?=ucfirst($ceVendeur["pseudo"])?></h5>
-                        <div class="col-6 m-0 p-1 mx-auto">
-                            <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter</a>
+                        <?php if (!user_is_connected()) { 
+                        echo '<div class="text-center">Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</div>';
+                        } else {?>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6 m-0 p-1 mx-auto">
+                                <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter</a>
+                            </div>
                         </div>
                     </div>
+                    <?php } ?>
                     <?php } elseif(isset($_GET['action']) && $_GET['action'] == 'avis') {?>
+                        <h5 class="card-title text-center">Informations sur <?=ucfirst($ceVendeur["pseudo"])?></h5>
                         <?php if (!user_is_connected()) { 
-                            echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
-                        } else {?>
-                    <div  id="collapseVoirLesAvis">
-                        <div class="listingNote">
+                        echo '<div class="text-center">Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</div>';?>
+                    </div>
+                    <?php } else {?>
+                        <div  id="collapseVoirLesAvis">
+                            <div class="listingNote">
                             <?php
                             $premiereLigne = true;
                             foreach($lesNotes as $uneNote){
@@ -264,60 +274,52 @@ include_once('inc/nav.inc.php');
                             //On ferme l'accolade du foreach des notes
                             }
                             ?>
-                       
                         <!-----Fin listingNote------------>
-                        
-                    </div>
-                    
-                            </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                <h5 class="card-title col-lg-6 addAvis">Laisser une note et un avis à <?=ucfirst($ceVendeur["pseudo"])?></h5>
-                                    <div class="col-lg-6">
-                                        <a class="laisserAvis btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Envoyer</a>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        <?php } ?>
-                    <?php } else { ?>
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <div class="conteneurTexte overflow-scroll">
-                                <p class="card-text p-0 m-0 text-justify" id="description">
-                                <?php 
-                                if (strlen($cetteAnnonce['description_longue']) > 960){
-                                    $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
-                                    if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
-                                        echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
-                                    }else{
-                                        echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
-                                    }
-                                }else{
-                                    echo ucfirst($cetteAnnonce['description_longue']);
-                                }
-                                ?>
-                                </p>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div class="row">
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                        <h5 class="card-title col-lg-6 addAvis">Laisser une note et un avis à <?=ucfirst($ceVendeur["pseudo"])?></h5>
+                            <div class="col-lg-6">
+                                <a class="laisserAvis btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#laisserAvis" data-backdrop="static">Envoyer</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php } else { ?>
+                        <h5 class="card-title">Special title treatment</h5>
+                        <div class="conteneurTexte overflow-scroll">
+                            <p class="card-text p-0 m-0 text-justify" id="description">
+                            <?php 
+                            if (strlen($cetteAnnonce['description_longue']) > 960){
+                                $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
+                                if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
+                                    echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
+                                }else{
+                                    echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
+                                }
+                            }else{
+                                echo ucfirst($cetteAnnonce['description_longue']);
+                            }
+                            ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
                             <div class="col-lg-6 text-center text-lg-left py-auto"><i class="fas fa-map-marker-alt"></i>
                             <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?>
-                        </div>
-                                <div class="prix col-lg-6 text-center text-lg-right">
-                                    <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> <i class="fas fa-euro-sign"></i></div>
-                                
+                            </div>
+                            <div class="prix col-lg-6 text-center text-lg-right">
+                                <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> <i class="fas fa-euro-sign"></i>
                             </div>
                         </div>
+                    </div>
                     <?php } ?>
                 </div>
-                <?php
-                if (!user_is_connected()) {
-                    echo '<span>Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</span>';
-                } ?>
                 <!-----Fin conteneurBoutons-------->
-                
             </div>
             <!------Fin description------------->
         </div>
