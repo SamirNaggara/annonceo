@@ -39,8 +39,8 @@ if(isset($_POST["reset-password-submit"])) {
         $sql = $pdo->prepare("DELETE FROM pwdReset WHERE pwdResetEmail = :pwdResetEmail");
         $sql->bindParam(':pwdResetEmail', $tokenEmail, PDO::PARAM_STR);
         $sql ->execute();
-        $msg .= '<div class="alert alert-success mt-2 col-6 mx-auto" role="alert">Votre mot de passe à bien été modifié. Redirection dans <span id="crono"></span></div>';
-		header("Refresh:4; url=". URL ."");
+        $msg .= '<div class="alert alert-success mt-2 col-8 mx-auto" role="alert">Votre mot de passe à bien été modifié. Redirection dans <span id="crono">3</span>sec.</div>';
+		header("Refresh:3; url=". URL ."");
     }
 }
 include_once('inc/header.inc.php');

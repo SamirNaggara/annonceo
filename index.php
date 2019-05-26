@@ -194,7 +194,12 @@ include_once('inc/nav.inc.php');
                                 </p>
                                 <div class="footerAnnonce row mx-auto w-100 mb-2">
                                     <span class="d-inline-block col-md-6 p-0 text-center text-md-left mr-auto"><i class="far fa-user"></i>
-                                        <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                                        <?php echo ucfirst($uneLigne['pseudo']); ?>: <?php if($uneLigne['moyenneNote'] == '') {
+                                                echo 'Aucune note';?></span>
+                                            <?php } else { ?>
+                                                <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                                                <?php } ?>
+                                                
                                     <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>" class="btn btn-outline-dark">Voir l'annonce</a>
                                 </div>
                             </div>

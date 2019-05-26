@@ -217,7 +217,12 @@ include_once('inc/nav.inc.php');
                             <strong class="vendeur"><i class="fas fa-user"></i>
                                 <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
                             <span class="laMoyenne">
-                                <?php echo $moyenneNote ?>/5</span>
+                                </span>
+                                <?php if($moyenneNote == '') {
+                                                echo 'Aucune note';?></span>
+                                            <?php } else { ?>
+                                                <?php echo $moyenneNote ?>/5</span>
+                                                <?php } ?>
                         </span>
                         </ul>
                     </div>
@@ -264,7 +269,12 @@ include_once('inc/nav.inc.php');
                             $infosMembreAvis->execute();
                             $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
                                 echo ucfirst($leMembreAvis["pseudo"]) ?> ( <span class="laNote">
-                                <?php echo $uneNote['note'] ?>/5)</span>
+                                <?php 
+                                if($uneNote['note'] == '') {
+                                                echo 'Aucune note';?> )</span>
+                                            <?php } else { ?>
+                                                <?php echo $uneNote['note'] ?>/5 )</span>
+                                                <?php } ?>
                                 <span class="dateNote text-secondary">
                                 <?php echo 'Le '.date("d-m-Y", strtotime($uneNote['date_enregistrement'])).' :'  ?></span></p>
                                 <p class="avis p-3">

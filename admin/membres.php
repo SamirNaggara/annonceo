@@ -32,15 +32,15 @@ if (isset($_GET['supprimer'])){
 
 $changementAdmin = "";
 
-if (isset($_GET['changementAdmin'])){
-    $changementAdmin = $_GET['changementAdmin']; 
+if (isset($_GET['modifInfoMembre'])){
+    $changementAdmin = $_GET['modifInfoMembre']; 
 }
 
-if (isset($_GET['modifierAdmin'])){
+if (isset($_GET['modifInfoMembre'])){
 
     //Recuperation du statut du membre concerné
     $recuperationStatut= $pdo->prepare("SELECT statut FROM membre WHERE id_membre = :id_membre");
-    $recuperationStatut->bindParam(':id_membre', $_GET['modifierAdmin'], PDO::PARAM_STR);
+    $recuperationStatut->bindParam(':id_membre', $_GET['modifInfoMembre'], PDO::PARAM_STR);
     $recuperationStatut->execute();
     
     $statut = $recuperationStatut->fetch(PDO::FETCH_ASSOC);
@@ -48,16 +48,16 @@ if (isset($_GET['modifierAdmin'])){
 //Si l'utilisateur est un membre, on update le statut a 2
 if ($statut['statut'] == 1){
     $updateStatut= $pdo->prepare("UPDATE membre SET statut = 2 WHERE id_membre = :id_membre");
-    $updateStatut->bindParam(':id_membre', $_GET['modifierAdmin'], PDO::PARAM_STR);
+    $updateStatut->bindParam(':id_membre', $_GET['modifInfoMembre'], PDO::PARAM_STR);
     $updateStatut->execute();
 } else{
     $updateStatut= $pdo->prepare("UPDATE membre SET statut = 1 WHERE id_membre = :id_membre");
-    $updateStatut->bindParam(':id_membre', $_GET['modifierAdmin'], PDO::PARAM_STR);
+    $updateStatut->bindParam(':id_membre', $_GET['modifInfoMembre'], PDO::PARAM_STR);
     $updateStatut->execute();
     }
-
     header("location:" . URL . "admin/membres.php");
-}
+    
+
 
 
 $bo_pseudo_profil = "";
@@ -67,13 +67,14 @@ $bo_telephone_profil = "";
 $bo_email_profil = "";
 $bo_civilite_profil = "";
 
-if(isset($_GET['modifInfoMembre'])) {
+
     $id_bo_membre_profil = $_GET['modifInfoMembre'];
     $recupinfosMembre = $pdo->prepare("SELECT * FROM membre WHERE id_membre = :id_membre");
     $recupinfosMembre->bindParam(':id_membre', $_GET['modifInfoMembre'], PDO::PARAM_STR);
     $recupinfosMembre->execute();
 
     $infoDuMembre = $recupinfosMembre->fetch(PDO::FETCH_ASSOC);
+    
 }
 
 if(isset($_POST['bo_pseudo_profil']) && isset($_POST['bo_nom_profil']) && isset($_POST['bo_prenom_profil']) && isset($_POST['bo_telephone_profil']) && isset($_POST['bo_email_profil']) && isset($_POST['bo_civilite_profil'])) {
@@ -146,7 +147,7 @@ if(isset($_POST['bo_pseudo_profil']) && isset($_POST['bo_nom_profil']) && isset(
 
         $msg .= '<div class="alert alert-success mt-2" role="alert">Les informations du membres ont été modifiées</div>';
     }
-    header('Refresh:2; url=' . URL . 'admin/membres.php');
+    header("location:" . URL . "admin/membres.php");
 }
 
 include_once('inc/header.inc.php');
@@ -287,6 +288,15 @@ include_once('inc/nav.inc.php');
                 </div>
             </div>
         </form>
+        <div class="col-6 mx-auto">
+            <form action="" method="get">
+                <div class="form-group">
+                    <label for="nouveauTitre">ID membre</label>
+                    <input type="text" class="form-control" id="modifierAdmin" name="modifierAdmin" <?php echo 'value="' . $changementAdmin . '"'; ?>>
+                </div>
+                <button type="submit" class="btn btn-primary">Changer le statut</button>
+            </form>
+        </div>
         <?php
         // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
         } ?>
