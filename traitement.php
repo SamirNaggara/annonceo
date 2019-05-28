@@ -109,6 +109,21 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
 //  ***********************************
 //  La requette d'affichage des annonces
 //  ***********************************
+$perPage = 5;
+$req = $pdo->query("SELECT COUNT(*) AS total FROM annonce");
+$result = $req->fetch(PDO::FETCH_ASSOC);
+$total = $result['total'];
+$nbPage = ceil($total/$perPage);
+if(isset($_GET['page']) && !empty($_GET['page']) && ctype_digit($_GET['page']) == 1) {
+    if($_GET['page'] > $nbPage) {
+        $current = $nbPage;
+    } else {
+        $current = $_GET['page'];
+    }
+} else {
+    $current = 1;
+}
+$firstOfPage = ($current-1)*$perPage;
     $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
@@ -133,7 +148,7 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
                                             AND a.prix BETWEEN :prixMin AND :prixMax
                                             GROUP BY a.id_annonce
                                             ORDER BY " . $pourTrie .
-                                            " LIMIT 30");
+                                            " LIMIT $firstOfPage, $perPage");
 
 	$requeteAffichage->bindParam(':rechercher', $pourLaRecherche, PDO::PARAM_STR);
 	$requeteAffichage->bindParam(':categorie', $pourLaCategorie, PDO::PARAM_STR);

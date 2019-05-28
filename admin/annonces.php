@@ -312,15 +312,30 @@ if(isset($_GET['modifier'])) {
 $recup_categorie = $pdo->query(
     "SELECT * FROM categorie ORDER BY titre"
 );
-
 // récupération des informations des annonces en fonction de leur categorie
+$perPage = 6;
+$req = $pdo->query("SELECT COUNT(*) AS total FROM annonce");
+$result = $req->fetch(PDO::FETCH_ASSOC);
+$total = $result['total'];
+$nbPage = ceil($total/$perPage);
+if(isset($_GET['page']) && !empty($_GET['page']) && ctype_digit($_GET['page']) == 1) {
+    if($_GET['page'] > $nbPage) {
+        $current = $nbPage;
+    } else {
+        $current = $_GET['page'];
+    }
+} else {
+    $current = 1;
+}
+$firstOfPage = ($current-1)*$perPage;
 if(isset($_GET['categorie'])) {
     $annonces = $pdo->prepare(
         "SELECT a.id_annonce, a.titre AS titre_annonce, a.description_courte, a.description_longue, a.prix, a.photo, a.pays, a.ville, a.adresse, a.cp, m.pseudo, c.titre, a.date_enregistrement  
     FROM annonce a, membre m, categorie c 
     WHERE c.titre = :titre
     AND m.id_membre = a.membre_id   
-    AND a.categorie_id = c.id_categorie"
+    AND a.categorie_id = c.id_categorie
+    LIMIT $firstOfPage, $perPage"
     );
     $annonces->bindParam(':titre', $_GET['categorie'], PDO::PARAM_STR);
     $annonces->execute();
@@ -331,7 +346,7 @@ if(isset($_GET['categorie'])) {
     FROM annonce a, membre m, categorie c 
     WHERE m.id_membre = a.membre_id   
     AND a.categorie_id = c.id_categorie
-    "
+    LIMIT $firstOfPage, $perPage"
     );
     $annonces->execute();
 }
@@ -486,7 +501,32 @@ if(isset($_GET['modifier'])) {
 <!-- Fin affichage formulaire de modification de l'annonce -->
 <?php  } else { 
     // Début tableau contenant toutes les annonces
-    echo '<div class="tableAnnonces">';
+    echo '<div class="tableAnnonces">'; ?>
+    <?php
+    if(isset($_GET['categorie'])) {
+
+    } else { ?>
+            <ul class="pagination">
+                <li class="<?php if($current == '1'){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != '1') { echo $current - 1; } else { $current; } ?>" class="page-link">&laquo;</a></li>
+
+                <?php 
+                for($i=1; $i<=$nbPage; $i++) {
+                    if($i == $current) {
+                        ?>
+                        <li class="page-item active"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li class="page-item"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                        <?php
+                    }
+                }
+                ?>                    
+
+                <li class="<?php if($current == $nbPage){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != $nbPage) { echo $current + 1; } else { $current; } ?>" class="page-link">&raquo;</a></li>
+            </ul>
+    <?php } ?>
+    <?php
     echo '<div class="row">';
     echo '<a class="nav-link dropdown-toggle btn btn-default" href="" id="categorieAnnonces" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Trier par categories';

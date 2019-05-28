@@ -57,19 +57,29 @@ include_once('inc/modal.inc.php');
 
 /* On calcule donc le numéro du premier enregistrement */
 
-/* $page = $_GET['page'];
-$limite = 6;
-$debut = ($page - 1) * $limite;
-LIMIT :limite OFFSET :debut");
-$requeteAffichage->bindValue('limite', $limite, PDO::PARAM_INT);
-$requeteAffichage->bindValue('debut', $debut, PDO::PARAM_INT); */
+
+$perPage = 5;
+$req = $pdo->query("SELECT COUNT(*) AS total FROM annonce");
+$result = $req->fetch(PDO::FETCH_ASSOC);
+$total = $result['total'];
+$nbPage = ceil($total/$perPage);
+if(isset($_GET['page']) && !empty($_GET['page']) && ctype_digit($_GET['page']) == 1) {
+    if($_GET['page'] > $nbPage) {
+        $current = $nbPage;
+    } else {
+        $current = $_GET['page'];
+    }
+} else {
+    $current = 1;
+}
+$firstOfPage = ($current-1)*$perPage;
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
                                             LEFT JOIN note n ON n.membre_id2 = m.id_membre
                                             GROUP BY a.id_annonce
                                             ORDER BY a.date_enregistrement DESC
-                                            LIMIT 30");
+                                            LIMIT $firstOfPage, $perPage");
 $requeteAffichage->execute();
 $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 
@@ -168,6 +178,25 @@ include_once('inc/nav.inc.php');
             </nav>
         
             <div class="annonce-index col-lg-8 mt-3">
+            <ul class="pagination">
+                <li class="<?php if($current == '1'){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != '1') { echo $current - 1; } else { $current; } ?>" class="page-link">&laquo;</a></li>
+
+                <?php 
+                for($i=1; $i<=$nbPage; $i++) {
+                    if($i == $current) {
+                        ?>
+                        <li class="page-item active"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li class="page-item"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                        <?php
+                    }
+                }
+                ?>                    
+
+                <li class="<?php if($current == $nbPage){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != $nbPage) { echo $current + 1; } else { $current; } ?>" class="page-link">&raquo;</a></li>
+            </ul>
                 <div id="contenerReponseRequete" class="row">
                 <!--Affichage de chargement de la page, qui s'affichera avant que le ajax ne rentre en jeu (sera effacer apres)-->
                     <?php 
@@ -209,6 +238,25 @@ include_once('inc/nav.inc.php');
                     }
                     ?>
                 </div>
+                <ul class="pagination">
+                    <li class="<?php if($current == '1'){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != '1') { echo $current - 1; } else { $current; } ?>" class="page-link">&laquo;</a></li>
+
+                    <?php 
+                    for($i=1; $i<=$nbPage; $i++) {
+                        if($i == $current) {
+                            ?>
+                            <li class="page-item active"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                            <?php
+                        } else {
+                            ?>
+                            <li class="page-item"><a class="page-link" href="?page=<?php echo $i ?>"><?php echo $i?></a></li>
+                            <?php
+                        }
+                    }
+                    ?>                    
+
+                    <li class="<?php if($current == $nbPage){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != $nbPage) { echo $current + 1; } else { $current; } ?>" class="page-link">&raquo;</a></li>
+                </ul>
             </div>
         </div>
     </div>
