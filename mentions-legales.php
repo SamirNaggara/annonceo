@@ -4,6 +4,7 @@ include_once('inc/init.inc.php');
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
+
 <div class="container">
     <div class="starter-template">
         <h1>Informations légales</h1>

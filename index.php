@@ -153,6 +153,8 @@ include_once('inc/nav.inc.php');
     <div class="pageIndex">
         <div class="container">
             <div class="starter-template">
+                <h2 class="titleAnnonces">Nos dernières annonces</h2>
+                <div class="divider"></div>
                 <p class="lead">
                     <?php echo $msg;?>
                 </p>
@@ -166,7 +168,7 @@ include_once('inc/nav.inc.php');
             <nav class="col-lg-2 mt-3 filtrePrix">
                 <div class="form-group">
                     <label for="prixMinimum">Filtrer par prix</label>
-                    <input type="range" class="rangeMin ajaxGlobale" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
+                    <input type="range" class="rangeMin ajaxGlobale custom-range col-6 col-md-12" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
                     <output class="" id="prixMin" name="resultMin"></output>
                 </div>
                 <div class="form-group">

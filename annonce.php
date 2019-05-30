@@ -135,19 +135,22 @@ include_once('inc/nav.inc.php');
         <header>
             <div class="titreAnnonce row justify-content-between">
                 <div class="conteneurTitreNote col-lg-6 w-100 ml-auto mx-left mx-lg-0">
-                    <h1 class="d-block text-lg-left text-center">
+                    <h1 class="d-block text-lg-left text-center mb-4">
                         <?php echo ucfirst($cetteAnnonce["titre"]); ?>
+                        <div class="divider"></div>
                     </h1>
                     
                     <!-----Fin collapseVoirLesAvis--------->
                 </div>
+                
                 <!------Fin conteneurTitreNote------------>
             </div>
             <!-------Fin titreAnnonce---------->
         </header>
+        
         <!-------Fin container-fluid---------->
         <!--Carousel et texte de l'annonce-->
-        <div class="conteneurCarouselTexte row my-5 ">
+        <div class="conteneurCarouselTexte row ">
             <section class="carousel col-lg-6">
                 <div id="carouselAnnonce" class="carousel slide w-90" data-ride="carousel">
                     <!-- <ol class="carousel-indicators">
@@ -230,8 +233,9 @@ include_once('inc/nav.inc.php');
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'contact') { ?>
                         <h5 class="card-title text-center">Laisser un message à <?=ucfirst($ceVendeur["pseudo"])?></h5>
                         <?php if (!user_is_connected()) { 
-                        echo '<div class="text-center">Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</div>';
-                        } else {?>
+                        echo '<div class="text-center">Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</div>';?>
+                    </div>
+                    <?php } else {?>
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -336,37 +340,17 @@ include_once('inc/nav.inc.php');
         <!------ Fin conteneurCarouselTexte-------->
         <!--Partie ou l'on affiche les autres annonces-->
         <hr>
-        <div class="gMap py-2">
+        <div class="gMap py-2 col-12">
             <iframe src="https://maps.google.it/maps?q=<?php echo $cetteAnnonce['adresse'] . $cetteAnnonce['cp'] . $cetteAnnonce['ville'] ?>&output=embed" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
         </div>
         <hr>
-        <div class="autresAnnonces row mt-3">
-            <h4 class="bold col-12 text-lg-left text-center">Annonces similaires :</h4>
-            <?php 
-            foreach($autresAnnonces as $cetteAutreAnnonce){
-                ?>
-            <figure class="col-sm-3 my-4 "><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
-            <div class="picture m-3 img-thumbnail">
-                    <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-                    <figcaption class="text-center text-dark mt-2">
-                    <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
-                </figcaption>
-                    </div>
-                </a>
-            </figure>
-            <?php
-            }
-                ?>
-        </div>
-        <!------Fin autresAnnonces-------------------->
-        <!--   Partie ou l'on affiche les commentaires-->
-        <?php
+                <!--   Partie ou l'on affiche les commentaires-->
+                <?php
         if (!user_is_connected()) { 
         } else {?>
         <div class="commentaires mt-4">
-        <hr>
-            <h4>Laisser un commentaires :</h4>
-            <form id="avis" method="post" action="" class="mt-3">
+            <h4>Laisser un commentaire</h4>
+            <form id="commentaire" method="post" action="" class="mt-3">
                 <div class="form-group">
                     <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
                 </div>
@@ -398,6 +382,28 @@ include_once('inc/nav.inc.php');
         </div>
         <?php } ?>
         <!------Fin commentaires----------->
+        <div class="autresAnnonces mt-3 pb-5">
+            <h4 class="bold col-12 text-lg-left text-center p-0">Annonces similaires</h4>
+            <?php 
+            foreach($autresAnnonces as $cetteAutreAnnonce){
+                ?>
+            <div class="row">
+            <figure class="col-sm-3 p-0"><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
+            <div class="picture m-3 img-thumbnail">
+                    <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
+                    <figcaption class="text-center text-dark mt-2">
+                    <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
+                </figcaption>
+                    </div>
+                </a>
+            </figure>
+            </div>
+            <?php
+            }
+                ?>
+        </div>
+        <!------Fin autresAnnonces-------------------->
+
         <!--Formulaire pour laisser un avis-->
         <div class="row laisserAvis">
             <form id="avis" method="post" action="">
@@ -428,7 +434,7 @@ include_once('inc/nav.inc.php');
                                     <div class="form-group">
                                         <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
                                     </div>
-                                    <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerAvis" value="Envoyer">
+                                    <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="envoyerAvis" name="envoyerAvis" value="Envoyer">
                                 </form>
                             </div>
                         </div>
@@ -463,7 +469,7 @@ include_once('inc/nav.inc.php');
                                             <?php echo $ceVendeur['telephone'] ?>
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="inscription" name="envoyerMessage" value="Envoyer">
+                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="envoyerMessage" name="envoyerMessage" value="Envoyer">
                             </form>
                         </div>
                     </div>

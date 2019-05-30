@@ -18,17 +18,33 @@ body,html {
         background-color: orange;
         border-color: orange;
     }
+    .nav-link.depot {
+        border: 1px solid orange;
+        border-radius: 7px;
+        transition: 0.3s ease-in-out;
+        &:hover {
+            background-color: orange;
+            color: #343a40 !important;
+        }
+        &:hover .fa-plus-circle {
+            color: #343a40;
+        }
+    }
+    .fa-plus-circle {
+        color: orange;
+    }
 }
 /** footer.inc.php **/
 .footerMembre {
     width: 100% !important;
-
+    position: absolute;
+    bottom: 0 !important;
     a {
         text-decoration: none;
         color: black;
         transition: 0.3s ease-in-out;
         &:hover {
-            color: #ffc107;
+            color: orange;
         }
     }
 }
@@ -77,6 +93,17 @@ body,html {
 }
 
 .pageIndex {
+    width: 100%;
+    .titleAnnonces {
+        padding-top: 15px;
+    }
+    .divider {
+        width: 100px;
+        height: 4px;
+        background-color: orange;
+        margin: 0 auto;
+        margin-top: 15px;
+    }
     padding: 0;
     background-color: #9b999914;
     .container {
@@ -115,19 +142,48 @@ body,html {
     text-align: center;
 
     h1 {
-        text-decoration: underline;
         font-size: 30px;
     }
 }
-
-//--------------page annonce---------------
+/* page annonce */
+.monAnnonce {
+    h1{
+        .divider {
+            width: 100px;
+            height: 4px;
+            background-color: orange;
+        }
+    }
+    h4 {
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 65px;
+            height: 4px;
+            background-color: orange;
+        }
+    }
+}
+.description {
+    .nav-link {
+        color: #343a40;
+    }
+    .nav-link.active {
+        color: orange;
+    }
+}
 .autresAnnonces {
     figure {
         width: 350px;
         height: 250px;
         .picture {
             width: 230px;
-            height: 100%;
+            height: 90%;
         }
         a {
             text-decoration: none;
@@ -309,15 +365,30 @@ body,html {
         }
     }
 }
-
+.container-fluid.contact {
+    height: 100% !important;
+    padding: 80px 0;
+    background-image: url("../images/contact.jpg");
+    background-size: cover;
+    .divider {
+        width: 130px;
+        height: 3px;
+        background-color: orange;
+        margin: 0 auto;
+        margin-top: 5px;
+    }
+    .row {
+        margin: 0;
+        .container {
+            padding-top: 0;
+        }
+    }
+}
 #contactForm {
     margin-top: 50px;
     margin-bottom: 22px;
     label {
         font-weight: bold;
-    }
-    .blue {
-        color: #0069d6;
     }
     .comment {
         font-style: italic;
@@ -361,7 +432,16 @@ body,html {
     p {
         font-size: 14px;
     }
+    a {
+        color: black;
+        text-decoration: underline;
+        transition: 0.3s ease-in-out;
+        &:hover {
+            color: orange;
+        }
+    }
 }
+
 #cgv_conteneur {
     margin-top: 50px;
 

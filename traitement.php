@@ -210,4 +210,4 @@ echo json_encode($tab);
         if($laLigne['moyenneNote'] >= 0) {
             echo 'Notes : '. round($laLigne['moyenneNote'],1);
         }
-/5</span>
+/5</span>*/

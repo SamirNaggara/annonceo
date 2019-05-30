@@ -5,6 +5,7 @@ include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
 
+<div class="container">
     <div class="starter-template">
         <h1>Conditions générales de ventes</h1>
     </div>

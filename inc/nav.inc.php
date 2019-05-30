@@ -28,7 +28,7 @@
                     <!-- On affiche "Déposer une annonce" seulement siun utilateur est connecter-->
                     <?php if (user_is_connected()){ ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link hover" href="nouvelle-annonce.php">Déposer une annonce</a>
+                        <a class="nav-link hover depot" href="nouvelle-annonce.php"><i class="fas fa-plus-circle"></i> Déposer une annonce</a>
                     </li>
                     <?php } ?>
                 </ul>

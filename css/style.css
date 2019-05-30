@@ -20,10 +20,27 @@ body, html {
   background-color: orange;
   border-color: orange;
 }
+.navbar .nav-link.depot {
+  border: 1px solid orange;
+  border-radius: 7px;
+  transition: 0.3s ease-in-out;
+}
+.navbar .nav-link.depot:hover {
+  background-color: orange;
+  color: #343a40 !important;
+}
+.navbar .nav-link.depot:hover .fa-plus-circle {
+  color: #343a40;
+}
+.navbar .fa-plus-circle {
+  color: orange;
+}
 
 /** footer.inc.php **/
 .footerMembre {
   width: 100% !important;
+  position: absolute;
+  bottom: 0 !important;
 }
 .footerMembre a {
   text-decoration: none;
@@ -31,7 +48,7 @@ body, html {
   transition: 0.3s ease-in-out;
 }
 .footerMembre a:hover {
-  color: #ffc107;
+  color: orange;
 }
 
 /** admin/footer.in.php **/
@@ -78,8 +95,19 @@ body, html {
 }
 
 .pageIndex {
+  width: 100%;
   padding: 0;
   background-color: #9b999914;
+}
+.pageIndex .titleAnnonces {
+  padding-top: 15px;
+}
+.pageIndex .divider {
+  width: 100px;
+  height: 4px;
+  background-color: orange;
+  margin: 0 auto;
+  margin-top: 15px;
 }
 .pageIndex .container {
   padding-top: 40px;
@@ -118,8 +146,35 @@ body, html {
   text-align: center;
 }
 .starter-template h1 {
-  text-decoration: underline;
   font-size: 30px;
+}
+
+/* page annonce */
+.monAnnonce h1 .divider {
+  width: 100px;
+  height: 4px;
+  background-color: orange;
+}
+.monAnnonce h4 {
+  position: relative;
+}
+.monAnnonce h4:after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 65px;
+  height: 4px;
+  background-color: orange;
+}
+
+.description .nav-link {
+  color: #343a40;
+}
+.description .nav-link.active {
+  color: orange;
 }
 
 .autresAnnonces figure {
@@ -128,7 +183,7 @@ body, html {
 }
 .autresAnnonces figure .picture {
   width: 230px;
-  height: 100%;
+  height: 90%;
 }
 .autresAnnonces figure a {
   text-decoration: none;
@@ -297,15 +352,32 @@ body, html {
   font-size: 14px;
 }
 
+.container-fluid.contact {
+  height: 100% !important;
+  padding: 80px 0;
+  background-image: url("../images/contact.jpg");
+  background-size: cover;
+}
+.container-fluid.contact .divider {
+  width: 130px;
+  height: 3px;
+  background-color: orange;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+.container-fluid.contact .row {
+  margin: 0;
+}
+.container-fluid.contact .row .container {
+  padding-top: 0;
+}
+
 #contactForm {
   margin-top: 50px;
   margin-bottom: 22px;
 }
 #contactForm label {
   font-weight: bold;
-}
-#contactForm .blue {
-  color: #0069d6;
 }
 #contactForm .comment {
   font-style: italic;
@@ -342,6 +414,14 @@ body, html {
 }
 #mentions_conteneur p, #cgv_conteneur p {
   font-size: 14px;
+}
+#mentions_conteneur a, #cgv_conteneur a {
+  color: black;
+  text-decoration: underline;
+  transition: 0.3s ease-in-out;
+}
+#mentions_conteneur a:hover, #cgv_conteneur a:hover {
+  color: orange;
 }
 
 #cgv_conteneur {
