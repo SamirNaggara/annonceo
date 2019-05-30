@@ -20,9 +20,6 @@
                     <div class="title text-white">
                         <a class="navbar-brand hover" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
                     </div>
-                    <li class="nav-item">
-                        <a class="nav-link hover" href="contact.php">Qui-sommes-nous ?</a>
-                    </li>
                     <!-- Contact -->
                     <li class="nav-item">
                         <a class="nav-link hover" href="contact.php">Contact</a>

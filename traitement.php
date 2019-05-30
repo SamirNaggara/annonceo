@@ -124,7 +124,7 @@ if(isset($_GET['page']) && !empty($_GET['page']) && ctype_digit($_GET['page']) =
     $current = 1;
 }
 $firstOfPage = ($current-1)*$perPage;
-    $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, m.pseudo, AVG(n.note) as moyenneNote
+    $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.ville, a.photo, m.pseudo, AVG(n.note) as moyenneNote
                                             FROM annonce a
                                             LEFT JOIN membre m ON m.id_membre = a.membre_id
                                             LEFT JOIN note n ON n.membre_id2 = m.id_membre
@@ -163,27 +163,33 @@ $firstOfPage = ($current-1)*$perPage;
         $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 //        Affichage de chacune des annonces
         foreach($requeteAffichage as $laLigne){
-            $tab['reponseRequete'] .= '<div class="blocRequete no-gutters bg-light col-12 mb-4">
+            $tab['reponseRequete'] .= '<div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow">
                                             <div class="row">
                                                 <div class="col-md-4 imgAnnonce">
                                                     <a href="' . URL . 'annonce.php?id_annonce=' . $laLigne['id_annonce'] . '">
                                                         <div class="picture">
                                                             <img src="' . $laLigne['photo'] . '" class="py-1 d-block" alt="photo annonceo">
                                                         </div>
-                                                    </a> 
+                                                    </a>
                                                 </div>
-                                                <div class="col-md-8 p-2 d-flex flex-column textAnnonce">
-                                                    <h5 class="mt-0 p-0 pt-2 d-flex justify-content-between">' . ucfirst($laLigne['titre']) . 
-                                                        '<span class="d-inline-block col-md-6 p-0 text-center text-md-right euroText">'
-                                                            . $laLigne['prix'] .' <i class="fas fa-euro-sign"></i>
-                                                        </span>
-                                                    </h5>
-                                                    <p class="p-0 text-center text-md-left w-100 mx-auto mb-auto">' . ucfirst($laLigne['description_courte']) . '</p>
-                                                    <div class="footerAnnonce row mx-auto w-100 mb-2">
-                                                        <span class="d-inline-block col-md-6 p-0 text-center text-md-left mr-auto"><i class="far fa-user"></i>' .  ucfirst($laLigne['pseudo']) . ': ' . round($laLigne['moyenneNote'],1) . '/5</span>
-                                                        <a href="'. URL.'annonce.php?id_annonce='.$laLigne['id_annonce'].'" class="btn btn-outline-dark">Voir l\'annonce</a>           
+                                                <div class="col-md-8 textAnnonce">
+                                                    <div class="headerAnnonce mx-auto w-100 mb-2 d-flex ">'.
+                                                        '<span><i class="fas fa-map-marker-alt"></i> '. ucfirst($laLigne['ville']).'</span>
+                                                        <span class="vendeurAnnonce"><i class="far fa-user"></i> '. ucfirst($laLigne['pseudo']).'</span>'.
+                                                        // span class note à mettre ici
+                                                   '</div>
+                                                    <div class="row">
+                                                        <div class="col-lg-8 mt-2">     
+                                                            <h5 class="colorLetter">' . ucfirst($laLigne['titre']) . 
+                                                        '</h5>
+                                                        <p class="descAnnonces">' . ucfirst($laLigne['description_courte']) . '</p>
                                                     </div>
+                                                    <div class="col-lg-4 mt-2 d-flex flex-column">
+                                                        <p class="euroText text-right">'. $laLigne['prix'].' <i class="fas fa-euro-sign"></i></p>
+                                                        <a href="'. URL.'annonce.php?id_annonce='.$laLigne['id_annonce'].'" class="btn btn-outline-dark">Voir l\'annonce</a>'.         
+                                                    '</div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>';
         }       
@@ -196,4 +202,12 @@ $firstOfPage = ($current-1)*$perPage;
 echo json_encode($tab);
 
 
-
+/*<span class="note">'?>
+    <?php 
+        if($laLigne['moyenneNote'] == '') {
+            echo 'Aucune note' ;
+        }   
+        if($laLigne['moyenneNote'] >= 0) {
+            echo 'Notes : '. round($laLigne['moyenneNote'],1);
+        }
+/5</span>

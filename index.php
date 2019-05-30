@@ -95,7 +95,7 @@ include_once('inc/nav.inc.php');
             <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
                 <div class="bgForm col-12">
                     <div class="row">
-                        <div class="form-group col-3">
+                        <div class="form-group col-6 col-sm-6 col-lg-3">
                             <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
                                 <option value="toutes">Par catégories</option>
                                 <?php 
@@ -105,7 +105,7 @@ include_once('inc/nav.inc.php');
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-3 selectRegion">
                             <select class="ajaxGlobale custom-select" id="region" name="region">
                                 <option value="toutes">Par regions</option>
                                 <?php foreach($listeRegions as $laRegion){
@@ -114,7 +114,7 @@ include_once('inc/nav.inc.php');
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-3 selectDpt">
                             <select class="ajaxGlobale selectDepartement custom-select" id="departement" name="departement">
                                 <option value="toutes">Par departements</option>
                                 <?php foreach(departements('toutes', $lesVilles) as $leDepartement){
@@ -133,7 +133,7 @@ include_once('inc/nav.inc.php');
                                 </select>
                             </div>
                         </div>  -->
-                        <div class="form-group col-3">
+                        <div class="form-group col-6 col-sm-6 col-lg-3">
                             <select class="ajaxGlobale custom-select" id="optionTrie" name="trie">
                                 <option value="parDateDesc">Les plus récentes</option>
                                 <option value="parDateAsc">Les plus anciennes</option>

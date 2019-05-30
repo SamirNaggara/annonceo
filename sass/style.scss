@@ -67,6 +67,11 @@ body,html {
                 margin: 0 20px;
             }
         }
+        @media screen and (max-width: 1024px){
+            .selectRegion, .selectDpt {
+                display:none;
+            }
+        }
     }
     
 }
@@ -80,6 +85,19 @@ body,html {
     .filtrePrix {
         padding: 0;
         padding-top: 50px;
+    }
+    @media screen and (max-width: 992px) {
+        .filtrePrix {
+            padding-left: 75px;
+            padding-top: 0;
+            margin: 0 !important;
+        }
+        .container {
+            padding-top: 1px;
+        }
+        .annonce-index {
+            margin: 0 !important;
+        }
     }
 }
 .colorLetter {
@@ -230,7 +248,7 @@ body,html {
     }
 }
 #contenerReponseRequete>.blocRequete {
-    height: 218px;
+    /* height: 218px; */
     box-sizing: border-box;
     /* border: 1px solid rgba(209, 206, 206, 0.678); */
     /* box-shadow: 0px 0px 10px 0px rgba(24, 11, 0, 0.5); */
