@@ -86,7 +86,7 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     }
     //Pour le champs prix max
     
-    if ($_POST['prixMax'] != 'Illimite'){
+    if ($_POST['prixMax'] != ''){
         $pourPrixMax = $_POST['prixMax'];
     }else{
         $pourPrixMax = 1000000;

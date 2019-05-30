@@ -41,7 +41,7 @@
                         <div class="input-group">
                             <input type="text" id="champsRechercher" class="form-control ajaxGlobale" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary btn-search" type="button">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>

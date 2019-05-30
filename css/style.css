@@ -14,7 +14,11 @@ body, html {
 }
 .navbar .hover:hover {
   box-sizing: border-box;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid orange;
+}
+.navbar .btn-search {
+  background-color: orange;
+  border-color: orange;
 }
 
 /** footer.inc.php **/
@@ -70,10 +74,14 @@ body, html {
 
 .pageIndex {
   padding: 0;
-  background-color: #80808014;
+  background-color: #9b999914;
 }
 .pageIndex .container {
   padding-top: 40px;
+}
+.pageIndex .filtrePrix {
+  padding: 0;
+  padding-top: 50px;
 }
 
 .colorLetter {
@@ -195,14 +203,31 @@ body, html {
   }
 }
 
+.annonce-index .pagination {
+  margin-left: 75px;
+}
+.annonce-index .pagination .page-link {
+  color: #343a40;
+}
+.annonce-index .pagination .page-item.active .page-link {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #fff;
+}
+.annonce-index .container {
+  padding-top: 0px;
+  margin-bottom: 0px;
+}
+
 #contenerReponseRequete > .blocRequete {
   height: 218px;
   box-sizing: border-box;
-  border: 1px solid rgba(209, 206, 206, 0.678);
+  /* border: 1px solid rgba(209, 206, 206, 0.678); */
+  /* box-shadow: 0px 0px 10px 0px rgba(24, 11, 0, 0.5); */
   border-radius: 3px;
-}
-#contenerReponseRequete > .blocRequete:hover {
-  box-shadow: 1px 1px 10px 1px rgba(122, 122, 122, 0.794);
+  /* &:hover {
+      box-shadow: 1px 1px 10px 1px rgba(122, 122, 122, 0.794);
+  } */
 }
 @media screen and (max-width: 767px) {
   #contenerReponseRequete > .blocRequete {
@@ -213,7 +238,7 @@ body, html {
   background-color: rgba(219, 219, 219, 0.794);
 }
 #contenerReponseRequete > .blocRequete .imgAnnonce .picture {
-  height: 216px;
+  height: 218px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -226,11 +251,32 @@ body, html {
 }
 #contenerReponseRequete > .blocRequete .textAnnonce {
   box-sizing: border-box;
-  /*  background-color: rgba(128, 128, 128, 0.116); */
+  padding: 15px;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .headerAnnonce {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .headerAnnonce span {
+  color: #adb5bd;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .headerAnnonce .vendeurAnnonce:before {
+  content: "|";
+  padding: 0 15px;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .headerAnnonce .note:before {
+  content: "|";
+  padding: 0 15px;
 }
 #contenerReponseRequete > .blocRequete .textAnnonce .euroText {
   font-size: 16px;
   font-weight: 400;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce h5 {
+  font-size: 17px;
+}
+#contenerReponseRequete > .blocRequete .textAnnonce .descAnnonces {
+  font-size: 14px;
 }
 
 #contactForm {

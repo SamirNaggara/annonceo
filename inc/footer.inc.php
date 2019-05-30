@@ -135,7 +135,6 @@ include_once('inc/modal.inc.php');
 </script>
 <script src="<?php echo URL ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo URL ?>js/sb-admin.min.js"></script>
-
 <script src="<?php echo URL ?>js/jquery-ui.min.js"></script>
 <script src="<?php echo URL ?>js/ekko-lightbox.js"></script>
 <script src="<?php echo URL ?>js/anchorjs/anchor.js"></script>

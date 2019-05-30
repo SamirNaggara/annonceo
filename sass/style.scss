@@ -11,8 +11,12 @@ body,html {
         box-sizing: border-box;
         &:hover {
             box-sizing: border-box;
-            border-bottom: 2px solid white;
+            border-bottom: 2px solid orange;
         }
+    }
+    .btn-search {
+        background-color: orange;
+        border-color: orange;
     }
 }
 /** footer.inc.php **/
@@ -69,9 +73,13 @@ body,html {
 
 .pageIndex {
     padding: 0;
-    background-color: #80808014;
+    background-color: #9b999914;
     .container {
         padding-top : 40px;
+    }
+    .filtrePrix {
+        padding: 0;
+        padding-top: 50px;
     }
 }
 .colorLetter {
@@ -203,22 +211,40 @@ body,html {
         overflow: hidden;
     }
 }
-
+.annonce-index {
+    .pagination {
+        margin-left: 75px;
+        .page-link {
+            color: #343a40;
+        }
+        .page-item.active .page-link {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: #fff;
+        }
+        
+    }
+    .container {
+        padding-top : 0px;
+        margin-bottom: 0px;
+    }
+}
 #contenerReponseRequete>.blocRequete {
     height: 218px;
     box-sizing: border-box;
-    border: 1px solid rgba(209, 206, 206, 0.678);
+    /* border: 1px solid rgba(209, 206, 206, 0.678); */
+    /* box-shadow: 0px 0px 10px 0px rgba(24, 11, 0, 0.5); */
     border-radius: 3px;
-    &:hover {
+    /* &:hover {
         box-shadow: 1px 1px 10px 1px rgba(122, 122, 122, 0.794);
-    }
+    } */
     @media screen AND (max-width: 767px){
         height: auto;
     }
     .imgAnnonce {
         background-color: rgba(219, 219, 219, 0.794);
         .picture {
-            height: 216px;
+            height: 218px;
             width: 100%;
             box-sizing: border-box;
             img{
@@ -233,10 +259,35 @@ body,html {
     
     .textAnnonce {
         box-sizing: border-box;
-       /*  background-color: rgba(128, 128, 128, 0.116); */
+        padding: 15px;
+        .headerAnnonce {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            span {
+                color: #adb5bd;
+            }
+            .vendeurAnnonce {
+                &:before {
+                    content: "|";
+                    padding: 0 15px;
+                }
+            }
+            .note {
+                &:before {
+                    content: "|";
+                    padding: 0 15px;
+                }
+            }
+        }
         .euroText {
             font-size: 16px;
             font-weight: 400;
+        }
+        h5 {
+            font-size: 17px;
+        }
+        .descAnnonces {
+            font-size: 14px;
         }
     }
 }

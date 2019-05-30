@@ -293,12 +293,12 @@ $(document).ready(function() {
 
     //Affichage Prix maximum sur le coté de la bar
     $(function() {
-        $('.rangeMax').next().text('Illimite'); // Valeur par défaut
+        $('.rangeMax').next().text(''); // Valeur par défaut
         $('.rangeMax').on('input', function() {
             var $set = $(this).val();
             $(this).next().text($set);
             if ($set == 5000){
-                $(this).next().text('Illimite');
+                $(this).next().text('');
             }
         });
     });

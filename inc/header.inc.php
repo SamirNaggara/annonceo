@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?php echo URL ?>css/ekko-lightbox.css" >
     <link rel="stylesheet" href="<?php echo URL ?>css/jquery-ui.min.css" >
     
+    
         <!-- Notre propre style -->
     <link rel="stylesheet" href="<?php echo URL ?>css/style.css" >
     
