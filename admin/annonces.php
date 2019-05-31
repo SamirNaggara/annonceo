@@ -309,9 +309,8 @@ if(isset($_GET['modifier'])) {
 }
 
 // récuperation des categories
-$recup_categorie = $pdo->query(
-    "SELECT * FROM categorie ORDER BY titre"
-);
+$recup_categorie = $pdo->query("SELECT * FROM categorie ORDER BY titre");
+
 // récupération des informations des annonces en fonction de leur categorie
 $perPage = 6;
 $req = $pdo->query("SELECT COUNT(*) AS total FROM annonce");
@@ -503,11 +502,16 @@ if(isset($_GET['modifier'])) {
     // Début tableau contenant toutes les annonces
     echo '<div class="tableAnnonces">'; ?>
     <?php
-    if(isset($_GET['categorie'])) {
-
+    if(isset($_GET['categorie'])) { 
+        
     } else { ?>
-            <ul class="pagination">
-                <li class="<?php if($current == '1'){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != '1') { echo $current - 1; } else { $current; } ?>" class="page-link">&laquo;</a></li>
+    <div class="card-header">
+        <div class="row">
+            <i class="fas fa-table"></i>
+            Liste des annonces
+            <a class="nav-link dropdown-toggle btn btn-default ml-3 p-0" href="" id="categorieAnnonces" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Trier par categories</a>
+            <ul class="pagination pagination-sm">
+                <li class="<?php if($current == '1'){ echo "page-item disabled";} ?>"><a href="?categorie=<?php $categorie['titre'] ?>&page=<?php if($current != '1') { echo $current - 1; } else { $current; } ?>" class="page-link">&laquo;</a></li>
 
                 <?php 
                 for($i=1; $i<=$nbPage; $i++) {
@@ -527,10 +531,6 @@ if(isset($_GET['modifier'])) {
             </ul>
     <?php } ?>
     <?php
-    echo '<div class="row">';
-    echo '<a class="nav-link dropdown-toggle btn btn-default" href="" id="categorieAnnonces" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Trier par categories';
-    echo '</a>';
     echo '<div class="dropdown-menu categoriesAnnonce" aria-labelledby="navbarDropdown">';
     echo '<a class="dropdown-item" href="'. URL. 'admin/annonces.php">Toutes les categories</a>';
     echo '<div class="dropdown-divider"></div>';
@@ -542,9 +542,10 @@ if(isset($_GET['modifier'])) {
     }
     echo '</div>';
     echo '</div>';
+    echo '</div>';
     echo '<div class="row tableauAnnonces">';
     // création du tableau
-    echo '<table class="table table-hover table-responsive-sm table-responsive-md col-12" >';
+    echo '<table class="table table-bordered table-responsive-sm table-responsive-md col-md-12" >';
     echo '<tr>
             <th>Id annonce</th>
             <th>Titre</th>
@@ -566,16 +567,16 @@ if(isset($_GET['modifier'])) {
         echo '<tr>';
         foreach($mesAnnonces AS $indice => $valeur ) {
             if($indice == 'photo') {
-                echo '<td><img src="' . URL . $valeur . '" alt="image produit" style="width: 100px;" class="img-fluid"></td>';
+                echo '<td class="imgTable"><img src="' . URL . $valeur . '" alt="image produit" style="width: 100px;" class="img-fluid"></td>';
             } elseif ($indice == 'description_courte') {
-                echo '<td>' . substr($valeur, 0, 21). '<a class="dropdown-item" href">lire la suite</a></td>';
+                echo '<td class="desc_courte">' . substr($valeur, 0, 21). '<a href="#" class="link_court">...</a></td>';
             } elseif ($indice == 'description_longue') {
-                echo '<td>' . substr($valeur, 0, 21). '<a href="">...</a></td>';
+                echo '<td class="desc_longue">' . substr($valeur, 0, 21). '<a href="#" class="link_long">...</a></td>';
             } else {
-                echo '<td>' . $valeur . '</td>';
+                echo '<td class="'. $indice .'">' . $valeur . '</td>';
             }
         }  
-        echo '<td>'; 
+        echo '<td class="btn-annonces">'; 
         echo '<a href="?categorie='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-search"></i></a>';
         echo '<a href="?modifier='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-edit"></i></a>';
         echo '<a href="?supprimer=' . checkInput($mesAnnonces['id_annonce']) . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
@@ -588,6 +589,6 @@ if(isset($_GET['modifier'])) {
     // Fin tableau contenant toutes les annonces
 }
 ?>
-
 <?php
 include_once('inc/footer.inc.php');
+?>

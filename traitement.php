@@ -162,7 +162,15 @@ $firstOfPage = ($current-1)*$perPage;
         
         $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 //        Affichage de chacune des annonces
+
+
         foreach($requeteAffichage as $laLigne){
+            if($laLigne['moyenneNote'] == '') {
+                $maMoyenne = 'Aucune note' ;
+            }   
+            if($laLigne['moyenneNote'] >= '0') {
+                $maMoyenne = 'Notes : '. round($laLigne['moyenneNote'],1).'/5';
+            }
             $tab['reponseRequete'] .= '<div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow">
                                             <div class="row">
                                                 <div class="col-md-4 imgAnnonce">
@@ -175,9 +183,9 @@ $firstOfPage = ($current-1)*$perPage;
                                                 <div class="col-md-8 textAnnonce">
                                                     <div class="headerAnnonce mx-auto w-100 mb-2 d-flex ">'.
                                                         '<span><i class="fas fa-map-marker-alt"></i> '. ucfirst($laLigne['ville']).'</span>
-                                                        <span class="vendeurAnnonce"><i class="far fa-user"></i> '. ucfirst($laLigne['pseudo']).'</span>'.
-                                                        // span class note à mettre ici
-                                                   '</div>
+                                                        <span class="vendeurAnnonce"><i class="far fa-user"></i> '. ucfirst($laLigne['pseudo']).'</span>
+                                                        <span class="note">'. $maMoyenne .'</span>
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-lg-8 mt-2">     
                                                             <h5 class="colorLetter">' . ucfirst($laLigne['titre']) . 
@@ -202,12 +210,4 @@ $firstOfPage = ($current-1)*$perPage;
 echo json_encode($tab);
 
 
-/*<span class="note">'?>
-    <?php 
-        if($laLigne['moyenneNote'] == '') {
-            echo 'Aucune note' ;
-        }   
-        if($laLigne['moyenneNote'] >= 0) {
-            echo 'Notes : '. round($laLigne['moyenneNote'],1);
-        }
-/5</span>*/
+

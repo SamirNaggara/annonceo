@@ -119,7 +119,7 @@ include_once('inc/nav.inc.php');
                             echo '<td>' . $laCategorie['titre'] . '</td>';
                             echo '<td>' . $laCategorie['motscles'] . '</td>';
                             ?>
-                            <td class="d-flex justify-content-center"> 
+                            <td class="d-flex justify-content-center btn-categorie"> 
                                 <a href="?modifier=<?php echo $laCategorie['titre'] ?>"><i class="fas fa-edit pr-2"></i></a>
                                 <a href="?supprimer=<?php echo $laCategorie['titre'] ?>" onclick="return(confirm('Etes vous sûr ?'))"><i class="fas fa-trash pl-2"></i></a>
                             </td>
@@ -147,7 +147,7 @@ include_once('inc/nav.inc.php');
 
 
         <div class="col-6 mx-auto">
-            <form action="" method="post">
+            <form action="" method="post" class="admin-form-cat">
                 <div class="form-group">
                     <label for="nouveauTitre">Titre de la nouvelle categorie</label>
                     <input type="text" class="form-control" id="nouveauTitre" name="nouveauTitre" <?php if (isset($_GET["modifier"])){
@@ -159,8 +159,9 @@ include_once('inc/nav.inc.php');
                     <input type="text" class="form-control" id="nouveauxMotsCles" name="nouveauxMotsCles">
                 </div>
 
-
-                <button type="submit" class="btn btn-primary">Valider</button>
+                <div class="form-group">
+                    <button type="submit" class="d-block btn btn-dark col-6 mx-auto">Valider</button>
+                </div>
             </form>
 
         </div>

@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+    
+
     // Début verif de tous les formulaires
     // initialisation de la variable de controle
     var control = 0; 
@@ -413,7 +415,10 @@ $(document).ready(function() {
             }
         });
     });
+
     
+
+
     /* Fonction countdown */
     function countDown() {
         setInterval(function(){

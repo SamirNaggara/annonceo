@@ -41,7 +41,12 @@
 <!-- Bootstrap core JavaScript-->
 <script src="startbootstrap-sb-admin-gh-pages/vendor/jquery/jquery.min.js"></script>
 <script src="startbootstrap-sb-admin-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<script
+        src="https://code.jquery.com/jquery-3.4.0.min.js"
+        integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+        crossorigin="anonymous">
+</script>
+<script src="../js/monScript.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="startbootstrap-sb-admin-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
 

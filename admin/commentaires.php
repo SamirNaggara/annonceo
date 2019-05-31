@@ -161,7 +161,7 @@ include_once('inc/nav.inc.php');
                             echo '<td>' . $leCommentaire['commentaire'] . '</td>';
                             echo '<td>' . formatStandardTotal($leCommentaire['date_enregistrement']) . '</td>';
                             ?>
-                            <td> 
+                            <td class="btn-commentaire"> 
                                 <a href="?modifier=<?php echo $leCommentaire['id_commentaire'] ?>#inputCommentaire"><i class="fas fa-edit"></i></a>
 
                                 <a href="?supprimer=<?php echo $leCommentaire['id_commentaire'] ?>" onclick="return(confirm('Etes vous sûr de vouloir supprimer?'))"><i class="fas fa-trash"></i></a>
@@ -207,7 +207,7 @@ include_once('inc/nav.inc.php');
                     <input type="text" class="form-control" id="inputCommentaire" name="inputCommentaire" <?php echo 'value="' . $inputCommentaire . '"'; ?>>
                 </div>
 
-                <button type="submit" class="btn btn-primary" name="validationModeration">Moderer l'avis</button>
+                <button type="submit" class="btn btn-dark" name="validationModeration">Moderer l'avis</button>
             </form>
 
         </div>

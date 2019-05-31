@@ -183,7 +183,7 @@ include_once('inc/nav.inc.php');
             Liste des membres
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive tableMembre">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -210,19 +210,24 @@ include_once('inc/nav.inc.php');
                             }else{
                                 $leMembreStatut = "Il y a un probleme avec le statut";
                             }
+                            if ($leMembre['civilite'] =='f') { 
+                                $leMembreCivilite = 'Femme';
+                            } else { 
+                                $leMembreCivilite = 'Homme';
+                            }
                             
                             echo '<tr>';
-                            echo '<td>' . $leMembre['id_membre'] . '</td>';
-                            echo '<td>' . ucfirst($leMembre['pseudo']) . '</td>';
-                            echo '<td>' . ucfirst($leMembre['nom']) . '</td>';
-                            echo '<td>' . ucfirst($leMembre['prenom']) . '</td>';
-                            echo '<td>' . $leMembre['telephone'] . '</td>';
-                            echo '<td>' . $leMembre['email'] . '</td>';
-                            echo '<td>' . $leMembre['civilite'] . '</td>';
-                            echo '<td>' . $leMembreStatut . '</td>';
-                            echo '<td>' . formatStandardTotal($leMembre['date_enregistrement']) . '</td>';
+                            echo '<td class="membre">' . $leMembre['id_membre'] . '</td>';
+                            echo '<td class="pseudo">' . ucfirst($leMembre['pseudo']) . '</td>';
+                            echo '<td class="nom">' . ucfirst($leMembre['nom']) . '</td>';
+                            echo '<td class="prenom">' . ucfirst($leMembre['prenom']) . '</td>';
+                            echo '<td class="telephone">' . $leMembre['telephone'] . '</td>';
+                            echo '<td class="email">' . $leMembre['email'] . '</td>';
+                            echo '<td class="civilite">' . $leMembreCivilite . '</td>';
+                            echo '<td class="statut">' . $leMembreStatut . '</td>';
+                            echo '<td class="date">' . formatStandardTotal($leMembre['date_enregistrement']) . '</td>';
                             ?>
-                            <td> 
+                            <td class="btn-membre"> 
                                 <a href="?changementAdmin=<?php echo $leMembre['id_membre'] ?>#modifierAdmin"><i class="fas fa-user"></i></a>
                                 <a href="?changementMembre=<?php echo $leMembre['id_membre'] ?>#modifierMembre"><i class="fas fa-edit"></i></a>
 
@@ -257,16 +262,17 @@ include_once('inc/nav.inc.php');
                     <label for="nouveauTitre">ID membre</label>
                     <input type="text" class="form-control" id="modifierAdmin" name="modifierAdmin" <?php echo 'value="' . $changementAdmin . '"'; ?>>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Changer le statut</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-dark d-block mx-auto">Changer le statut</button>
+                </div>
             </form>
         </div>
         <?php } ?>
         <?php 
         if (isset($_GET['changementMembre'])){
         ?>
-        <div class="col-6 mx-auto">
-            <form method="post" class="col-8 proForm pl-2">
+        <div class="col-sm-12 col-6 mx-auto">
+            <form method="post" class="col-sm-12 col-8 proForm pl-2">
                 <div class="row m-0">
                     <div class="form-group col-6">
                         <label for="id_membre">Identifiant</label>
@@ -304,7 +310,7 @@ include_once('inc/nav.inc.php');
                         <input type="text" class="form-control" id="email" name="email" value="<?php echo $email_membre; ?>">
                     </div>
                     <div class="form-group col-12">
-                        <button type="submit" class="btn btn-primary col-12" name="validerMembre">Valider</button>
+                        <button type="submit" class="btn btn-dark col-12" name="validerMembre">Valider</button>
                     </div>
                 </div>
             </form>

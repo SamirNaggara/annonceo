@@ -203,7 +203,7 @@ include_once('inc/nav.inc.php');
                     </a>
             </section>
             <!-----Fin carousel-------------->
-            <div class="description col-lg-6">
+            <div class="description col-lg-6 mt-sm-2">
                 <div class="card ">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
@@ -239,7 +239,7 @@ include_once('inc/nav.inc.php');
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-6 m-0 p-1 mx-auto">
+                            <div class="col-12 m-0 p-1 mx-auto">
                                 <a class="contacter btn btn-outline-dark col-12 m-0 p-1" href="#" data-toggle="modal" data-target="#contacter" data-backdrop="static">Contacter</a>
                             </div>
                         </div>
@@ -355,7 +355,7 @@ include_once('inc/nav.inc.php');
                     <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-outline-dark w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
+                    <input type="submit" class="btn btn-dark w-100" id="envoyerCommentaire" name="envoyerCommentaire" value="Envoyer">
                 </div>
             </form>
             <div class="conteneurCommentaire mt-5">
@@ -384,23 +384,20 @@ include_once('inc/nav.inc.php');
         <!------Fin commentaires----------->
         <div class="autresAnnonces mt-3 pb-5">
             <h4 class="bold col-12 text-lg-left text-center p-0">Annonces similaires</h4>
+            <div class="row">
             <?php 
             foreach($autresAnnonces as $cetteAutreAnnonce){
                 ?>
-            <div class="row">
-            <figure class="col-sm-3 p-0"><a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
-            <div class="picture m-3 img-thumbnail">
+                <figure class="col-sm-3 p-0">
+                    <a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
+                        <div class="picture m-3 img-thumbnail">
                     <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-                    <figcaption class="text-center text-dark mt-2">
-                    <?php echo ucfirst($cetteAutreAnnonce['titre']) ?>
-                </figcaption>
-                    </div>
-                </a>
-            </figure>
+                            <figcaption class="text-center text-dark mt-2"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
+                        </div>
+                    </a>
+                </figure>
+        <?php } ?>
             </div>
-            <?php
-            }
-                ?>
         </div>
         <!------Fin autresAnnonces-------------------->
 
@@ -434,7 +431,7 @@ include_once('inc/nav.inc.php');
                                     <div class="form-group">
                                         <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
                                     </div>
-                                    <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="envoyerAvis" name="envoyerAvis" value="Envoyer">
+                                    <input type="submit" class="btn btn-dark w-100" onclick="return inscription()" id="envoyerAvis" name="envoyerAvis" value="Envoyer">
                                 </form>
                             </div>
                         </div>

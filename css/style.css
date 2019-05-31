@@ -1,7 +1,9 @@
+@charset "UTF-8";
 /** Generale **/
 body, html {
   min-height: 100vh;
   position: relative;
+  box-sizing: border-box;
 }
 
 /** navbar **/
@@ -26,6 +28,10 @@ body, html {
   transition: 0.3s ease-in-out;
 }
 .navbar .nav-link.depot:hover {
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  -ms-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
   background-color: orange;
   color: #343a40 !important;
 }
@@ -36,24 +42,19 @@ body, html {
   color: orange;
 }
 
-/** footer.inc.php **/
-.footerMembre {
-  width: 100% !important;
-  position: absolute;
-  bottom: 0 !important;
-}
-.footerMembre a {
-  text-decoration: none;
-  color: black;
-  transition: 0.3s ease-in-out;
-}
-.footerMembre a:hover {
-  color: orange;
+/* conteneur principal */
+.container {
+  padding-top: 100px;
+  margin-bottom: 80px;
+  box-sizing: border-box;
 }
 
-/** admin/footer.in.php **/
-.adminFooter {
-  display: none !important;
+/** titres des pages affichage des messages d'erreurs */
+.starter-template {
+  text-align: center;
+}
+.starter-template h1 {
+  font-size: 30px;
 }
 
 /** index.php **/
@@ -132,135 +133,6 @@ body, html {
 
 .colorLetter {
   color: orange;
-}
-
-/* conteneur principal englobant les annonces*/
-.container {
-  padding-top: 100px;
-  margin-bottom: 80px;
-  box-sizing: border-box;
-}
-
-/** titres des pages affiche les message d'erreur */
-.starter-template {
-  text-align: center;
-}
-.starter-template h1 {
-  font-size: 30px;
-}
-
-/* page annonce */
-.monAnnonce h1 .divider {
-  width: 100px;
-  height: 4px;
-  background-color: orange;
-}
-.monAnnonce h4 {
-  position: relative;
-}
-.monAnnonce h4:after {
-  content: "";
-  position: absolute;
-  top: 30px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 65px;
-  height: 4px;
-  background-color: orange;
-}
-
-.description .nav-link {
-  color: #343a40;
-}
-.description .nav-link.active {
-  color: orange;
-}
-
-.autresAnnonces figure {
-  width: 350px;
-  height: 250px;
-}
-.autresAnnonces figure .picture {
-  width: 230px;
-  height: 90%;
-}
-.autresAnnonces figure a {
-  text-decoration: none;
-}
-.autresAnnonces figure img {
-  height: 100%;
-  margin: 0 auto;
-  max-width: 100%;
-}
-@media screen and (max-width: 480px) {
-  .autresAnnonces figure img {
-    height: 100% !important;
-  }
-}
-.autresAnnonces figure figcaption {
-  font-size: 15px;
-}
-
-.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
-  font-size: 10px;
-}
-
-.monAnnonce .conteneurCarouselTexte .carousel .bg-carousel {
-  background-color: #f8f9fa;
-}
-.monAnnonce .conteneurCarouselTexte .carousel img {
-  height: 500px !important;
-  margin: 0 auto;
-}
-@media screen and (max-width: 480px) {
-  .monAnnonce .conteneurCarouselTexte .carousel img {
-    height: 400px !important;
-  }
-}
-
-.monAnnonce #collapseVoirLesAvis .listingNote {
-  max-height: 310px;
-  overflow: auto;
-}
-
-.monAnnonce .conteneurCarouselTexte .description {
-  position: relative;
-}
-@media screen and (min-width: 990px) {
-  .monAnnonce .conteneurCarouselTexte .description .footerDescription {
-    bottom: 0;
-  }
-}
-
-.monAnnonce .commentaires .conteneurCommentaire .date {
-  font-size: 10px;
-}
-
-.monAnnonce header .titreAnnonce .conteneurConten {
-  max-width: 400px;
-}
-
-.vendeur {
-  line-height: 40px;
-}
-
-.addAvis {
-  font-size: 14px !important;
-}
-
-#newAnnonce {
-  margin-top: 30px;
-}
-#newAnnonce textarea {
-  border: none;
-  border: 1px solid rgba(128, 128, 128, 0.404);
-  border-radius: 5px;
-}
-
-.tableAnnonces .row {
-  margin-right: 0px;
-  margin-left: 0px;
 }
 
 @media screen and (min-width: 768px) {
@@ -352,6 +224,396 @@ body, html {
   font-size: 14px;
 }
 
+/* page gestion des membres */
+@media screen and (max-width: 1024px) {
+  .tableMembre {
+    width: 100%;
+  }
+  .tableMembre table,
+.tableMembre tbody,
+.tableMembre tr,
+.tableMembre td {
+    display: block;
+    width: 100% !important;
+  }
+
+  tr:first-child {
+    display: none;
+  }
+
+  th {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 40px;
+    border: 1px solid black;
+  }
+
+  .membre:before {
+    content: "Id Membre: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .pseudo:before {
+    content: "Pseudo: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .nom {
+    font-size: 18px;
+  }
+  .nom:before {
+    content: "Nom: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .prenom:before {
+    content: "Prénom: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .telephone:before {
+    content: "Téléphone: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .email:before {
+    content: "Email: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .civilite:before {
+    content: "Civilité: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .statut:before {
+    content: "Statut: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .date:before {
+    content: "Date: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .btn-membre {
+    font-size: 20px;
+    text-align: center;
+  }
+  .btn-membre a {
+    color: #343a40;
+    margin: 0 15px;
+  }
+  .btn-membre a:hover {
+    color: orange;
+  }
+}
+/* bouton gestion des catégories et membres*/
+.btn-categorie a, .btn-membre a, .btn-commentaire a, .btn-note a, .btn-annonces a {
+  color: #343a40;
+  margin: 0 1px;
+  transition: 0.3s ease-in-out;
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  -ms-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+}
+.btn-categorie a:hover, .btn-membre a:hover, .btn-commentaire a:hover, .btn-note a:hover, .btn-annonces a:hover {
+  color: orange;
+}
+
+/* page gestion des annonces */
+.tableAnnonces {
+  max-width: 100%;
+}
+.tableAnnonces .tableauAnnonces {
+  padding: 15px;
+  max-width: 100%;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.tableAnnonces .card-header .row {
+  padding: 0;
+}
+.tableAnnonces .card-header .row .fa-table {
+  line-height: 25px;
+}
+.tableAnnonces .pagination {
+  margin-left: 15px;
+  margin-bottom: 0;
+}
+.tableAnnonces .pagination .page-link {
+  color: #343a40;
+}
+.tableAnnonces .pagination .page-item.active .page-link {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+  .tableAnnonces {
+    width: 100%;
+  }
+  .tableAnnonces table,
+.tableAnnonces tbody,
+.tableAnnonces tr,
+.tableAnnonces td {
+    display: block;
+    width: 100% !important;
+  }
+  .tableAnnonces .imgTable {
+    text-align: center;
+  }
+  .tableAnnonces .imgTable img {
+    width: 35% !important;
+  }
+
+  tr:first-child {
+    display: none;
+  }
+
+  th {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 40px;
+    border: 1px solid black;
+  }
+
+  .id_annonce:before {
+    content: "Id annonce: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .prix {
+    text-align: center;
+  }
+  .prix:before {
+    content: "Prix: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .titre_annonce {
+    font-size: 18px;
+  }
+  .titre_annonce:before {
+    content: "Titre: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .pays:before {
+    content: "Pays: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .ville:before {
+    content: "Ville: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .adresse:before {
+    content: "Adresse: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .cp:before {
+    content: "Code postal: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .pseudo:before {
+    content: "Pseudo: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .titre:before {
+    content: "Catégorie: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .date_enregistrement:before {
+    content: "Date: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .desc_courte:before {
+    content: "Description courte: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .desc_longue:before {
+    content: "Description longue: ";
+    width: 20px;
+    height: 20px;
+    font-weight: bold;
+  }
+
+  .btn-annonces {
+    font-size: 20px;
+    text-align: center;
+  }
+  .btn-annonces a {
+    color: #343a40;
+    margin: 0 15px;
+  }
+  .btn-annonces a:hover {
+    color: orange;
+  }
+}
+/* page annonce.php */
+.monAnnonce h1 .divider {
+  width: 100px;
+  height: 4px;
+  background-color: orange;
+}
+.monAnnonce h4 {
+  position: relative;
+}
+.monAnnonce h4:after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 65px;
+  height: 4px;
+  background-color: orange;
+}
+.monAnnonce .description .nav-link {
+  color: #343a40;
+}
+.monAnnonce .description .nav-link.active {
+  color: orange;
+}
+
+.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
+  font-size: 10px;
+}
+
+.monAnnonce .conteneurCarouselTexte .carousel .bg-carousel {
+  background-color: #f8f9fa;
+}
+.monAnnonce .conteneurCarouselTexte .carousel img {
+  height: 500px !important;
+  margin: 0 auto;
+}
+@media screen and (max-width: 480px) {
+  .monAnnonce .conteneurCarouselTexte .carousel img {
+    height: 400px !important;
+  }
+}
+
+.monAnnonce #collapseVoirLesAvis .listingNote {
+  max-height: 310px;
+  overflow: auto;
+}
+
+.monAnnonce .conteneurCarouselTexte .description {
+  position: relative;
+}
+@media screen and (min-width: 990px) {
+  .monAnnonce .conteneurCarouselTexte .description .footerDescription {
+    bottom: 0;
+  }
+}
+
+.monAnnonce .commentaires .conteneurCommentaire .date {
+  font-size: 10px;
+}
+
+.monAnnonce header .titreAnnonce .conteneurConten {
+  max-width: 400px;
+}
+
+.vendeur {
+  line-height: 40px;
+}
+
+.addAvis {
+  font-size: 14px !important;
+}
+
+.autresAnnonces figure {
+  width: 350px;
+  height: 250px;
+}
+.autresAnnonces figure .picture {
+  width: 230px;
+  height: 90%;
+}
+.autresAnnonces figure a {
+  text-decoration: none;
+}
+.autresAnnonces figure img {
+  height: 100%;
+  margin: 0 auto;
+  max-width: 100%;
+}
+@media screen and (max-width: 480px) {
+  .autresAnnonces figure img {
+    height: 100% !important;
+  }
+}
+.autresAnnonces figure figcaption {
+  font-size: 15px;
+}
+
+/* page nouvelle-annonce */
+#newAnnonce {
+  margin-top: 30px;
+}
+#newAnnonce textarea {
+  border: none;
+  border: 1px solid rgba(128, 128, 128, 0.404);
+  border-radius: 5px;
+}
+
+/* page contact */
 .container-fluid.contact {
   height: 100% !important;
   padding: 80px 0;
@@ -391,6 +653,7 @@ body, html {
   font-size: 22px;
 }
 
+/* profil */
 .profil {
   display: flex;
   justify-content: center;
@@ -404,6 +667,15 @@ body, html {
   padding-right: 5px;
 }
 
+.fa-check {
+  color: lightgreen;
+}
+
+.fa-times {
+  color: red;
+}
+
+/* mention légales */
 #mentions_conteneur h3, #cgv_conteneur h3 {
   background-color: #343a40;
   color: white;
@@ -421,9 +693,14 @@ body, html {
   transition: 0.3s ease-in-out;
 }
 #mentions_conteneur a:hover, #cgv_conteneur a:hover {
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  -ms-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
   color: orange;
 }
 
+/* condition générale de vente */
 #cgv_conteneur {
   margin-top: 50px;
 }
@@ -431,6 +708,7 @@ body, html {
   text-align: center;
 }
 
+/* reset-password */
 .rstPswd, .newPass {
   padding-top: 197px;
 }
@@ -475,6 +753,7 @@ body, html {
   padding: 10px;
 }
 
+/* nouvelle annonce */
 #newAnnonce label {
   font-weight: bold;
 }
@@ -502,12 +781,28 @@ body, html {
   min-height: 150px;
 }
 
-.fa-check {
-  color: lightgreen;
+/** footer.inc.php **/
+.footerMembre {
+  width: 100% !important;
+  position: absolute;
+  bottom: 0 !important;
+}
+.footerMembre a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s ease-in-out;
+}
+.footerMembre a:hover {
+  -webkit-transition: 0.3s ease-in-out;
+  -moz-transition: 0.3s ease-in-out;
+  -ms-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  color: orange;
 }
 
-.fa-times {
-  color: red;
+/** admin/footer.in.php **/
+.adminFooter {
+  display: none !important;
 }
 
 /*# sourceMappingURL=style.css.map */

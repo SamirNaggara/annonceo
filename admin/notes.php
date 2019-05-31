@@ -166,7 +166,7 @@ include_once('inc/nav.inc.php');
                             echo '<td>' . $laNote['avis'] . '</td>';
                             echo '<td>' . formatStandardTotal($laNote['date_enregistrement']) . '</td>';
                             ?>
-                            <td> 
+                            <td class="btn-note"> 
                                 <a href="?modifier=<?php echo $laNote['id_note'] ?>#inputAvis"><i class="fas fa-edit"></i></a>
 
                                 <a href="?supprimer=<?php echo $laNote['id_note'] ?>" onclick="return(confirm('Etes vous sûr ?'))"><i class="fas fa-trash"></i></a>
@@ -181,53 +181,46 @@ include_once('inc/nav.inc.php');
             </div>
         </div>        
     </div>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Note</a>
+        </li>
+        <li class="breadcrumb-item active">Modérer une note ou un avis</li>
+    </ol>
+    <div class="col-sm-8 col-6 mx-auto">
+        <form action="<?php echo URL . 'admin/notes.php' ?>" method="post">
+            <div class="form-group">
+                <label for="nouvelleIdNote">ID Note</label>
+                <input type="text" class="form-control" id="inputIdNote" name="inputIdNote" <?php echo 'value="' . $inputIdNote . '"'; ?>>
+            </div>
+            <div class="form-group">
+                <label for="inputPseudoAcheteur">Pseudo Donneur</label>
+                <input type="text" class="form-control" id="inputPseudoAcheteur" name="inputPseudoAcheteur" disabled <?php echo 'value="' . $inputPseudoDonneur . '"'; ?>>
+            </div>
+            <div class="form-group">
+                <label for="inputPseudoVendeur">Pseudo Receveur</label>
+                <input type="text" class="form-control" id="inputPseudoVendeur" name="inputPseudoVendeur" disabled <?php echo 'value="' . $inputPseudoReceveur . '"'; ?>>
+            </div>
+            <div class="form-group">
+                <label for="inputNote">Note</label>
+                <select name="inputNote" id="inputNote">
+                    <option value="0" <?php if (isset($_GET['modifier']) && $inputNote == 0) echo 'selected'; ?>>0</option>
+                    <option value="1" <?php if (isset($_GET['modifier']) && $inputNote == 1) echo 'selected'; ?>>1</option>
+                    <option value="2" <?php if (isset($_GET['modifier']) && $inputNote == 2) echo 'selected'; ?>>2</option>
+                    <option value="3" <?php if (isset($_GET['modifier']) && $inputNote == 3) echo 'selected'; ?>>3</option>
+                    <option value="4" <?php if (isset($_GET['modifier']) && $inputNote == 4) echo 'selected'; ?>>4</option>
+                    <option value="5" <?php if (isset($_GET['modifier']) && $inputNote == 5) echo 'selected'; ?>>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputAvis">Avis</label>
+                <input type="text" class="form-control" id="inputAvis" name="inputAvis" <?php echo 'value="' . $inputAvis . '"'; ?>>
+            </div>
 
-    <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="#">Note</a>
-            </li>
-            <li class="breadcrumb-item active">Modérer une note ou un avis</li>
-        </ol>
-
-        <div class="col-6 mx-auto">
-            <form action="<?php echo URL . 'admin/notes.php' ?>" method="post">
-                <div class="form-group">
-                    <label for="nouvelleIdNote">ID Note</label>
-                    <input type="text" class="form-control" id="inputIdNote" name="inputIdNote" <?php echo 'value="' . $inputIdNote . '"'; ?>>
-                </div>
-                <div class="form-group">
-                    <label for="inputPseudoAcheteur">Pseudo Donneur</label>
-                    <input type="text" class="form-control" id="inputPseudoAcheteur" name="inputPseudoAcheteur" disabled <?php echo 'value="' . $inputPseudoDonneur . '"'; ?>>
-                </div>
-                <div class="form-group">
-                    <label for="inputPseudoVendeur">Pseudo Receveur</label>
-                    <input type="text" class="form-control" id="inputPseudoVendeur" name="inputPseudoVendeur" disabled <?php echo 'value="' . $inputPseudoReceveur . '"'; ?>>
-                </div>
-                <div class="form-group">
-                    <label for="inputNote">Note</label>
-                    <select name="inputNote" id="inputNote">
-                        <option value="0" <?php if (isset($_GET['modifier']) && $inputNote == 0) echo 'selected'; ?>>0</option>
-                        <option value="1" <?php if (isset($_GET['modifier']) && $inputNote == 1) echo 'selected'; ?>>1</option>
-                        <option value="2" <?php if (isset($_GET['modifier']) && $inputNote == 2) echo 'selected'; ?>>2</option>
-                        <option value="3" <?php if (isset($_GET['modifier']) && $inputNote == 3) echo 'selected'; ?>>3</option>
-                        <option value="4" <?php if (isset($_GET['modifier']) && $inputNote == 4) echo 'selected'; ?>>4</option>
-                        <option value="5" <?php if (isset($_GET['modifier']) && $inputNote == 5) echo 'selected'; ?>>5</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inputAvis">Avis</label>
-                    <input type="text" class="form-control" id="inputAvis" name="inputAvis" <?php echo 'value="' . $inputAvis . '"'; ?>>
-                </div>
-
-                <button type="submit" class="btn btn-primary" name="validationModeration">Moderer l'avis</button>
-            </form>
-
-        </div>
+            <button type="submit" class="btn btn-dark" name="validationModeration">Moderer l'avis</button>
+        </form>
     </div>
-
 </div>
 
 <?php

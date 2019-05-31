@@ -2,7 +2,9 @@
 body,html {
     min-height: 100vh;
     position: relative;
+    box-sizing: border-box;
 }
+
 /** navbar **/
 .navbar {
     box-sizing: border-box;
@@ -23,6 +25,10 @@ body,html {
         border-radius: 7px;
         transition: 0.3s ease-in-out;
         &:hover {
+            -webkit-transition: 0.3s ease-in-out;
+            -moz-transition: 0.3s ease-in-out;
+            -ms-transition: 0.3s ease-in-out;
+            -o-transition: 0.3s ease-in-out;
             background-color: orange;
             color: #343a40 !important;
         }
@@ -34,24 +40,23 @@ body,html {
         color: orange;
     }
 }
-/** footer.inc.php **/
-.footerMembre {
-    width: 100% !important;
-    position: absolute;
-    bottom: 0 !important;
-    a {
-        text-decoration: none;
-        color: black;
-        transition: 0.3s ease-in-out;
-        &:hover {
-            color: orange;
-        }
+
+/* conteneur principal */
+.container {
+    padding-top: 100px;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+}
+
+/** titres des pages affichage des messages d'erreurs */
+.starter-template {
+    text-align: center;
+
+    h1 {
+        font-size: 30px;
     }
 }
-/** admin/footer.in.php **/
-.adminFooter {
-    display: none !important;
-}
+
 /** index.php **/
 .container-fluid {
     height: 400px;
@@ -91,7 +96,6 @@ body,html {
     }
     
 }
-
 .pageIndex {
     width: 100%;
     .titleAnnonces {
@@ -130,148 +134,6 @@ body,html {
 .colorLetter {
     color: orange;
 }
-/* conteneur principal englobant les annonces*/
-.container {
-    padding-top: 100px;
-    margin-bottom: 80px;
-    box-sizing: border-box;
-}
-
-/** titres des pages affiche les message d'erreur */
-.starter-template {
-    text-align: center;
-
-    h1 {
-        font-size: 30px;
-    }
-}
-/* page annonce */
-.monAnnonce {
-    h1{
-        .divider {
-            width: 100px;
-            height: 4px;
-            background-color: orange;
-        }
-    }
-    h4 {
-        position: relative;
-        &:after {
-            content: "";
-            position: absolute;
-            top: 30px;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            width: 65px;
-            height: 4px;
-            background-color: orange;
-        }
-    }
-}
-.description {
-    .nav-link {
-        color: #343a40;
-    }
-    .nav-link.active {
-        color: orange;
-    }
-}
-.autresAnnonces {
-    figure {
-        width: 350px;
-        height: 250px;
-        .picture {
-            width: 230px;
-            height: 90%;
-        }
-        a {
-            text-decoration: none;
-        }
-        img {
-            height: 100%;
-            margin: 0 auto;
-            max-width: 100%;
-            @media screen AND (max-width: 480px) {
-                height: 100% !important;
-            }
-        }
-        figcaption {
-            font-size: 15px;
-        }
-    }
-}
-
-.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
-    font-size: 10px;
-}
-
-.monAnnonce .conteneurCarouselTexte .carousel{
-    .bg-carousel {
-        background-color: #f8f9fa;
-    }
-    img {
-    height: 500px !important;
-    margin: 0 auto;
-
-        @media screen AND (max-width: 480px) {
-        height: 400px !important;
-        }
-    }
-}
-.monAnnonce #collapseVoirLesAvis .listingNote{
-    max-height: 310px;
-    overflow: auto;
-}
-
-.monAnnonce .conteneurCarouselTexte .description {
-    position: relative;
-
-    .footerDescription {
-        @media screen AND (min-width:990px){
-            bottom: 0;
-        }
-        
-    }
-}
-
-.monAnnonce .commentaires .conteneurCommentaire .date{
-    font-size:10px;
-}
-
-.monAnnonce header .titreAnnonce .conteneurConten{
-    max-width:400px;
-}
-.vendeur {
-    line-height: 40px;
-}
-.addAvis {
-    font-size: 14px !important;
-}
-//--------------depot annonce---------------------
-
-#newAnnonce {
-    margin-top: 30px;
-
-    textarea {
-        border: none;
-        border: 1px solid rgba(128, 128, 128, 0.404);
-        border-radius: 5px;
-    }
-}
-
-//--------------page admin/annonces---------------
-
-.tableAnnonces {
-
-    .row {
-        margin-right: 0px;
-        margin-left: 0px;
-    }
-}
-
-//----------------Page acceuil-------------------
-
 #contenerReponseRequete>.blocRequete>.texte>.footerAnnonce{
     @media screen AND (min-width:768px){
         position:absolute;
@@ -365,6 +227,415 @@ body,html {
         }
     }
 }
+
+/* page gestion des membres */
+@media screen and (max-width: 1024px) {
+    .tableMembre {
+        width: 100%;
+            table,
+            tbody,
+            tr,
+            td {
+            display: block;
+            width: 100% !important;
+            }           
+        }
+    tr:first-child {
+        display: none;
+    }
+    th {
+        display: none;
+    }
+    tr {
+        margin-bottom: 40px;
+        border: 1px solid black;
+    }
+    .membre {
+        &:before {
+            content: "Id Membre: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .pseudo {
+        &:before {
+            content: "Pseudo: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    } 
+    .nom {
+        font-size: 18px;
+        &:before {
+            content: "Nom: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .prenom {
+        &:before {
+            content: "Prénom: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .telephone {
+        &:before {
+            content: "Téléphone: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .email {
+        &:before {
+            content: "Email: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .civilite {
+        &:before {
+            content: "Civilité: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .statut {
+        &:before {
+            content: "Statut: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .date {
+        &:before {
+            content: "Date: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .btn-membre {
+        font-size: 20px;
+        text-align: center;
+        a {
+            color: #343a40;
+            margin: 0 15px;
+            &:hover {
+                color: orange;
+            }
+        }
+    }
+}
+
+/* bouton gestion des catégories et membres*/
+.btn-categorie, .btn-membre, .btn-commentaire, .btn-note, .btn-annonces {
+    a {
+        color: #343a40;
+        margin: 0 1px;
+        transition: 0.3s ease-in-out;
+        -webkit-transition: 0.3s ease-in-out;
+        -moz-transition: 0.3s ease-in-out;
+        -ms-transition: 0.3s ease-in-out;
+        -o-transition: 0.3s ease-in-out;
+        &:hover {
+            color: orange;
+        }
+    }
+}
+/* page gestion des annonces */
+.tableAnnonces {
+    
+    
+}
+.tableAnnonces {
+    max-width: 100%;
+    .tableauAnnonces {
+        padding: 15px;
+        max-width: 100%;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .card-header {
+        .row{
+            padding: 0;
+            .fa-table {
+                line-height: 25px;
+            }
+        }
+    }
+    .pagination {
+        margin-left: 15px;
+        margin-bottom: 0;
+        .page-link {
+            color: #343a40;
+        }
+        .page-item.active .page-link {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: #fff;
+        }
+        
+    }
+}
+@media screen and (max-width: 1024px) {
+    .tableAnnonces {
+        width: 100%;
+            table,
+            tbody,
+            tr,
+            td {
+            display: block;
+            width: 100% !important;
+            }
+            .imgTable {
+                text-align: center;
+                img {
+                    width: 35% !important;
+                }
+            }
+            
+        }
+    tr:first-child {
+        display: none;
+    }
+    th {
+        display: none;
+    }
+    tr {
+        margin-bottom: 40px;
+        border: 1px solid black;
+    }
+    .id_annonce {
+        &:before {
+            content: "Id annonce: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .prix {
+        text-align: center;
+        &:before {
+            content: "Prix: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    } 
+    .titre_annonce {
+        font-size: 18px;
+        &:before {
+            content: "Titre: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .pays {
+        &:before {
+            content: "Pays: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .ville {
+        &:before {
+            content: "Ville: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .adresse {
+        &:before {
+            content: "Adresse: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .cp {
+        &:before {
+            content: "Code postal: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .pseudo {
+        &:before {
+            content: "Pseudo: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .titre {
+        &:before {
+            content: "Catégorie: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .date_enregistrement {
+        &:before {
+            content: "Date: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .desc_courte {
+        &:before {
+            content: "Description courte: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .desc_longue {
+        &:before {
+            content: "Description longue: ";
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+        }
+    }
+    .btn-annonces {
+        font-size: 20px;
+        text-align: center;
+        a {
+            color: #343a40;
+            margin: 0 15px;
+            &:hover {
+                color: orange;
+            }
+        }
+    }
+}
+
+/* page annonce.php */
+.monAnnonce {
+    h1{
+        .divider {
+            width: 100px;
+            height: 4px;
+            background-color: orange;
+        }
+    }
+    h4 {
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 65px;
+            height: 4px;
+            background-color: orange;
+        }
+    }
+    .description {
+        .nav-link {
+            color: #343a40;
+        }
+        .nav-link.active {
+            color: orange;
+        }
+    }
+}
+.monAnnonce header .titreAnnonce #collapseVoirLesAvis .dateNote {
+    font-size: 10px;
+}
+.monAnnonce .conteneurCarouselTexte .carousel{
+    .bg-carousel {
+        background-color: #f8f9fa;
+    }
+    img {
+    height: 500px !important;
+    margin: 0 auto;
+
+        @media screen AND (max-width: 480px) {
+        height: 400px !important;
+        }
+    }
+}
+.monAnnonce #collapseVoirLesAvis .listingNote{
+    max-height: 310px;
+    overflow: auto;
+}
+.monAnnonce .conteneurCarouselTexte .description {
+    position: relative;
+
+    .footerDescription {
+        @media screen AND (min-width:990px){
+            bottom: 0;
+        }
+        
+    }
+}
+.monAnnonce .commentaires .conteneurCommentaire .date{
+    font-size:10px;
+}
+.monAnnonce header .titreAnnonce .conteneurConten{
+    max-width:400px;
+}
+.vendeur {
+    line-height: 40px;
+}
+.addAvis {
+    font-size: 14px !important;
+}
+.autresAnnonces {
+    figure {
+        width: 350px;
+        height: 250px;
+        .picture {
+            width: 230px;
+            height: 90%;
+        }
+        a {
+            text-decoration: none;
+        }
+        img {
+            height: 100%;
+            margin: 0 auto;
+            max-width: 100%;
+            @media screen AND (max-width: 480px) {
+                height: 100% !important;
+            }
+        }
+        figcaption {
+            font-size: 15px;
+        }
+    }
+}
+
+/* page nouvelle-annonce */
+#newAnnonce {
+    margin-top: 30px;
+
+    textarea {
+        border: none;
+        border: 1px solid rgba(128, 128, 128, 0.404);
+        border-radius: 5px;
+    }
+}
+
+/* page contact */
 .container-fluid.contact {
     height: 100% !important;
     padding: 80px 0;
@@ -402,7 +673,9 @@ body,html {
         font-size: 22px;
     }
 }
-//------------profil---------------------------
+
+/* profil */
+
 .profil {
     display: flex;
     justify-content: center;
@@ -417,8 +690,15 @@ body,html {
         padding-right: 5px;
     }
 }
-//------------mention légales-------------------
+.fa-check{
+	color: lightgreen;
+}
 
+.fa-times{
+	color: red;
+}
+
+/* mention légales */
 #mentions_conteneur, #cgv_conteneur {
 
     h3 {
@@ -437,11 +717,15 @@ body,html {
         text-decoration: underline;
         transition: 0.3s ease-in-out;
         &:hover {
+            -webkit-transition: 0.3s ease-in-out;
+            -moz-transition: 0.3s ease-in-out;
+            -ms-transition: 0.3s ease-in-out;
+            -o-transition: 0.3s ease-in-out;
             color: orange;
         }
     }
 }
-
+/* condition générale de vente */
 #cgv_conteneur {
     margin-top: 50px;
 
@@ -450,7 +734,7 @@ body,html {
     }
 }
 
-//--------------reset-password-------------------
+/* reset-password */
 .rstPswd, .newPass {
     padding-top: 197px;
 
@@ -496,7 +780,7 @@ body,html {
     }
 }
 
-//-----------------nouvelle annonce--------------------------
+/* nouvelle annonce */
 #newAnnonce {
 
     label {
@@ -527,11 +811,26 @@ body,html {
         min-height:150px;
     }
 }
-//----------------Profil -------------------------------
-.fa-check{
-	color: lightgreen;
-}
 
-.fa-times{
-	color: red;
+/** footer.inc.php **/
+.footerMembre {
+    width: 100% !important;
+    position: absolute;
+    bottom: 0 !important;
+    a {
+        text-decoration: none;
+        color: black;
+        transition: 0.3s ease-in-out;
+        &:hover {
+            -webkit-transition: 0.3s ease-in-out;
+            -moz-transition: 0.3s ease-in-out;
+            -ms-transition: 0.3s ease-in-out;
+            -o-transition: 0.3s ease-in-out;
+            color: orange;
+        }
+    }
+}
+/** admin/footer.in.php **/
+.adminFooter {
+    display: none !important;
 }
