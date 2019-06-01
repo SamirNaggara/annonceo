@@ -161,14 +161,16 @@ $moyenneNote = round($moyenneNote['moyenneNote'],1);
 
 
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, a.ville, m.pseudo, AVG(n.note) as moyenneNote
-                                            FROM annonce a
-                                            LEFT JOIN membre m ON m.id_membre = a.membre_id
-                                            LEFT JOIN note n ON n.membre_id2 = m.id_membre
-                                            GROUP BY a.id_annonce
-                                            ORDER BY a.date_enregistrement DESC
-                                            LIMIT 10");
+FROM annonce a
+LEFT JOIN membre m ON m.id_membre = a.membre_id
+LEFT JOIN note n ON n.membre_id2 = m.id_membre
+WHERE m.id_membre = :id_membre
+GROUP BY a.id_annonce
+ORDER BY a.date_enregistrement DESC
+LIMIT 10
+                                            ");
 
-
+$requeteAffichage->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 $requeteAffichage->execute();
 $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 
@@ -179,10 +181,10 @@ include_once('inc/nav.inc.php');
 
 <!--Titre et boutons de navigations-->
 <div class="container">
-<div class="starter-template">
-    <h1>Profil</h1>
-    <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-</div>    
+    <div class="starter-template">
+        <h1>Profil</h1>
+        <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
+    </div>    
 <div class="row m-0">
     <div class="profil col-4 p-0">
             <ul class="list-group col-12 p-0">
@@ -296,11 +298,12 @@ include_once('inc/nav.inc.php');
     <?php
     //Fermeture du if de l'onglet informations personnels
     // Ouverture de l'onglet sur les commentaires
-    if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>   
+    if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>  
+    <div class="container"> 
     <?php 
                     foreach($requeteAffichage as $uneLigne){
                     ?>
-                    <div class="blocRequete no-gutters bg-light col-sm-6 mx-auto col-8 mb-4 shadow">
+                    <div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow border border-primary">
                         <div class="row">
                             <div class="col-md-4 imgAnnonce">
                                 <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
@@ -340,6 +343,7 @@ include_once('inc/nav.inc.php');
                     <?php
                     }
                     ?>
+                    </div>
     <?php } ?>
     <?php
     // Ouverture de l'onglet sur les notes
