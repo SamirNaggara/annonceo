@@ -172,6 +172,8 @@ LIMIT 10
 
 $requeteAffichage->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre'], PDO::PARAM_STR);
 $requeteAffichage->execute();
+
+
 $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -299,11 +301,10 @@ include_once('inc/nav.inc.php');
     //Fermeture du if de l'onglet informations personnels
     // Ouverture de l'onglet sur les commentaires
     if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>  
-    <div class="container"> 
     <?php 
                     foreach($requeteAffichage as $uneLigne){
                     ?>
-                    <div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow border border-primary">
+                    <div class="blocRequete no-gutters bg-light col-sm-8 ml-auto col-12 mb-4 shadow">
                         <div class="row">
                             <div class="col-md-4 imgAnnonce">
                                 <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
@@ -343,7 +344,6 @@ include_once('inc/nav.inc.php');
                     <?php
                     }
                     ?>
-                    </div>
     <?php } ?>
     <?php
     // Ouverture de l'onglet sur les notes

@@ -134,7 +134,7 @@ body,html {
 .colorLetter {
     color: orange;
 }
-#contenerReponseRequete>.blocRequete>.texte>.footerAnnonce{
+.blocRequete>.texte>.footerAnnonce{
     @media screen AND (min-width:768px){
         position:absolute;
         bottom:0px;
@@ -142,7 +142,7 @@ body,html {
     
 }
 
-#contenerReponseRequete>.blocRequete>.texte>p{
+.blocRequete>.texte>p{
     @media screen AND (max-width:968px){
         overflow: hidden;
     }
@@ -165,7 +165,7 @@ body,html {
         margin-bottom: 0px;
     }
 }
-#contenerReponseRequete>.blocRequete {
+.blocRequete {
     /* height: 218px; */
     box-sizing: border-box;
     /* border: 1px solid rgba(209, 206, 206, 0.678); */
