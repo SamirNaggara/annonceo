@@ -156,6 +156,23 @@ $moyenneNote->execute();
 $moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);  
 $moyenneNote = round($moyenneNote['moyenneNote'],1);
 
+/*Requette pour "mes annonces"*/
+
+
+
+$requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, a.ville, m.pseudo, AVG(n.note) as moyenneNote
+                                            FROM annonce a
+                                            LEFT JOIN membre m ON m.id_membre = a.membre_id
+                                            LEFT JOIN note n ON n.membre_id2 = m.id_membre
+                                            GROUP BY a.id_annonce
+                                            ORDER BY a.date_enregistrement DESC
+                                            LIMIT 10");
+
+
+$requeteAffichage->execute();
+$requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
+
+
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
@@ -169,20 +186,20 @@ include_once('inc/nav.inc.php');
 <div class="row m-0">
     <div class="profil col-4 p-0">
             <ul class="list-group col-12 p-0">
-                <li class="list-group-item <?php if($_GET['action'] == 'informationsPersonnels') echo 'active'?>"> 
-                    <a href="?action=informationsPersonnels" class="<?php if($_GET['action'] == 'informationsPersonnels') echo 'text-white'?> d-block w-100">Informations personnels</a>
+                <li class="list-group-item <?php if((isset($_GET['action']) && $_GET['action'] == 'informationsPersonnels') || !isset($_GET['action'])){echo 'active';}?>"> 
+                    <a href="?action=informationsPersonnels" class="<?php if((isset($_GET['action']) && $_GET['action'] == 'informationsPersonnels') || !isset($_GET['action'])) {echo 'text-white';}?> d-block w-100">Informations personnels</a>
                 </li>
-                <li class="list-group-item <?php if($_GET['action'] == 'mesAnnonces') echo 'active'?>">
-                    <a href="?action=mesAnnonces" class="<?php if($_GET['action'] == 'mesAnnonces') echo 'text-white'?> d-block w-100">Mes annonces</a>
+                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'mesAnnonces') echo 'active'?>">
+                    <a href="?action=mesAnnonces" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'mesAnnonces') echo 'text-white'?> d-block w-100">Mes annonces</a>
                 </li>
-                <li class="list-group-item <?php if($_GET['action'] == 'mesNotes') echo 'active'?>">
-                    <a href="?action=mesNotes" class="<?php if($_GET['action'] == 'mesNotes') echo 'text-white'?> d-block w-100">Mes notes</a>
+                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'mesNotes') echo 'active'?>">
+                    <a href="?action=mesNotes" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'mesNotes') echo 'text-white'?> d-block w-100">Mes notes</a>
                 </li>
-                <li class="list-group-item <?php if($_GET['action'] == 'modifierProfil') echo 'active'?>">
-                    <a href="?action=modifierProfil" class="<?php if($_GET['action'] == 'modifierProfil') echo 'text-white'?> d-block w-100">Modifier mon profil</a>
+                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierProfil') echo 'active'?>">
+                    <a href="?action=modifierProfil" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'modifierProfil') echo 'text-white'?> d-block w-100">Modifier mon profil</a>
                 </li>
-                <li class="list-group-item <?php if($_GET['action'] == 'modifierPassword') echo 'active'?>">
-                    <a href="?action=modifierPassword" class="<?php if($_GET['action'] == 'modifierPassword') echo 'text-white'?> d-block w-100">Modifier mot de passe</a>
+                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierPassword') echo 'active'?>">
+                    <a href="?action=modifierPassword" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'modifierPassword') echo 'text-white'?> d-block w-100">Modifier mot de passe</a>
                 </li>
             </ul>
     </div>
@@ -280,9 +297,49 @@ include_once('inc/nav.inc.php');
     //Fermeture du if de l'onglet informations personnels
     // Ouverture de l'onglet sur les commentaires
     if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>   
-    <div class="col-8">
-        <p>Mes futures annonces j'attends Samir pour les afficher</p>
-    </div>
+    <?php 
+                    foreach($requeteAffichage as $uneLigne){
+                    ?>
+                    <div class="blocRequete no-gutters bg-light col-sm-6 mx-auto col-8 mb-4 shadow">
+                        <div class="row">
+                            <div class="col-md-4 imgAnnonce">
+                                <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
+                                    <div class="picture">
+                                        <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="photo annonceo">
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-8 textAnnonce">
+                                <div class="headerAnnonce mx-auto w-100 mb-2 d-flex ">
+                                    <span><i class="fas fa-map-marker-alt"></i> <?php echo ucfirst($uneLigne['ville']);?></span>
+                                    <span class="vendeurAnnonce"><i class="far fa-user"></i>
+                                    <?php echo ucfirst($uneLigne['pseudo']); ?></span>
+                                    <span class="note"> <?php if($uneLigne['moyenneNote'] == '') {
+                                                echo 'Aucune note';?></span>
+                                            <?php } else { ?>
+                                            Notes : <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                                            <?php } ?>     
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8 mt-2">
+                                        <h5 class="colorLetter"><?php echo ucfirst($uneLigne['titre']); ?></h5>                            
+                                        <p class="descAnnonces">
+                                            <?php echo ucfirst($uneLigne['description_courte']); ?>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 mt-2 d-flex flex-column">
+                                        <p class="euroText text-right">
+                                            <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
+                                        </p>
+                                        <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>" class="btn btn-outline-dark">Voir l'annonce</a>           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
     <?php } ?>
     <?php
     // Ouverture de l'onglet sur les notes
