@@ -253,7 +253,7 @@ $(document).ready(function() {
 
     // Verif formulaire de connexion
     $('#connexionModal').on('keyup', function(){
-        var pseudo = $('#connecxionInputPseudo').val();
+        var pseudo = $('#connexionInputPseudo').val();
         var password = $('#connexionInputPassword').val();
         var regex = /["<>&]/g;
         var regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
@@ -261,12 +261,12 @@ $(document).ready(function() {
         // Me retourne la valeur tapée dans le champs lorsqu'on quitte le champs
         
         if(pseudo.length >= 3 && pseudo.length <= 20 && !pseudo.match(regex)) {
-            $('#connecxionInputPseudo').removeClass('is-invalid');
-            $('#connecxionInputPseudo').addClass('is-valid');
+            $('#connexionInputPseudo').removeClass('is-invalid');
+            $('#connexionInputPseudo').addClass('is-valid');
             control = 1;
         } else {
-            $('#connecxionInputPseudo').removeClass('is-valid');
-            $('#connecxionInputPseudo').addClass('is-invalid');
+            $('#connexionInputPseudo').removeClass('is-valid');
+            $('#connexionInputPseudo').addClass('is-invalid');
             control = 0;
         }
 

@@ -138,8 +138,8 @@ include_once('inc/nav.inc.php');
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered tableCommentaire" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-light">
                         <tr>
                             <th>Id commentaires</th>
                             <th>Id membre</th>
@@ -155,11 +155,11 @@ include_once('inc/nav.inc.php');
                             
                             
                             echo '<tr>';
-                            echo '<td>' . $leCommentaire['id_commentaire'] . '</td>';
-                            echo '<td>' . $leCommentaire['id_membre'] . " - " . ucfirst($leCommentaire['pseudo']) . '</td>';
-                            echo '<td>' . $leCommentaire['id_annonce'] . " - " . ucfirst($leCommentaire['titre']) . '</td>';
-                            echo '<td>' . $leCommentaire['commentaire'] . '</td>';
-                            echo '<td>' . formatStandardTotal($leCommentaire['date_enregistrement']) . '</td>';
+                            echo '<td class="id_comments">' . $leCommentaire['id_commentaire'] . '</td>';
+                            echo '<td class="membre_comments">' . $leCommentaire['id_membre'] . " - " . ucfirst($leCommentaire['pseudo']) . '</td>';
+                            echo '<td class="annonce_comments">' . $leCommentaire['id_annonce'] . " - " . ucfirst($leCommentaire['titre']) . '</td>';
+                            echo '<td class="comments">' . $leCommentaire['commentaire'] . '</td>';
+                            echo '<td class="date_comments">' . formatStandardTotal($leCommentaire['date_enregistrement']) . '</td>';
                             ?>
                             <td class="btn-commentaire"> 
                                 <a href="?modifier=<?php echo $leCommentaire['id_commentaire'] ?>#inputCommentaire"><i class="fas fa-edit"></i></a>

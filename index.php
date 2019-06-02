@@ -89,10 +89,11 @@ $requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
+<header>
     <div class="container-fluid">
         <div class="bgIndex d-flex align-item-center" style="background-image: url('images/indexbgc.jpg');">
             <form method="post" action="#" class="indexForm col-xs-12 col-lg-8 mx-auto d-flex flex-wrap justify-content-center align-content-center">
-            <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
+                <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
                 <div class="bgForm col-12">
                     <div class="row">
                         <div class="form-group col-6 col-sm-6 col-lg-3">
@@ -146,15 +147,17 @@ include_once('inc/nav.inc.php');
                 </div>
             </form>
         </div>
-    </div>  
+    </div>
+</header>  
     <!-- ***************************************** -->
     <!-- Affichage des annonces en pages d'accueil -->
     <!-- ***************************************** --> 
     <div class="pageIndex">
         <div class="container">
             <div class="starter-template">
-                <h2 class="titleAnnonces">Nos dernières annonces</h2>
-                <div class="divider"></div>
+                <h2 class="titleAnnonces">Nos dernières annonces
+                    <span class="divider"></span>
+                </h2>
                 <p class="lead">
                     <?php echo $msg;?>
                 </p>
@@ -172,8 +175,7 @@ include_once('inc/nav.inc.php');
                     <output class="" id="prixMin" name="resultMin"></output>
                 </div>
                 <div class="form-group">
-                    <label for="prixMaximum"></label>
-                    <input type="hidden" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" min="0" max="5000" step="10" value="5000" />
+                    <input type="hidden" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" value="5000" />
                     <output id="prixMax" class="" name="resultMax"></output>
                 </div>
             </nav>
@@ -209,7 +211,7 @@ include_once('inc/nav.inc.php');
                             <div class="col-md-4 imgAnnonce">
                                 <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
                                     <div class="picture">
-                                        <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="photo annonceo">
+                                        <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="<?php echo $uneLigne['titre']; ?>">
                                     </div>
                                 </a>
                             </div>
@@ -268,7 +270,7 @@ include_once('inc/nav.inc.php');
             </div>
         </div>
     </div>
-</div>
+
 <!-- Fin d'affichage des annonces en pages d'accueil -->
 <?php
 include_once('inc/footer.inc.php');

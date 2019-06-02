@@ -276,6 +276,19 @@ if (isset($_GET['supprimer'])) {
 //***************************
 // FIN SUPPRESSION D'ANNONCE
 //***************************
+//***************************
+// SUPPRESSION D'IMAGE
+//***************************
+
+if (isset($_GET['supprimerImage'])) {
+    $supprimerLigne= $pdo->prepare("DELETE FROM annonce WHERE id_annonce = :id_annonce");
+    $supprimerLigne->bindParam(':id_annonce', $_GET['supprimer'], PDO::PARAM_STR);
+    $supprimerLigne->execute();
+    header("location:" . URL . "admin/annonces.php");
+}
+//***************************
+// FIN SUPPRESSION D'ANNONCE
+//***************************
 
 // récupération des informations de l'annonce pour l'affichage en modification
 if(isset($_GET['modifier'])) {
@@ -305,6 +318,18 @@ if(isset($_GET['modifier'])) {
         $photo_actuelle3 = $laRecupAnnonces['photo3'];
         $photo_actuelle4 = $laRecupAnnonces['photo4'];
         $photo_actuelle5 = $laRecupAnnonces['photo5'];
+        echo '<pre>'; print_r($id_photo); echo '</pre>';
+    }
+    if(isset($_GET['del'])) {
+        $del = $_GET['del'];
+        $getImg = $pdo->prepare("SELECT id_photo FROM annonce WHERE photo_id = :id_photo");
+        $getImg->bindParam(':id_photo', $del, PDO::PARAM_STR);
+        if ($getImg) {
+            while($imageData = $getImg->fetch(PDO::FETCH_ASSOC)) {
+                $delImg = $imageData['photo'];
+                unlink($delImg);
+            }
+        }
     }
 }
 
@@ -353,7 +378,8 @@ if(isset($_GET['categorie'])) {
 include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 ?>
-
+<?php 
+?>
 <?php 
 if(isset($_GET['modifier'])) {
 ?>
@@ -365,8 +391,9 @@ if(isset($_GET['modifier'])) {
     </div>
     <div class="col-12 mx-auto">
         <div class="row">
-            <form method="post" action="" enctype="multipart/form-data" class="d-flex" >
-                <div class="section1 col-4 offset-1">
+            <form method="post" action="" enctype="multipart/form-data" class="d-flex pb-4" >
+            <div class="row">
+                <div class="section1 col-12 col-lg-4 offset-lg-1">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
                     </div>
@@ -387,62 +414,63 @@ if(isset($_GET['modifier'])) {
                     </div>
                     <div class="form-group">
                         <label for="description_courte">Description courte :</label>
-                        <textarea name="description_courte" id="description_courte" class="w-100" rows="5"><?php echo $desCourte; ?></textarea>
+                        <textarea name="description_courte" id="description_courte" class="form-control w-100" rows="5"><?php echo $desCourte; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="description_longue">Description longue :</label>
-                        <textarea name="description_longue" id="description_longue" class="w-100" rows="5"><?php echo $desLongue; ?></textarea>
+                        <textarea name="description_longue" id="description_longue" class=" form-control w-100" rows="5"><?php echo $desLongue; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="prix">Prix :</label>
                         <input type="text" class="form-control" id="prix" name="prix" value="<?php echo $prix; ?>">
                     </div>
                 </div>
-                <div class="section2 col-5 mx-auto flex-wrap">
-                        <div class="container-fluid d-flex pt-2">
-                            <?php if(!empty($photo_actuelle)) { ?>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Principale</label><br>
-                                <img src="<?php echo URL.$photo_actuelle; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle" name="photo_actuelle" value="<?php echo $photo_actuelle; ?>">
-                            </div>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Photo 1</label><br>
-                                <img src="<?php echo URL.$photo_actuelle1; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle1" name="photo_actuelle1" value="<?php echo $photo_actuelle1; ?>">
-                            </div>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Photo 2</label><br>
-                                <img src="<?php echo URL.$photo_actuelle2; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle2" name="photo_actuelle2" value="<?php echo $photo_actuelle2; ?>">
-                            </div>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Photo 3</label><br>
-                                <img src="<?php echo URL.$photo_actuelle3; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle3" name="photo_actuelle3" value="<?php echo $photo_actuelle3; ?>">
-                            </div>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Photo 4</label><br>
-                                <img src="<?php echo URL.$photo_actuelle4; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle4" name="photo_actuelle4" value="<?php echo $photo_actuelle4; ?>">
-                            </div>
-                            <div class="text-center mr-2">
-                                <label for="photo_actuelle">Photo 5</label><br>
-                                <img src="<?php echo URL.$photo_actuelle5; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" class="form-control" id="photo_actuelle5" name="photo_actuelle5" value="<?php echo $photo_actuelle5; ?>">
-                            </div>
+                <div class="section2 col-lg-5 mx-auto flex-lg-wrap">
+                    <div class="container-fluid d-flex pt-2">
+                        <?php if(!empty($photo_actuelle)) { ?>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Principale</label><br>
+                            <img src="<?php echo URL.$photo_actuelle; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                            <a href="?del=". $id_photo .">supprimer</a>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle" name="photo_actuelle" value="<?php echo $photo_actuelle; ?>">
+                        </div>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Photo 1</label><br>
+                            <img src="<?php echo URL.$photo_actuelle1; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle1" name="photo_actuelle1" value="<?php echo $photo_actuelle1; ?>">
+                        </div>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Photo 2</label><br>
+                            <img src="<?php echo URL.$photo_actuelle2; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle2" name="photo_actuelle2" value="<?php echo $photo_actuelle2; ?>">
+                        </div>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Photo 3</label><br>
+                            <img src="<?php echo URL.$photo_actuelle3; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle3" name="photo_actuelle3" value="<?php echo $photo_actuelle3; ?>">
+                        </div>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Photo 4</label><br>
+                            <img src="<?php echo URL.$photo_actuelle4; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle4" name="photo_actuelle4" value="<?php echo $photo_actuelle4; ?>">
+                        </div>
+                        <div class="text-center mr-2">
+                            <label for="photo_actuelle">Photo 5</label><br>
+                            <img src="<?php echo URL.$photo_actuelle5; ?>" alt="photo actuelle du produit <?php echo $titre; ?>" style="max-width:100%;">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="photo_actuelle5" name="photo_actuelle5" value="<?php echo $photo_actuelle5; ?>">
+                        </div>
                     </div>
                     <?php } ?>
                     <div class="row pt-4">
@@ -492,6 +520,7 @@ if(isset($_GET['modifier'])) {
                         <hr>
                         <input type="submit" class="form-control btn btn-warning col-11 mx-auto mt-2" id="enregistrement" name="enregistrement" value="Enregistrement">	
                     </div>
+                </div>
                 </div>
             </form>
         </div>
@@ -546,6 +575,7 @@ if(isset($_GET['modifier'])) {
     echo '<div class="row tableauAnnonces">';
     // création du tableau
     echo '<table class="table table-bordered table-responsive-sm table-responsive-md col-md-12" >';
+    echo '<thead class="thead-light">';
     echo '<tr>
             <th>Id annonce</th>
             <th>Titre</th>
@@ -562,6 +592,7 @@ if(isset($_GET['modifier'])) {
             <th>Date enregistrement</th>
             <th>Actions</th>
         </tr>';
+    echo '</thead>';
     // Affichage des annonces dans le tableau
     while($mesAnnonces = $annonces->fetch(PDO::FETCH_ASSOC)) {
         echo '<tr>';
@@ -577,7 +608,6 @@ if(isset($_GET['modifier'])) {
             }
         }  
         echo '<td class="btn-annonces">'; 
-        echo '<a href="?categorie='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-search"></i></a>';
         echo '<a href="?modifier='.checkInput($mesAnnonces['id_annonce']).'"><i class="fas fa-edit"></i></a>';
         echo '<a href="?supprimer=' . checkInput($mesAnnonces['id_annonce']) . '" onclick="return(confirm(\'Etes vous sûr ?\'))"><i class="fas fa-trash"></i></a>';
         echo '</td>';

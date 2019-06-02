@@ -14,13 +14,13 @@ include_once('inc/nav.inc.php');
             <h3>1. Présentation du site.</h3>
             <p>En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site <a href="http://mickaelchristine.fr/annonceo/">Annonceo</a> l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :</p>
             <p><strong>Propriétaire</strong> : Mickael CHRISTINE & Samir NAGGARA – 300 Boulevard de Vaugirad 75015 Paris<br />
-            <strong>Créateur</strong>  : <a href="mickaelchristine.fr et naggara.fr">Mickael CHRISTINE & Samir NAGGARA</a><br />
+            <strong>Créateur</strong>  : <a href="http://mickaelchristine.fr/annonceo/">Mickael CHRISTINE & Samir NAGGARA</a><br />
             <strong>Responsable publication</strong> : Annonceo – annonceo@mail.fr<br />
             Les responsables publication sont des personnes physique ou des personnes morale.<br />
             <strong>Webmaster</strong> : Mickael CHRISTINE & Samir NAGGARA – mickael.christine@mail.fr, samirnaggara@mail.fr<br />
             <strong>Hébergeur</strong> : OVH – 19 Place Françoise Dorin, 75017 Paris<br />
             Crédits : <br />
-            Le modèle de mentions légales est offert par Subdelirium.com <a target="_blank" href="https://www.subdelirium.com/generateur-de-mentions-legales/" alt="generateur de mentions légales">Générateur de mentions légales</a></p>
+            Le modèle de mentions légales est offert par Subdelirium.com <a target="_blank" href="https://www.subdelirium.com/generateur-de-mentions-legales/">Générateur de mentions légales</a></p>
 
             <h3>2. Conditions générales d’utilisation du site et des services proposés.</h3>
             <p>L’utilisation du site <a href="http://mickaelchristine.fr/annonceo/">Annonceo</a> implique l’acceptation pleine et entière des conditions générales d’utilisation ci-après décrites. Ces conditions d’utilisation sont susceptibles d’être modifiées ou complétées à tout moment, les utilisateurs du site <a href="http://mickaelchristine.fr/annonceo/">Annonceo</a> sont donc invités à les consulter de manière régulière.</p>
@@ -69,6 +69,7 @@ include_once('inc/nav.inc.php');
             <p>Informations personnelles : « les informations qui permettent, sous quelque forme que ce soit, directement ou non, l'identification des personnes physiques auxquelles elles s'appliquent » (article 4 de la loi n° 78-17 du 6 janvier 1978).</p>
         </div>
     </div>
+
 <?php
 include_once('inc/footer.inc.php');
 

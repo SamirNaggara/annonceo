@@ -68,12 +68,12 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	///////////////////////////////////////////
 	// Début vérification des extensions photo
 	///////////////////////////////////////////
-
+	$taille_max    = 2000000;
 	// verification de la photo principal avant enregistrement
 	if(empty($msg2) && !empty($_FILES['photo']['name'])) {
-		$taille_max    = 2000000;
-		if($_FILES['photo']['name'] > $taille_max) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo principal est trop important.<br>Veuillez en choisir une autre</div>';
+
+		if($_FILES['photo']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo principal dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -108,8 +108,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// vérification de la photo1 avant enregistrement
 	if(!empty($_FILES['photo1']['name'])) {
 
-		if($_FILES['photo1']['size'] > 2000000) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo numéro 1 est trop important.<br>Veuillez en choisir une autre</div>';
+		if($_FILES['photo1']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo numéro 1 dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -143,8 +143,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// vérification de la photo2 avant enregistrement
 	if(!empty($_FILES['photo2']['name'])) {
 
-		if($_FILES['photo2']['size'] > 2000000) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo numéro 2 est trop important.<br>Veuillez en choisir une autre</div>';
+		if($_FILES['photo2']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo numéro 2 dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -177,8 +177,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// vérification de la photo3 avant enregistrement	
 	if(!empty($_FILES['photo3']['name'])) {
 
-		if($_FILES['photo3']['size'] > 2000000) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo numéro 3 est trop important.<br>Veuillez en choisir une autre</div>';
+		if($_FILES['photo3']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo numéro 3 dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -211,8 +211,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// vérification de la photo4 avant enregistrement	
 	if(!empty($_FILES['photo4']['name'])) {
 
-		if($_FILES['photo4']['size'] > 2000000) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo numéro 4 est trop important.<br>Veuillez en choisir une autre</div>';
+		if($_FILES['photo4']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo numéro 4 dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -245,8 +245,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 	// vérification de la photo5 avant enregistrement	
 	if(!empty($_FILES['photo5']['name'])) {
 
-		if($_FILES['photo5']['size'] > 2000000) {
-			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la taille de la photo numéro 5 est trop important.<br>Veuillez en choisir une autre</div>';
+		if($_FILES['photo5']['size'] > $taille_max) {
+			$msg2 .= '<div class="alert alert-danger mt-2" role="alert">Attention, la poids de la photo numéro 5 dépasse les 2MB.<br>Veuillez réduire son poids ou en choisir une autre</div>';
 		}
 
 		// dans le cas d'une modif, on conserve l'ancienne photo avant de tester si une nouvelle photo a été chargé dans le formulaire
@@ -332,6 +332,7 @@ include_once('inc/nav.inc.php');
 <div class="container">
 	<div class="starter-template col-lg-10 mx-auto text-center">
 		<h1>Déposer une annonce</h1>
+		<div class="divider mx-auto"></div>
 		<p class="lead"><?php echo $msg;?></p>
 		<p class="lead"><?php echo $msg2;?></p>
 	</div>

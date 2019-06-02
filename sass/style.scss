@@ -4,7 +4,9 @@ body,html {
     position: relative;
     box-sizing: border-box;
 }
-
+.clear {
+    clear: both;
+}
 /** navbar **/
 .navbar {
     box-sizing: border-box;
@@ -40,7 +42,12 @@ body,html {
         color: orange;
     }
 }
-
+.divider {
+display: block !important;
+    width: 100px;
+    height: 4px;
+    background-color: orange;
+}
 /* conteneur principal */
 .container {
     padding-top: 100px;
@@ -58,9 +65,11 @@ body,html {
 }
 
 /** index.php **/
-.container-fluid {
-    height: 400px;
-    padding: 0;
+header {
+    .container-fluid {
+        height: 400px;
+        padding: 0;
+    }
 }
 .bgIndex {
     position: relative;
@@ -227,115 +236,286 @@ body,html {
         }
     }
 }
-
-/* page gestion des membres */
+/* Administration */
+.breadcrumb-item {
+    a {
+        color: orange;
+    }
+}
+/* page gestion des notes */
 @media screen and (max-width: 1024px) {
-    .tableMembre {
+    .tableNotes {
         width: 100%;
-            table,
-            tbody,
-            tr,
-            td {
-            display: block;
-            width: 100% !important;
-            }           
+        
+        table,
+        tbody,
+        tr,
+        td {
+        display: block;
+        width: 100% !important;
+        }           
+        thead {
+            tr {
+            display: none;
+            }
+        } 
+        th {
+            display: none;
         }
-    tr:first-child {
-        display: none;
-    }
-    th {
-        display: none;
-    }
-    tr {
-        margin-bottom: 40px;
-        border: 1px solid black;
-    }
-    .membre {
-        &:before {
-            content: "Id Membre: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        tr {
+            margin-bottom: 40px;
+            border: 1px solid black;
         }
-    }
-    .pseudo {
-        &:before {
-            content: "Pseudo: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        .id_note {
+            &:before {
+                content: "Id notes: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
         }
-    } 
-    .nom {
-        font-size: 18px;
-        &:before {
-            content: "Nom: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        .donneur {
+            &:before {
+                content: "Donneur: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        } 
+        .receveur {
+            font-size: 18px;
+            &:before {
+                content: "Receveur: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
         }
-    }
-    .prenom {
-        &:before {
-            content: "Prénom: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        .note {
+            &:before {
+                content: "Note: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
         }
-    }
-    .telephone {
-        &:before {
-            content: "Téléphone: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        .avis {
+            &:before {
+                content: "Avis: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
         }
-    }
-    .email {
-        &:before {
-            content: "Email: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
+        .date_note {
+            &:before {
+                content: "Date: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
         }
-    }
-    .civilite {
-        &:before {
-            content: "Civilité: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .statut {
-        &:before {
-            content: "Statut: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .date {
-        &:before {
-            content: "Date: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .btn-membre {
-        font-size: 20px;
-        text-align: center;
-        a {
-            color: #343a40;
-            margin: 0 15px;
-            &:hover {
-                color: orange;
+        .btn-note {
+            font-size: 20px;
+            text-align: center;
+            a {
+                color: #343a40;
+                margin: 0 15px;
+                &:hover {
+                    color: orange;
+                }
             }
         }
     }
 }
+/* page gestion des commentaires */
+@media screen and (max-width: 1024px) {
+    .tableCommentaire {
+        width: 100%;
+        
+        table,
+        tbody,
+        tr,
+        td {
+        display: block;
+        width: 100% !important;
+        }           
+        thead {
+            tr {
+            display: none;
+            }
+        } 
+        th {
+            display: none;
+        }
+        tr {
+            margin-bottom: 40px;
+            border: 1px solid black;
+        }
+        .id_comments {
+            &:before {
+                content: "Id Commentaire: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .membre_comments {
+            &:before {
+                content: "Id Membre: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        } 
+        .annonce_comments {
+            font-size: 18px;
+            &:before {
+                content: "Id Annonce: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .comments {
+            &:before {
+                content: "Commentaire: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .date_comments {
+            &:before {
+                content: "Date: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .btn-commentaire {
+            font-size: 20px;
+            text-align: center;
+            a {
+                color: #343a40;
+                margin: 0 15px;
+                &:hover {
+                    color: orange;
+                }
+            }
+        }
+    }
+}
+/* page gestion des membres */
+@media screen and (max-width: 1024px) {
+    .tableMembre {
+        width: 100%;
 
+        table,
+        tbody,
+        tr,
+        td {
+        display: block;
+        width: 100% !important;
+        }           
+        thead {
+            tr {
+            display: none;
+            }
+        } 
+        th {
+            display: none;
+        }
+        tr {
+            margin-bottom: 40px;
+            border: 1px solid black;
+        }
+        .membre {
+            &:before {
+                content: "Id Membre: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .pseudo {
+            &:before {
+                content: "Pseudo: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        } 
+        .nom {
+            font-size: 18px;
+            &:before {
+                content: "Nom: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .prenom {
+            &:before {
+                content: "Prénom: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .telephone {
+            &:before {
+                content: "Téléphone: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .email {
+            &:before {
+                content: "Email: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .civilite {
+            &:before {
+                content: "Civilité: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .statut {
+            &:before {
+                content: "Statut: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .date {
+            &:before {
+                content: "Date: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .btn-membre {
+            font-size: 20px;
+            text-align: center;
+            a {
+                color: #343a40;
+                margin: 0 15px;
+                &:hover {
+                    color: orange;
+                }
+            }
+        }
+    }
+}
 /* bouton gestion des catégories et membres*/
 .btn-categorie, .btn-membre, .btn-commentaire, .btn-note, .btn-annonces {
     a {
@@ -352,10 +532,6 @@ body,html {
     }
 }
 /* page gestion des annonces */
-.tableAnnonces {
-    
-    
-}
 .tableAnnonces {
     max-width: 100%;
     .tableauAnnonces {
@@ -389,146 +565,145 @@ body,html {
 @media screen and (max-width: 1024px) {
     .tableAnnonces {
         width: 100%;
-            table,
-            tbody,
-            tr,
-            td {
-            display: block;
-            width: 100% !important;
+        table,
+        tbody,
+        tr,
+        td {
+        display: block;
+        width: 100% !important;
+        }
+        .imgTable {
+            text-align: center;
+            img {
+                width: 35% !important;
             }
-            .imgTable {
-                text-align: center;
-                img {
-                    width: 35% !important;
+        }
+        tr:first-child {
+            display: none;
+        }
+        th {
+            display: none;
+        }
+        tr {
+            margin-bottom: 40px;
+            border: 1px solid black;
+        }
+        .id_annonce {
+            &:before {
+                content: "Id annonce: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .prix {
+            text-align: center;
+            &:before {
+                content: "Prix: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        } 
+        .titre_annonce {
+            font-size: 18px;
+            &:before {
+                content: "Titre: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .pays {
+            &:before {
+                content: "Pays: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .ville {
+            &:before {
+                content: "Ville: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .adresse {
+            &:before {
+                content: "Adresse: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .cp {
+            &:before {
+                content: "Code postal: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .pseudo {
+            &:before {
+                content: "Pseudo: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .titre {
+            &:before {
+                content: "Catégorie: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .date_enregistrement {
+            &:before {
+                content: "Date: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .desc_courte {
+            &:before {
+                content: "Description courte: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .desc_longue {
+            &:before {
+                content: "Description longue: ";
+                width: 20px;
+                height: 20px;
+                font-weight: bold;
+            }
+        }
+        .btn-annonces {
+            font-size: 20px;
+            text-align: center;
+            a {
+                color: #343a40;
+                margin: 0 15px;
+                &:hover {
+                    color: orange;
                 }
-            }
-            
-        }
-    tr:first-child {
-        display: none;
-    }
-    th {
-        display: none;
-    }
-    tr {
-        margin-bottom: 40px;
-        border: 1px solid black;
-    }
-    .id_annonce {
-        &:before {
-            content: "Id annonce: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .prix {
-        text-align: center;
-        &:before {
-            content: "Prix: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    } 
-    .titre_annonce {
-        font-size: 18px;
-        &:before {
-            content: "Titre: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .pays {
-        &:before {
-            content: "Pays: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .ville {
-        &:before {
-            content: "Ville: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .adresse {
-        &:before {
-            content: "Adresse: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .cp {
-        &:before {
-            content: "Code postal: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .pseudo {
-        &:before {
-            content: "Pseudo: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .titre {
-        &:before {
-            content: "Catégorie: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .date_enregistrement {
-        &:before {
-            content: "Date: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .desc_courte {
-        &:before {
-            content: "Description courte: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .desc_longue {
-        &:before {
-            content: "Description longue: ";
-            width: 20px;
-            height: 20px;
-            font-weight: bold;
-        }
-    }
-    .btn-annonces {
-        font-size: 20px;
-        text-align: center;
-        a {
-            color: #343a40;
-            margin: 0 15px;
-            &:hover {
-                color: orange;
             }
         }
     }
 }
-
 /* page annonce.php */
 .monAnnonce {
     h1{
         .divider {
+            display: block !important;
             width: 100px;
             height: 4px;
             background-color: orange;
@@ -575,6 +750,15 @@ body,html {
 }
 .monAnnonce #collapseVoirLesAvis .listingNote{
     max-height: 310px;
+    overflow: auto;
+}
+.monAnnonce .gMap {
+    iframe {
+        width: 100%;
+    }
+}
+.monAnnonce .conteneurCarouselTexte .description .conteneurTexte #descriptionTexte {
+    max-height: 345px !important;
     overflow: auto;
 }
 .monAnnonce .conteneurCarouselTexte .description {
@@ -642,8 +826,8 @@ body,html {
     background-image: url("../images/contact.jpg");
     background-size: cover;
     .divider {
-        width: 130px;
-        height: 3px;
+        width: 100px;
+        height: 4px;
         background-color: orange;
         margin: 0 auto;
         margin-top: 5px;
@@ -674,6 +858,21 @@ body,html {
     }
 }
 
+/* statistique */
+
+.statistique {
+    display: flex;
+    justify-content: center;
+    a {
+        color: #343a40;
+        text-decoration: none;
+    }
+    li.active {
+        a {
+            color: orange;
+        }
+    }
+}
 /* profil */
 
 .profil {
@@ -683,7 +882,25 @@ body,html {
     .btnProfil {
         min-width: 200px !important;
     }
+    a {
+        color: #343a40;
+        text-decoration: none;
+    }
+    li.active {
+        a {
+            color: orange;
+        }
+    }
 }
+.cardAvis {
+    h2 {
+        font-size: 25px;
+        .moyenneAvis {
+            font-size: 14px;
+        }
+    }
+}
+
 .proForm {
     .form-group {
         padding: 0;

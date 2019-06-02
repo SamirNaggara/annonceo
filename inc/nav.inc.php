@@ -17,9 +17,9 @@
             </button>
             <div class="collapse navbar-collapse d-md-flex justify-content-md-between" id="navbarsExampleDefault">
                 <ul class="navbar-nav">
-                    <div class="title text-white">
+                    <li class="title text-white">
                         <a class="navbar-brand hover" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
-                    </div>
+                    </li>
                     <!-- Contact -->
                     <li class="nav-item">
                         <a class="nav-link hover" href="contact.php">Contact</a>
@@ -36,7 +36,7 @@
                     <!-- Barre de recherche -->
                     <form class="d-none d-md-inline-block form-inline mr-0 mr-md-3 my-2 my-md-0" method="get">
                         <div class="input-group">
-                            <input type="text" id="champsRechercher" class="form-control ajaxGlobale" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="basic-addon2">
+                            <input type="text" id="champsRechercher" class="form-control ajaxGlobale" placeholder="Rechercher" aria-label="Rechercher" aria-describedby="champsRechercher">
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-search" type="button">
                                     <i class="fas fa-search"></i>
@@ -79,7 +79,7 @@
                                     
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static"><i class="fas fa-sign-in-alt"></i> Connexion</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#inscriptionModal" class="test" data-backdrop="static"><i class="far fa-edit"></i> Inscription</a>
+                                <a class="dropdown-item test" href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static"><i class="far fa-edit"></i> Inscription</a>
                                 
                                 
                                 
@@ -104,4 +104,4 @@
             </div>
         </nav>
        
-    <main role="main" style="padding-top: 55px;">
+    <main style="padding-top: 55px;">

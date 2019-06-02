@@ -124,10 +124,9 @@ include_once('inc/header.inc.php');
 include_once('inc/nav.inc.php');
 
 ?>
-
-<section class="monAnnonce">
-    <div class="container">
-        <!--Ecris les messages d'erreurs-->
+<div class="container">
+    <div class="monAnnonce">
+        <!-- Ecrit les messages d'erreurs -->
         <p class="lead">
             <?php echo $msg;?>
         </p>
@@ -135,45 +134,32 @@ include_once('inc/nav.inc.php');
         <header>
             <div class="titreAnnonce row justify-content-between">
                 <div class="conteneurTitreNote col-lg-6 w-100 ml-auto mx-left mx-lg-0">
-                    <h1 class="d-block text-lg-left text-center mb-4">
+                    <h1 class="d-block text-lg-left mb-4">
                         <?php echo ucfirst($cetteAnnonce["titre"]); ?>
-                        <div class="divider"></div>
+                        <span class="divider"></span>
                     </h1>
                     
-                    <!-----Fin collapseVoirLesAvis--------->
+                    <!-- Fin collapseVoirLesAvis -->
                 </div>
                 
-                <!------Fin conteneurTitreNote------------>
+                <!-- Fin conteneurTitreNote -->
             </div>
-            <!-------Fin titreAnnonce---------->
+            <!-- Fin titreAnnonce -->
         </header>
         
-        <!-------Fin container-fluid---------->
-        <!--Carousel et texte de l'annonce-->
+        <!-- Fin container-fluid -->
+        <!-- Carousel et texte de l'annonce -->
         <div class="conteneurCarouselTexte row ">
-            <section class="carousel col-lg-6">
+            <div class="carousel col-lg-6">
                 <div id="carouselAnnonce" class="carousel slide w-90" data-ride="carousel">
-                    <!-- <ol class="carousel-indicators">
-                        <li data-target="#carouselAnnonce" data-slide-to="0" class="active"></li> -->
-                        <?php 
-                            //$i=1;
-                        //Pour chaque tour de boucle, la ligne <li>...</li> s'écrit uniquement si il y a une photo, et le compteur suit pour que les data-slide se suivent 
-                            //foreach($lesPhotos as $ind => $laPhoto){
-                            //  if (!empty($laPhoto) && $ind != 'id_photo'){
-                                //    echo '<li data-target="#carouselAnnonce" data-slide-to="' . $i . '"></li>';
-                                //  $i++;
-                            // }
-                        // }
-                        ?>
-                    <!-- </ol> -->
-                    <div class="carousel-inner w-100 rounded">
+                    <div class="carousel-inner w-100 rounded mb-2">
                         <div class="carousel-item active">
                             <?php 
-                        echo '<div class="bg-carousel rounded">';
-                        echo '<a href="' . $cetteAnnonce["photo"] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
-                        echo '<img class="d-block img-fluid mx-auto" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
-                        echo '</a>';
-                        echo '</div>';
+                            echo '<div class="bg-carousel rounded">';
+                                echo '<a href="' . $cetteAnnonce["photo"] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                                    echo '<img class="d-block img-fluid mx-auto" src="' . $cetteAnnonce["photo"] . '" alt="Premiere photo">';
+                                echo '</a>';
+                            echo '</div>';
                         ?>
                         </div>
                         <?php
@@ -182,11 +168,11 @@ include_once('inc/nav.inc.php');
                         foreach($lesPhotos as $ind => $laPhoto){
                             if (!empty($laPhoto) && $ind != 'id_photo'){
                                 echo '<div class="carousel-item">';
-                                echo '<div class="bg-carousel rounded">';
-                                echo '<a href="' . $lesPhotos[$listePhoto[$j]] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
-                                echo '<img class="d-block img-fluid mx-auto rounded" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="Autres photos">';
-                                echo '</a>';
-                                echo '</div>';
+                                    echo '<div class="bg-carousel rounded">';
+                                        echo '<a href="' . $lesPhotos[$listePhoto[$j]] . '" data-toggle="lightbox" data-title="'.ucfirst($cetteAnnonce["titre"]).'" data-footer="'.number_format($cetteAnnonce['prix'], 2, ',', ' ').' €" data-gallery="example-gallery">';
+                                            echo '<img class="d-block img-fluid mx-auto rounded" src="' . $lesPhotos[$listePhoto[$j]] . '" alt="'.$cetteAnnonce['titre'].'">';
+                                        echo '</a>';
+                                    echo '</div>';
                                 echo '</div>';
                                 $j++;
                             }
@@ -201,32 +187,32 @@ include_once('inc/nav.inc.php');
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-            </section>
-            <!-----Fin carousel-------------->
+                </div>
+            </div>
+            <!-- Fin carousel -->
             <div class="description col-lg-6 mt-sm-2">
                 <div class="card ">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link <?php if($_GET['action'] == '') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>">Description</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php if($_GET['action'] == 'avis') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=avis">Le vendeur</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php if($_GET['action'] == 'contact') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=contact">Contact</a>
-                        </li>
-                        <span class="nav-item ml-auto">
-                            <strong class="vendeur"><i class="fas fa-user"></i>
-                                <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
-                            <span class="laMoyenne">
-                                </span>
-                                <?php if($moyenneNote == '') {
-                                                echo 'Aucune note';?></span>
-                                            <?php } else { ?>
-                                                <?php echo $moyenneNote ?>/5</span>
-                                                <?php } ?>
-                        </span>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if($_GET['action'] == '') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if($_GET['action'] == 'avis') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=avis">Le vendeur</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if($_GET['action'] == 'contact') echo 'active'?>" href="<?php echo URL; ?>annonce.php?id_annonce=<?=$id_annonce?>&action=contact">Contact</a>
+                            </li>
+                            <li class="nav-item ml-auto">
+                                <strong class="vendeur"><i class="fas fa-user"></i>
+                                    <?php echo ucfirst($ceVendeur['pseudo']); ?></strong>
+                                <span class="laMoyenne">
+                                    <?php if($moyenneNote == '') {
+                                                    echo 'Aucune note';?></li>
+                                                <?php } else { ?>
+                                                    <?php echo $moyenneNote ?>/5</span>
+                                                    <?php } ?>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-body">
@@ -236,7 +222,7 @@ include_once('inc/nav.inc.php');
                         echo '<div class="text-center">Veuillez vous <a href="#" data-toggle="modal" data-target="#connexionModal" data-backdrop="static">connectez</a> ou vous <a href="#" data-toggle="modal" data-target="#inscriptionModal" data-backdrop="static">inscrire</a> pour contacter '. ucfirst($ceVendeur["pseudo"]).'</div>';?>
                     </div>
                     <?php } else {?>
-                    </div>
+                </div>
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-12 m-0 p-1 mx-auto">
@@ -288,7 +274,7 @@ include_once('inc/nav.inc.php');
                             //On ferme l'accolade du foreach des notes
                             }
                             ?>
-                        <!-----Fin listingNote------------>
+                        <!-- Fin listingNote -->
                             </div>
                         </div>
                     </div>
@@ -303,19 +289,19 @@ include_once('inc/nav.inc.php');
                     </div>
                     <?php } ?>
                     <?php } else { ?>
-                        <h5 class="card-title">Special title treatment</h5>
+                        
                         <div class="conteneurTexte overflow-scroll">
-                            <p class="card-text p-0 m-0 text-justify" id="description">
+                            <p class="card-text p-0 m-0 text-justify" id="descriptionTexte">
                             <?php 
                             if (strlen($cetteAnnonce['description_longue']) > 960){
                                 $textIncomplet = substr($cetteAnnonce['description_longue'],0, 960);
                                 if (isset($_GET['texte']) && $_GET['texte'] == 'complet'){
-                                    echo ucfirst($cetteAnnonce['description_longue']) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
+                                    echo ucfirst(nl2br($cetteAnnonce['description_longue'])) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '#description" class="float-right mb-5 mt-3">Lire moins</a>';
                                 }else{
-                                    echo ucfirst($textIncomplet) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
+                                    echo ucfirst(nl2br($textIncomplet)) . '<a href="?id_annonce=' . $cetteAnnonce['id_annonce'] . '&' . 'texte=complet#description" class="float-right">Lire la suite...</a>';
                                 }
                             }else{
-                                echo ucfirst($cetteAnnonce['description_longue']);
+                                echo ucfirst(nl2br($cetteAnnonce['description_longue']));
                             }
                             ?>
                             </p>
@@ -323,34 +309,40 @@ include_once('inc/nav.inc.php');
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-lg-6 text-center text-lg-left py-auto"><i class="fas fa-map-marker-alt"></i>
+                            <div class="col-lg-8 text-left py-auto"><i class="fas fa-map-marker-alt"></i>
                             <?php echo $cetteAnnonce['adresse'] . ',' . $cetteAnnonce['ville']?>
                             </div>
-                            <div class="prix col-lg-6 text-center text-lg-right">
+                            <div class="col-lg-4 text-right">
                                 <?php echo number_format($cetteAnnonce['prix'], 2, ',', ' '); ?> <i class="fas fa-euro-sign"></i>
                             </div>
                         </div>
                     </div>
                     <?php } ?>
                 </div>
-                <!-----Fin conteneurBoutons-------->
+                <!-- Fin conteneurBoutons -->
             </div>
-            <!------Fin description------------->
+            <!-- Fin description -->
         </div>
-        <!------ Fin conteneurCarouselTexte-------->
-        <!--Partie ou l'on affiche les autres annonces-->
+        <!-- Fin conteneurCarouselTexte -->
+        <!-- Partie ou l'on affiche les autres annonces-->
         <hr>
         <div class="gMap py-2 col-12">
-            <iframe src="https://maps.google.it/maps?q=<?php echo $cetteAnnonce['adresse'] . $cetteAnnonce['cp'] . $cetteAnnonce['ville'] ?>&output=embed" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
+        <?php
+        $tabCar = array(" ", "\t", "\n", "\r", "\0", "\x0B", "\xA0");
+        $cetteAnnonce['adresse'] = str_replace($tabCar, array(), $cetteAnnonce['adresse']);
+        $cetteAnnonce['cp'] = str_replace($tabCar, array(), $cetteAnnonce['cp']);
+        $cetteAnnonce['ville'] = str_replace($tabCar, array(), $cetteAnnonce['ville']);
+        ?>
+            <iframe src="https://maps.google.it/maps?q=<?php echo trim($cetteAnnonce['adresse']) . trim($cetteAnnonce['cp']) . trim($cetteAnnonce['ville']) ?>&output=embed" height="200" allowfullscreen></iframe>
         </div>
         <hr>
-                <!--   Partie ou l'on affiche les commentaires-->
+                <!-- Partie ou l'on affiche les commentaires -->
                 <?php
         if (!user_is_connected()) { 
         } else {?>
         <div class="commentaires mt-4">
             <h4>Laisser un commentaire</h4>
-            <form id="commentaire" method="post" action="" class="mt-3">
+            <form id="commentaire" method="post"  class="mt-3">
                 <div class="form-group">
                     <textarea name="inputCommentaire" class="form-control" id="inputCommentaire" rows="4" placeholder="Mon commentaire..."></textarea>
                 </div>
@@ -381,34 +373,34 @@ include_once('inc/nav.inc.php');
             </div>
         </div>
         <?php } ?>
-        <!------Fin commentaires----------->
+        <!-- Fin commentaires -->
         <div class="autresAnnonces mt-3 pb-5">
-            <h4 class="bold col-12 text-lg-left text-center p-0">Annonces similaires</h4>
+            <h4 class="bold col-12 text-lg-left p-0">Annonces similaires</h4>
             <div class="row">
             <?php 
             foreach($autresAnnonces as $cetteAutreAnnonce){
                 ?>
-                <figure class="col-sm-3 p-0">
+                <figure class="col-12 col-md-3 mt-3 p-0">
                     <a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
-                        <div class="picture m-3 img-thumbnail">
+                        <div class="picture mb-sm-3 m-lg-3 img-thumbnail mx-auto">
                     <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>
-                            <figcaption class="text-center text-dark mt-2"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
                         </div>
                     </a>
+                    <figcaption class="text-center text-dark mt-2 pb-sm-4"><?php echo ucfirst($cetteAutreAnnonce['titre']) ?></figcaption>
                 </figure>
         <?php } ?>
             </div>
         </div>
-        <!------Fin autresAnnonces-------------------->
+        <!-- Fin autresAnnonces -->
 
         <!--Formulaire pour laisser un avis-->
         <div class="row laisserAvis">
-            <form id="avis" method="post" action="">
-                <div class="modal fade" id="laisserAvis" tabindex="-1" role="dialog" aria-labelledby="laisserAvis" aria-hidden="true" class="col-sm-4">
+            <form id="avis" method="post">
+                <div class="modal fade col-sm-12 mx-auto" id="laisserAvis" tabindex="-1" role="dialog" aria-labelledby="laisserAvis" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Laisser un avis à
+                                <h5 class="modal-title" id="modalAvis">Laisser un avis à
                                     <?php echo ucfirst($ceVendeur["pseudo"]); ?>
                                 </h5>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -416,7 +408,6 @@ include_once('inc/nav.inc.php');
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="post">
                                     <div class="form-group">
                                         <label for="inputNote">Notes: </label>
                                         <select class="form-control" id="inputNote" name="inputNote">
@@ -432,20 +423,19 @@ include_once('inc/nav.inc.php');
                                         <textarea class="form-control" name="inputAvis" id="inputAvis" cols="30" rows="10" placeholder="Mon avis"></textarea>
                                     </div>
                                     <input type="submit" class="btn btn-dark w-100" onclick="return inscription()" id="envoyerAvis" name="envoyerAvis" value="Envoyer">
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        <!--------Fin laisser un avis-------------->
+        <!-- Fin laisser un avis -->
         <div class="row modalContacter">
-            <div class="modal fade" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true" class="col-sm-4">
+            <div class="modal fade col-sm-12 mx-auto" id="contacter" tabindex="-1" role="dialog" aria-labelledby="contacter" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Contacter
+                            <h5 class="modal-title" id="modalContact">Contacter
                                 <?php echo ucfirst($ceVendeur["pseudo"]); ?>
                             </h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -457,7 +447,7 @@ include_once('inc/nav.inc.php');
                                 <div class="form-group">
                                     <textarea class="form-control" name="monMessage" id="monMesage" cols="30" rows="10" placeholder="Mon message"></textarea>
                                 </div>
-                                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
+                                <a class="voirLesAvis d-block d-lg-inline-block t-2 text-dark mb-3 colorLetter" data-toggle="collapse" href="#collapseNumeroDeTelephone" role="button" aria-expanded="false" aria-controls="collapseNumeroDeTelephone">
                                     Ou obtenir le numero de téléphone
                                 </a>
                                 <div class="collapse" id="collapseNumeroDeTelephone">
@@ -466,109 +456,20 @@ include_once('inc/nav.inc.php');
                                             <?php echo $ceVendeur['telephone'] ?>
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary w-100" onclick="return inscription()" id="envoyerMessage" name="envoyerMessage" value="Envoyer">
+                                <input type="submit" class="btn btn-dark w-100" onclick="return inscription()" id="envoyerMessage" name="envoyerMessage" value="Envoyer">
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    <!-- Fin modalContacter -->
     </div>
-    <!-------Fin modalContacter-------------->
-</section>
-<!---------Fin section mon annonce------------->
-
+    <!-- Fin section mon annonce -->
 <?php
 include_once('inc/footer.inc.php');
 ?>
 
-                    <script type="text/javascript">
-                  
-                        $(document).ready(function ($) {
-                            // delegate calls to data-toggle="lightbox"
-                            $(document).on('click', '[data-toggle="lightbox"]:not([data-gallery="navigateTo"]):not([data-gallery="example-gallery-11"])', function(event) {
-                                event.preventDefault();
-                                return $(this).ekkoLightbox({
-                                    onShown: function() {
-                                        if (window.console) {
-                                            return console.log('');
-                                        }
-                                    },
-                                    onNavigate: function(direction, itemIndex) {
-                                        if (window.console) {
-                                            return console.log('');
-                                        }
-                                    }
-                                });
-                            });
-            
-                            // disable wrapping
-                            $(document).on('click', '[data-toggle="lightbox"][data-gallery="example-gallery-11"]', function(event) {
-                                event.preventDefault();
-                                return $(this).ekkoLightbox({
-                                    wrapping: false
-                                });
-                            });
-            
-                            //Programmatically call
-                            $('#open-image').click(function (e) {
-                                e.preventDefault();
-                                $(this).ekkoLightbox();
-                            });
-                            $('#open-youtube').click(function (e) {
-                                e.preventDefault();
-                                $(this).ekkoLightbox();
-                            });
-            
-                            // navigateTo
-                            $(document).on('click', '[data-toggle="lightbox"][data-gallery="navigateTo"]', function(event) {
-                                event.preventDefault();
-            
-                                return $(this).ekkoLightbox({
-                                    onShown: function() {
-            
-                                        this.modal().on('click', '.modal-footer a', function(e) {
-            
-                                            e.preventDefault();
-                                            this.navigateTo(2);
-            
-                                        }.bind(this));
-            
-                                    }
-                                });
-                            });
-            
-            
-                            /**
-                             * Documentation specific - ignore this
-                             */
-                            anchors.options.placement = 'left';
-                            anchors.add('h3');
-                            $('code[data-code]').each(function() {
-            
-                                var $code = $(this),
-                                    $pair = $('div[data-code="'+$code.data('code')+'"]');
-            
-                                $code.hide();
-                                var text = $code.text($pair.html()).html().trim().split("\n");
-                                var indentLength = text[text.length - 1].match(/^\s+/)
-                                indentLength = indentLength ? indentLength[0].length : 24;
-                                var indent = '';
-                                for(var i = 0; i < indentLength; i++)
-                                    indent += ' ';
-                                if($code.data('trim') == 'all') {
-                                    for (var i = 0; i < text.length; i++)
-                                        text[i] = text[i].trim();
-                                } else  {
-                                    for (var i = 0; i < text.length; i++)
-                                        text[i] = text[i].replace(indent, '    ').replace('    ', '');
-                                }
-                                text = text.join("\n");
-                                $code.html(text).show();
-            
-                            });
-                        });
                     
-                    </script>
 
 

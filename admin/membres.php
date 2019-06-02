@@ -185,7 +185,7 @@ include_once('inc/nav.inc.php');
         <div class="card-body">
             <div class="table-responsive tableMembre">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>Id membre</th>
                             <th>Pseudo</th>

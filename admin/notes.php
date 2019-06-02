@@ -141,8 +141,8 @@ include_once('inc/nav.inc.php');
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered tableNotes" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-light">
                         <tr>
                             <th>Id notes</th>
                             <th>Id/Pseudo donneur</th>
@@ -159,12 +159,12 @@ include_once('inc/nav.inc.php');
                             
                             
                             echo '<tr>';
-                            echo '<td>' . $laNote['id_note'] . '</td>';
-                            echo '<td>' . $laNote['idDonneur'] . " - " . ucfirst($laNote['pseudoDonneur']) . '</td>';
-                            echo '<td>' . $laNote['idReceveur'] . " - " . ucfirst($laNote['pseudoReceveur']) . '</td>';
-                            echo '<td>' . $laNote['note'] . "/5" . '</td>';
-                            echo '<td>' . $laNote['avis'] . '</td>';
-                            echo '<td>' . formatStandardTotal($laNote['date_enregistrement']) . '</td>';
+                            echo '<td class="id_note">' . $laNote['id_note'] . '</td>';
+                            echo '<td class="donneur">' . $laNote['idDonneur'] . " - " . ucfirst($laNote['pseudoDonneur']) . '</td>';
+                            echo '<td class="receveur">' . $laNote['idReceveur'] . " - " . ucfirst($laNote['pseudoReceveur']) . '</td>';
+                            echo '<td class="note">' . $laNote['note'] . "/5" . '</td>';
+                            echo '<td class="avis">' . $laNote['avis'] . '</td>';
+                            echo '<td class="date_note">' . formatStandardTotal($laNote['date_enregistrement']) . '</td>';
                             ?>
                             <td class="btn-note"> 
                                 <a href="?modifier=<?php echo $laNote['id_note'] ?>#inputAvis"><i class="fas fa-edit"></i></a>

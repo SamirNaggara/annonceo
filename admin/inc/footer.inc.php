@@ -32,7 +32,7 @@
             <div class="modal-body">Êtes vous sûrs de vouloir vous deconnecter?</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                <a class="btn btn-primary" href="<?php echo URL . '?action=deconnexion'; ?>">Me deconnecter</a>
+                <a class="btn btn-dark" href="<?php echo URL . '?action=deconnexion'; ?>">Me deconnecter</a>
             </div>
         </div>
     </div>

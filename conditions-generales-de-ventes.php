@@ -96,6 +96,7 @@ include_once('inc/nav.inc.php');
             </p>
         </div>
     </div>
+
 <?php
 include_once('inc/footer.inc.php');
 
