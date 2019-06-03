@@ -103,7 +103,7 @@ include_once('inc/modal.inc.php');
                         </div>
                         <button type="submit" class="btn btn-dark w-100">Connexion</button>
                         <!-- lien renvoyant vers le formulaire de renouvellement de mot de passe -->
-                        <p><a href="reset-password.php">Mot de passe oublié ?</a></p>
+                        <p><a href="reset-password.php" class="colorLetter text-decoration-none">Mot de passe oublié ?</a></p>
                     </form>
                 </div>
             </div>
