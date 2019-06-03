@@ -157,9 +157,6 @@ $moyenneNote = $moyenneNote -> fetch(PDO::FETCH_ASSOC);
 $moyenneNote = round($moyenneNote['moyenneNote'],1);
 
 /*Requette pour "mes annonces"*/
-
-
-
 $requeteAffichage = $pdo->prepare("SELECT a.id_annonce, a.titre, a.description_courte, a.prix, a.photo, a.ville, m.pseudo, AVG(n.note) as moyenneNote
 FROM annonce a
 LEFT JOIN membre m ON m.id_membre = a.membre_id
@@ -185,242 +182,262 @@ include_once('inc/nav.inc.php');
 <div class="container">
     <div class="starter-template">
         <h1>Profil</h1>
+        <div class="divider mx-auto"></div>
         <p class="lead"><?php echo $msg; // affichage de message pour l'utilisateur. Cette variable provient de init.inc.php ?></p>
-    </div>    
-<div class="row m-0">
-    <div class="profil col-4 p-0">
-            <ul class="list-group col-12 p-0">
-                <li class="list-group-item <?php if((isset($_GET['action']) && $_GET['action'] == 'informationsPersonnels') || !isset($_GET['action'])){echo 'active';}?>"> 
-                    <a href="?action=informationsPersonnels" class="<?php if((isset($_GET['action']) && $_GET['action'] == 'informationsPersonnels') || !isset($_GET['action'])) {echo 'text-white';}?> d-block w-100">Informations personnels</a>
+    </div>      
+    <div class="row m-0">
+        <div class="profil col-12 col-lg-4 p-0 pt-5 mb-2">
+                <ul class="list-group col-12 p-0">
+                <li class="list-group-item bg-light <?php if((isset($_GET['action']) && $_GET['action'] == 'informationsPersonnels') || !isset($_GET['action'])){echo 'active bg-dark';}?>"> 
+                    <a href="?action=informationsPersonnels" class="d-block w-100">Informations personnels</a>
                 </li>
-                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'mesAnnonces') echo 'active'?>">
-                    <a href="?action=mesAnnonces" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'mesAnnonces') echo 'text-white'?> d-block w-100">Mes annonces</a>
+                <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action'] == 'mesAnnonces') echo 'active bg-dark'?>">
+                    <a href="?action=mesAnnonces" class="d-block w-100">Mes annonces</a>
                 </li>
-                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'mesNotes') echo 'active'?>">
-                    <a href="?action=mesNotes" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'mesNotes') echo 'text-white'?> d-block w-100">Mes notes</a>
+                <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action'] == 'mesNotes') echo 'active bg-dark'?>">
+                    <a href="?action=mesNotes" class="d-block w-100">Mes notes et avis</a>
                 </li>
-                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierProfil') echo 'active'?>">
-                    <a href="?action=modifierProfil" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'modifierProfil') echo 'text-white'?> d-block w-100">Modifier mon profil</a>
+                <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierProfil') echo 'active bg-dark'?>">
+                    <a href="?action=modifierProfil" class="d-block w-100">Modifier mon profil</a>
                 </li>
-                <li class="list-group-item <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierPassword') echo 'active'?>">
-                    <a href="?action=modifierPassword" class="<?php if(isset($_GET['action']) && $_GET['action'] == 'modifierPassword') echo 'text-white'?> d-block w-100">Modifier mot de passe</a>
+                <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action'] == 'modifierPassword') echo 'active bg-dark'?>">
+                    <a href="?action=modifierPassword" class="d-block w-100">Modifier mot de passe</a>
                 </li>
             </ul>
-    </div>
-    <!--Formulaires des informations personnels-->
-    <?php
-    if(!isset($_GET['action']) || $_GET['action'] == 'informationsPersonnels') {
-    ?>
-    <div class="formProfil col-8">  
+        </div>
+        <!--Formulaires des informations personnels-->
+        <?php
+        if(!isset($_GET['action']) || $_GET['action'] == 'informationsPersonnels') {
+        ?>
+        <div class="formProfil col-12 col-lg-8 p-0 pb-2 px-lg-2 mt-2 mt-lg-0">  
             <div class="col-auto p-0">
                 <ul class="list-group">
-                    <li class="list-group-item bg-primary text-white">Vos informations</li>
-                    <li class="list-group-item"><span class="infos_profil">Identifiant membre: </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Pseudo: </span><?php echo ucfirst($_SESSION['utilisateur']['pseudo']); ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Nom: </span><?php echo ucfirst($_SESSION['utilisateur']['nom']); ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Prénom: </span><?php echo ucfirst($_SESSION['utilisateur']['prenom']); ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Email: </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Sexe: </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'Masculin'; else echo 'Féminin'; ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Téléphone: </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
-                    <li class="list-group-item"><span class="infos_profil">Statut: </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
+                    <li class="list-group-item bg-dark text-white"><strong>Vos informations</strong></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Identifiant membre:</strong> </span><?php echo $_SESSION['utilisateur']['id_membre']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Pseudo:</strong> </span><?php echo ucfirst($_SESSION['utilisateur']['pseudo']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Nom:</strong> </span><?php echo ucfirst($_SESSION['utilisateur']['nom']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Prénom:</strong> </span><?php echo ucfirst($_SESSION['utilisateur']['prenom']); ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Email:</strong> </span><?php echo $_SESSION['utilisateur']['email']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Sexe:</strong> </span><?php if( $_SESSION['utilisateur']['civilite'] == 'm') echo 'Masculin'; else echo 'Féminin'; ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Téléphone:</strong> </span><?php echo $_SESSION['utilisateur']['telephone']; ?></li>
+                    <li class="list-group-item"><span class="infos_profil"><strong>Statut:</strong> </span><?php if(user_is_admin()) { echo 'Administrateur'; } else { echo 'Membre'; } ?></li>
                 </ul>
             </div>
-    <?php }
-    // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-    elseif(isset($_GET['action']) && $_GET['action'] == "modifierProfil") {    
-    ?>
-    <form method="post" class="col-8 proForm pl-2">
-        <div class="row m-0">
-            <div class="form-group col-6">
-                <label for="id_membre_profil">Identifiant</label>
-                <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
+        <?php }
+        // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+        elseif(isset($_GET['action']) && $_GET['action'] == "modifierProfil") {    
+        ?>
+        <form method="post" class="col-12 col-lg-8 proForm pl-lg-2 py-3 px-0">
+            <div class="row m-0">
+                <div class="form-group col-6">
+                    <label for="id_membre_profil">Identifiant</label>
+                    <input type="text" disabled="disabled" class="form-control" id="id_membre_profil" name="id_membre_profil" value="<?php echo $id_membre_profil; ?>">
+                </div>
+                <div class="form-group col-6">
+                    <label for="date_enregistrement_profil">Date d'inscription</label>
+                    <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
+                </div>
+                <div class="form-group col-6 fg-pseudo">
+                    <label for="pseudo_profil">Pseudo</label>
+                    <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+                </div>
+                <div class="form-group col-6">
+                    <label for="civilite_profil">Sexe</label>
+                    <select class="form-control col-12" id="civilite_profil" name="civilite_profil">
+                        <option value="m">masculin</option>
+                        <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="nom_profil">Nom</label>
+                    <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
+                </div>
+                <div class="form-group col-6">
+                    <label for="telephone_profil">Telephone</label>
+                    <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
+                </div>
+                <div class="form-group col-6">
+                    <label for="prenom_profil">Prenom</label>
+                    <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
+                </div>
+                <div class="form-group col-6">
+                    <label for="email_profil">Email</label>
+                    <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
+                </div>
+                <div class="form-group col-12">
+                    <button type="submit" class="btn btn-dark col-12" name="validerMembre">Valider</button>
+                </div>
             </div>
-            <div class="form-group col-6">
-                <label for="date_enregistrement_profil">Date d'inscription</label>
-                <input type="text" disabled="disabled" class="form-control" id="date_enregistrement_profil" name="date_enregistrement_profil" value="<?php echo $date_enregistrement_profil; ?>">
+        </form>
+        <?php
+        // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
+        } 
+        ?>
+        <?php
+        if(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
+        ?>
+        <!--Form pour le mot de passe-->
+        <form method="post" class="col-12 col-lg-6 mx-auto pl-lg-2 pt-3 px-0">
+            <div class="form-group">
+                <label for="inputActuelMdp">Mot de passe actuel</label>
+                <input type="password" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
             </div>
-            <div class="form-group col-6 fg-pseudo">
-                <label for="pseudo_profil">Pseudo</label>
-                <input type="text" class="form-control" id="pseudo_profil" name="pseudo_profil" value="<?php echo ucfirst($pseudo_profil); ?>">
+            <div class="form-group">
+                <label for="inputNouveauMdp1">Nouveau mot de passe</label>
+                <input type="password" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
             </div>
-            <div class="form-group col-6">
-                <label for="civilite_profil">Sexe</label>
-                <select class="form-control col-12" id="civilite_profil" name="civilite_profil">
-                    <option value="m">masculin</option>
-                    <option value="f" <?php if($civilite_profil == 'f') echo 'selected'; ?>>féminin</option>
-                </select>
+            <div class="form-group">
+                <label for="inputNouveauMdp2">Confirmer le mot de passe</label>
+                <input type="password" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
             </div>
-            <div class="form-group col-6">
-                <label for="nom_profil">Nom</label>
-                <input type="text" class="form-control" id="nom_profil" name="nom_profil" value="<?php echo ucfirst($nom_profil); ?>">
+            <div class="form-group">
+                <button type="submit" class="btn btn-dark col-12" name="enregistrementMdp">Enregistrer</button>
             </div>
-            <div class="form-group col-6">
-                <label for="telephone_profil">Telephone</label>
-                <input type="text" class="form-control" id="telephone_profil" name="telephone_profil" value="<?php echo $telephone_profil; ?>">
-            </div>
-            <div class="form-group col-6">
-                <label for="prenom_profil">Prenom</label>
-                <input type="text" class="form-control" id="prenom_profil" name="prenom_profil" value="<?php echo ucfirst($prenom_profil); ?>">
-            </div>
-            <div class="form-group col-6">
-                <label for="email_profil">Email</label>
-                <input type="text" class="form-control" id="email_profil" name="email_profil" value="<?php echo $email_profil; ?>">
-            </div>
-            <div class="form-group col-12">
-                <button type="submit" class="btn btn-primary col-12" name="validerMembre">Valider</button>
-            </div>
-        </div>
-    </form>
-    <?php
-    // Le formulaire est apparent seuelement si action = informationsPersonnels OU BIEN si get action n'existe pas
-    } 
-    ?>
-    <?php
-    if(isset($_GET['action']) && $_GET['action'] == "modifierPassword") {    
-    ?>
-    <!--Form pour le mot de passe-->
-    <form action="" method="post" class="col-8 pl-2">
-        <div class="form-group">
-            <label for="id_membre_profil">Mot de passe actuel</label>
-            <input type="password" class="form-control" id="inputActuelMdp" name="inputActuelMdp">
-        </div>
-        <div class="form-group">
-            <label for="pseudo_profil">Nouveau mot de passe</label>
-            <input type="password" class="form-control" id="inputNouveauMdp1" name="inputNouveauMdp1">
-        </div>
-        <div class="form-group">
-            <label for="nom_profil">Confirmer le mot de passe</label>
-            <input type="password" class="form-control" id="inputNouveauMdp2" name="inputNouveauMdp2">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary col-12" name="enregistrementMdp">Enregistrer</button>
-        </div>
-    </form>
-    <?php } ?>
-    <?php
-    //Fermeture du if de l'onglet informations personnels
-    // Ouverture de l'onglet sur les commentaires
-    if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>  
-    <?php 
-                    foreach($requeteAffichage as $uneLigne){
-                    ?>
-                    <div class="blocRequete no-gutters bg-light col-sm-8 ml-auto col-12 mb-4 shadow">
-                        <div class="row">
-                            <div class="col-md-4 imgAnnonce">
-                                <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
-                                    <div class="picture">
-                                        <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="photo annonceo">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-8 textAnnonce">
-                                <div class="headerAnnonce mx-auto w-100 mb-2 d-flex ">
-                                    <span><i class="fas fa-map-marker-alt"></i> <?php echo ucfirst($uneLigne['ville']);?></span>
-                                    <span class="vendeurAnnonce"><i class="far fa-user"></i>
-                                    <?php echo ucfirst($uneLigne['pseudo']); ?></span>
-                                    <span class="note"> <?php if($uneLigne['moyenneNote'] == '') {
-                                                echo 'Aucune note';?></span>
-                                            <?php } else { ?>
-                                            Notes : <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
-                                            <?php } ?>     
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8 mt-2">
-                                        <h5 class="colorLetter"><?php echo ucfirst($uneLigne['titre']); ?></h5>                            
-                                        <p class="descAnnonces">
-                                            <?php echo ucfirst($uneLigne['description_courte']); ?>
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-4 mt-2 d-flex flex-column">
-                                        <p class="euroText text-right">
-                                            <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
-                                        </p>
-                                        <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>" class="btn btn-outline-dark">Voir l'annonce</a>           
-                                    </div>
-                                </div>
-                            </div>
+        </form>
+        <?php } ?>
+        <?php
+        //Fermeture du if de l'onglet informations personnels
+        // Ouverture de l'onglet sur les commentaires
+        if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>
+        <div class="row col-lg-8 ml-2">   
+        <?php
+        if(count($requeteAffichage) <= 0) {
+            echo '<div class="d-flex align-items-center">';
+            echo '<p class="text-danger mt-2 pl-2" role="alert">Vous n\'avez pas encore d\'annonce pour le moment</p>';
+            echo '</div>';
+        } 
+        foreach($requeteAffichage as $uneLigne){
+        ?>
+        <div class="blocRequete no-gutters bg-light col-12 ml-auto col-lg-12 mb-4 shadow">
+            <div class="row">
+                <div class="col-md-4 imgAnnonce">
+                    <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
+                        <div class="picture">
+                            <img src="<?php echo $uneLigne['photo']; ?>" class="py-1 d-block" alt="photo annonceo">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-8 textAnnonce">
+                    <div class="headerAnnonce mx-auto w-100 mb-2 d-flex ">
+                        <span><i class="fas fa-map-marker-alt"></i> <?php echo ucfirst($uneLigne['ville']);?></span>
+                        <span class="vendeurAnnonce"><i class="far fa-user"></i>
+                        <?php echo ucfirst($uneLigne['pseudo']); ?></span>
+                        <span class="note"> <?php if($uneLigne['moyenneNote'] == '') {
+                                    echo 'Aucune note';?></span>
+                                <?php } else { ?>
+                                Notes : <?php echo round($uneLigne['moyenneNote'],1); ?>/5</span>
+                                <?php } ?>     
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 mt-2">
+                            <h5 class="colorLetter"><?php echo ucfirst($uneLigne['titre']); ?></h5>                            
+                            <p class="descAnnonces">
+                                <?php echo ucfirst($uneLigne['description_courte']); ?>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 mt-2 d-flex flex-column">
+                            <p class="euroText text-right">
+                                <?php echo $uneLigne['prix']; ?> <i class="fas fa-euro-sign"></i>
+                            </p>
+                            <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>" class="btn btn-outline-dark">Voir l'annonce</a>           
                         </div>
                     </div>
-                    <?php
-                    }
-                    ?>
-    <?php } ?>
-    <?php
-    // Ouverture de l'onglet sur les notes
-    if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){    
-    ?>
-    <div class="col-8 pl-2">
-    <div class="starter-template">
-        <h2>Mes avis</h2>
-        <h3>Moyenne: <?php echo $moyenneNote; ?>/5</h3>
-    </div>
-    <div class="card card-body listingNote">
+                </div>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+        </div>  
+        <?php } ?>
+        <?php
+        // Ouverture de l'onglet sur les notes
+        if (isset($_GET['action']) && $_GET['action'] == "mesNotes"){  
+        ?>
+        <div class="col-12 col-lg-8 pl-2 pb-3 cardAvis">
+            <div class="starter-template">
+                <h2 class="text-left pl-2 pb-2">Avis reçus
+                    <span class="divider"></span>
+                <span class="moyenneAvis text-right float-right mt-n4"><?php if($moyenneNote == 0) { echo 'Pas encore de note';} else { echo 'Votre moyenne:'. $moyenneNote.'/5'; }?> </span>
+                </h2>
+                <?php 
+                if(count($lesNotes) <= 0) {
+                    echo '<div class="d-flex align-items-center">';
+                    echo '<p class="text-danger mt-2 pl-2" role="alert">Vous n\'avez pas encore donné ou reçu de note pour le moment</p>';
+                    echo '</div>';
+                }  
+                ?>
+                <div class="clear"></div>
+            </div>
+            <!-- <div class="card card-body listingNote"> -->
+                <?php
+            $premiereLigne = true;
+            foreach($lesNotes as $uneNote){
+            //On affiche uniquement les commentaires que la personne à reçut
+                if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
+                //Place un br au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+                    if ($premiereLigne){
+                        $premiereLigne = false;
+                    }else{
+                    echo '<br>';
+                }
+                ?>
+                <div class="card text-left">
+                    <div class="card-header">
+                        <i class="far fa-user"></i> <?php 
+                        $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+                        $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+                        $infosMembreAvis->execute();
+                        $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                        echo ucfirst($leMembreAvis["pseudo"]) ?> , vous a attribué la note de : 
+                        <span class="laNote"><?php echo $uneNote['note'] ?>/5</span>
+                        , le <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
+                    </div>
+                    <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
+                </div>
+                <?php } ?>
             <?php
-        $premiereLigne = true;
-        foreach($lesNotes as $uneNote){
-        
-        //On affiche uniquement les commentaire que la personne à reçut
-            if ($uneNote["membre_id2"] == $_SESSION['utilisateur']['id_membre']){
-            //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
-                    
+            //On ferme l'accolade du foreach des notes
+            }
+            ?>
+            <div class="starter-template">
+                <h2 class="text-left pl-2 pt-2">Avis donnés
+                    <span class="divider"></span>
+                </h2>
+            </div>
+                <?php
+            $premiereLigne = true;
+            foreach($lesNotes as $uneNote){
+            //On affiche uniquement les commentaires que la personne à donnés
+                if ($uneNote["membre_id1"] == $_SESSION['utilisateur']['id_membre']){
+                //Place un br au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
+
                 if ($premiereLigne){
                     $premiereLigne = false;
                 }else{
-                echo '<hr>';
-            }
-            ?>
-            <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
-                    
-            $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
-            $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
-            $infosMembreAvis->execute();
-            $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
-                    
-            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
-            <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
-            <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
-            <?php } ?>
+                    echo '<br>';
+                }
+                ?>
+                <div class="card text-left">
+                    <div class="card-header">
+                        <i class="far fa-user"></i> <?php     
+                        $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
+                        $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
+                        $infosMembreAvis->execute();
+                        $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
+                        echo ucfirst($leMembreAvis["pseudo"]) ?>, vous avez attribué la note de : <span class="laNote"><?php echo $uneNote['note'] ?>/5, le</span>
+                        <span class="dateNote text-secondary"> <?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
+                    </div>
+                    <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
+                </div>
+                <?php } ?>
 
-        <?php
-        //On ferme l'accolade du foreach des notes
-        }
-        ?>
-    </div>
-    <div class="starter-template">
-        <h2>Les avis donnés</h2>
-    </div>
-    <div class="card card-body listingNote">
             <?php
-        $premiereLigne = true;
-        foreach($lesNotes as $uneNote){
-        //On affiche uniquement les commentaire que la personne à reçut
-            if ($uneNote["membre_id1"] == $_SESSION['utilisateur']['id_membre']){
-            //Place un hr au dessus si ce n'est pas la premiere ligne, a la premiere il n'en met pas
-
-            if ($premiereLigne){
-                $premiereLigne = false;
-            }else{
-                echo '<hr>';
+            //On ferme l'accolade du foreach des notes
             }
             ?>
-            <p class="nomEtNote m-0"><i class="far fa-user"></i> <?php 
-                    
-            $infosMembreAvis = $pdo->prepare("SELECT pseudo FROM membre WHERE id_membre = :id_membre");
-            $infosMembreAvis->bindParam(':id_membre', $uneNote['membre_id1'], PDO::PARAM_STR);
-            $infosMembreAvis->execute();
-            $leMembreAvis = $infosMembreAvis->fetch(PDO::FETCH_ASSOC);
-            echo ucfirst($leMembreAvis["pseudo"]) ?> : <span class="laNote"><?php echo $uneNote['note'] ?>/5</span></p>
-            <span class="dateNote text-secondary"><?php echo date("d-m-Y", strtotime($uneNote['date_enregistrement']))  ?></span>
-            <p class="avis p-3"><?php echo $uneNote['avis'] ?></p>
-
-            <?php } ?>
-
-        <?php
-        //On ferme l'accolade du foreach des notes
-        }
-        ?>
-    </div>
-    </div>
+        </div>
+    
     <?php
     }
     ?>

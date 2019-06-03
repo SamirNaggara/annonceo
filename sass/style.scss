@@ -7,6 +7,9 @@ body,html {
 .clear {
     clear: both;
 }
+#wrapper #content-wrapper {
+    padding-top: 0;
+}
 /** navbar **/
 .navbar {
     box-sizing: border-box;

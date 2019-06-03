@@ -66,5 +66,5 @@ if (isset($_POST['request-reset-submit'])) {
     header("location: reset-password.php?reset=success");
 
 } else {
-    header("location: http://localhost/teamRocket/trunk/");
+    header("location:" . URL);
 } 

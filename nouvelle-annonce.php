@@ -319,8 +319,8 @@ if(isset($_POST['titre']) && isset($_POST['descriptionCourte']) && isset($_POST[
 						$infos_annonce = $liste_annonce->fetch(PDO::FETCH_ASSOC);
 						$id_annonce = $infos_annonce['id_annonce'];
 					}
-					$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistrée redirection dans 2sec.</div>';
-				//header('Refresh:2; url='. URL . 'annonce.php?id_annonce=' . $id_annonce);
+					$msg .= '<div class="alert alert-success mt-2" role="alert">Votre annonce à bien été enregistrée redirection dans <span id="crono">3</span> sec.</div>';
+				header('Refresh:3; url='. URL . 'annonce.php?id_annonce=' . $id_annonce);
 			}
 		}	
 	}
@@ -448,8 +448,8 @@ include_once('inc/nav.inc.php');
 					<div class="form-group col-md-6">
 						<input type="hidden" class="form-control" id="id_annonce" name="id_annonce" value="<?php echo $id_annonce; ?>">
 					</div>
-					<div class="form-group col-md-12">
-						<input type="submit" class="form-control btn btn-warning col-md-12" OnClick="if(check_formular()){newAnnonce.submit();}else{return false;}" id="enregistrement" name="enregistrement" value="Enregistrement">
+					<div class="form-group col-md-12 pb-3">
+						<input type="submit" class="form-control btn btn-dark col-md-8 d-block mx-auto" OnClick="if(check_formular()){newAnnonce.submit();}else{return false;}" id="enregistrement" name="enregistrement" value="Enregistrement">
 					</div>	
 				</div>	
 			</form>

@@ -320,10 +320,10 @@ if(isset($_GET['modifier'])) {
         $photo_actuelle5 = $laRecupAnnonces['photo5'];
         echo '<pre>'; print_r($id_photo); echo '</pre>';
     }
+    // en construction suppression d'image
     if(isset($_GET['del'])) {
         $del = $_GET['del'];
-        $getImg = $pdo->prepare("SELECT id_photo FROM annonce WHERE photo_id = :id_photo");
-        $getImg->bindParam(':id_photo', $del, PDO::PARAM_STR);
+        $getImg = $id_photo;
         if ($getImg) {
             while($imageData = $getImg->fetch(PDO::FETCH_ASSOC)) {
                 $delImg = $imageData['photo'];
@@ -359,6 +359,7 @@ if(isset($_GET['categorie'])) {
     WHERE c.titre = :titre
     AND m.id_membre = a.membre_id   
     AND a.categorie_id = c.id_categorie
+    ORDER BY date_enregistrement DESC
     LIMIT $firstOfPage, $perPage"
     );
     $annonces->bindParam(':titre', $_GET['categorie'], PDO::PARAM_STR);
@@ -370,6 +371,7 @@ if(isset($_GET['categorie'])) {
     FROM annonce a, membre m, categorie c 
     WHERE m.id_membre = a.membre_id   
     AND a.categorie_id = c.id_categorie
+    ORDER BY date_enregistrement DESC
     LIMIT $firstOfPage, $perPage"
     );
     $annonces->execute();
@@ -530,10 +532,7 @@ if(isset($_GET['modifier'])) {
 <?php  } else { 
     // Début tableau contenant toutes les annonces
     echo '<div class="tableAnnonces">'; ?>
-    <?php
-    if(isset($_GET['categorie'])) { 
-        
-    } else { ?>
+
     <div class="card-header">
         <div class="row">
             <i class="fas fa-table"></i>
@@ -558,7 +557,7 @@ if(isset($_GET['modifier'])) {
 
                 <li class="<?php if($current == $nbPage){ echo "page-item disabled";} ?>"><a href="?page=<?php if($current != $nbPage) { echo $current + 1; } else { $current; } ?>" class="page-link">&raquo;</a></li>
             </ul>
-    <?php } ?>
+  
     <?php
     echo '<div class="dropdown-menu categoriesAnnonce" aria-labelledby="navbarDropdown">';
     echo '<a class="dropdown-item" href="'. URL. 'admin/annonces.php">Toutes les categories</a>';

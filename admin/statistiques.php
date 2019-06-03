@@ -88,7 +88,7 @@ include_once('inc/nav.inc.php');
             // Le formulaire est apparent seuelement si action = lesMieuxNotes OU BIEN si get action n'existe pas
             if ((isset($_GET['action']) && $_GET['action'] == "lesMieuxNotes") || !isset($_GET['action'])){ 
             ?>
-            <div class="col-12 col-lg-8 p-0 card">
+            <div class="col-12 col-lg-7 p-0 card ml-auto">
                 <h5 class="card-header">Participant les mieux notés</h5>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
@@ -112,7 +112,7 @@ include_once('inc/nav.inc.php');
             // Le formulaire est apparent seuelement si action = lesPlusActifs OU BIEN si get action n'existe pas
             if (isset($_GET['action']) && $_GET['action'] == "lesPlusActifs"){ 
             ?>
-            <div class="col-12 col-lg-8 p-0 card">
+            <div class="col-12 col-lg-7 p-0 card ml-auto">
                 <h5 class="card-header">Participant les plus actifs</h5>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
@@ -161,7 +161,7 @@ include_once('inc/nav.inc.php');
             // Le formulaire est apparent seuelement si action = lesMieuxNotes OU BIEN si get action n'existe pas
             if ((isset($_GET['action']) && $_GET['action'] == "lesPlusPopulaire")){ 
             ?>
-            <div class="col-12 col-lg-8 p-0 card">
+            <div class="col-12 col-lg-7 p-0 card ml-auto">
                 <h5 class="card-header">Annonces les plus anciennes</h5>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">

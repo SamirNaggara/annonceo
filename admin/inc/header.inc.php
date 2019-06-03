@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Administration - Annonceo</title>
-
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
     <!-- Custom fonts for this template-->
     <link href="startbootstrap-sb-admin-gh-pages/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
