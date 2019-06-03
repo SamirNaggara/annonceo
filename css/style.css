@@ -5,6 +5,9 @@ body, html {
   position: relative;
   box-sizing: border-box; }
 
+.clear {
+  clear: both; }
+
 /** navbar **/
 .navbar {
   box-sizing: border-box; }
@@ -33,6 +36,12 @@ body, html {
   .navbar .fa-plus-circle {
     color: orange; }
 
+.divider {
+  display: block !important;
+  width: 100px;
+  height: 4px;
+  background-color: orange; }
+
 /* conteneur principal */
 .container {
   padding-top: 100px;
@@ -46,7 +55,7 @@ body, html {
     font-size: 30px; }
 
 /** index.php **/
-.container-fluid {
+header .container-fluid {
   height: 400px;
   padding: 0; }
 
@@ -172,6 +181,119 @@ body, html {
     .blocRequete .textAnnonce .descAnnonces {
       font-size: 14px; }
 
+/* Administration */
+.breadcrumb-item a {
+  color: orange; }
+
+/* page gestion des notes */
+@media screen and (max-width: 1024px) {
+  .tableNotes {
+    width: 100%; }
+    .tableNotes table,
+    .tableNotes tbody,
+    .tableNotes tr,
+    .tableNotes td {
+      display: block;
+      width: 100% !important; }
+    .tableNotes thead tr {
+      display: none; }
+    .tableNotes th {
+      display: none; }
+    .tableNotes tr {
+      margin-bottom: 40px;
+      border: 1px solid black; }
+    .tableNotes .id_note:before {
+      content: "Id notes: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableNotes .donneur:before {
+      content: "Donneur: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableNotes .receveur {
+      font-size: 18px; }
+      .tableNotes .receveur:before {
+        content: "Receveur: ";
+        width: 20px;
+        height: 20px;
+        font-weight: bold; }
+    .tableNotes .note:before {
+      content: "Note: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableNotes .avis:before {
+      content: "Avis: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableNotes .date_note:before {
+      content: "Date: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableNotes .btn-note {
+      font-size: 20px;
+      text-align: center; }
+      .tableNotes .btn-note a {
+        color: #343a40;
+        margin: 0 15px; }
+        .tableNotes .btn-note a:hover {
+          color: orange; } }
+/* page gestion des commentaires */
+@media screen and (max-width: 1024px) {
+  .tableCommentaire {
+    width: 100%; }
+    .tableCommentaire table,
+    .tableCommentaire tbody,
+    .tableCommentaire tr,
+    .tableCommentaire td {
+      display: block;
+      width: 100% !important; }
+    .tableCommentaire thead tr {
+      display: none; }
+    .tableCommentaire th {
+      display: none; }
+    .tableCommentaire tr {
+      margin-bottom: 40px;
+      border: 1px solid black; }
+    .tableCommentaire .id_comments:before {
+      content: "Id Commentaire: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableCommentaire .membre_comments:before {
+      content: "Id Membre: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableCommentaire .annonce_comments {
+      font-size: 18px; }
+      .tableCommentaire .annonce_comments:before {
+        content: "Id Annonce: ";
+        width: 20px;
+        height: 20px;
+        font-weight: bold; }
+    .tableCommentaire .comments:before {
+      content: "Commentaire: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableCommentaire .date_comments:before {
+      content: "Date: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableCommentaire .btn-commentaire {
+      font-size: 20px;
+      text-align: center; }
+      .tableCommentaire .btn-commentaire a {
+        color: #343a40;
+        margin: 0 15px; }
+        .tableCommentaire .btn-commentaire a:hover {
+          color: orange; } }
 /* page gestion des membres */
 @media screen and (max-width: 1024px) {
   .tableMembre {
@@ -182,81 +304,68 @@ body, html {
     .tableMembre td {
       display: block;
       width: 100% !important; }
-
-  tr:first-child {
-    display: none; }
-
-  th {
-    display: none; }
-
-  tr {
-    margin-bottom: 40px;
-    border: 1px solid black; }
-
-  .membre:before {
-    content: "Id Membre: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .pseudo:before {
-    content: "Pseudo: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .nom {
-    font-size: 18px; }
-    .nom:before {
-      content: "Nom: ";
+    .tableMembre thead tr {
+      display: none; }
+    .tableMembre th {
+      display: none; }
+    .tableMembre tr {
+      margin-bottom: 40px;
+      border: 1px solid black; }
+    .tableMembre .membre:before {
+      content: "Id Membre: ";
       width: 20px;
       height: 20px;
       font-weight: bold; }
-
-  .prenom:before {
-    content: "Pr├®nom: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .telephone:before {
-    content: "T├®l├®phone: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .email:before {
-    content: "Email: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .civilite:before {
-    content: "Civilit├®: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .statut:before {
-    content: "Statut: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .date:before {
-    content: "Date: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .btn-membre {
-    font-size: 20px;
-    text-align: center; }
-    .btn-membre a {
-      color: #343a40;
-      margin: 0 15px; }
-      .btn-membre a:hover {
-        color: orange; } }
+    .tableMembre .pseudo:before {
+      content: "Pseudo: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .nom {
+      font-size: 18px; }
+      .tableMembre .nom:before {
+        content: "Nom: ";
+        width: 20px;
+        height: 20px;
+        font-weight: bold; }
+    .tableMembre .prenom:before {
+      content: "Pr├®nom: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .telephone:before {
+      content: "T├®l├®phone: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .email:before {
+      content: "Email: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .civilite:before {
+      content: "Civilit├®: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .statut:before {
+      content: "Statut: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .date:before {
+      content: "Date: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableMembre .btn-membre {
+      font-size: 20px;
+      text-align: center; }
+      .tableMembre .btn-membre a {
+        color: #343a40;
+        margin: 0 15px; }
+        .tableMembre .btn-membre a:hover {
+          color: orange; } }
 /* bouton gestion des cat├®gories et membres*/
 .btn-categorie a, .btn-membre a, .btn-commentaire a, .btn-note a, .btn-annonces a {
   color: #343a40;
@@ -304,103 +413,88 @@ body, html {
       text-align: center; }
       .tableAnnonces .imgTable img {
         width: 35% !important; }
-
-  tr:first-child {
-    display: none; }
-
-  th {
-    display: none; }
-
-  tr {
-    margin-bottom: 40px;
-    border: 1px solid black; }
-
-  .id_annonce:before {
-    content: "Id annonce: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .prix {
-    text-align: center; }
-    .prix:before {
-      content: "Prix: ";
+    .tableAnnonces tr:first-child {
+      display: none; }
+    .tableAnnonces th {
+      display: none; }
+    .tableAnnonces tr {
+      margin-bottom: 40px;
+      border: 1px solid black; }
+    .tableAnnonces .id_annonce:before {
+      content: "Id annonce: ";
       width: 20px;
       height: 20px;
       font-weight: bold; }
-
-  .titre_annonce {
-    font-size: 18px; }
-    .titre_annonce:before {
-      content: "Titre: ";
+    .tableAnnonces .prix {
+      text-align: center; }
+      .tableAnnonces .prix:before {
+        content: "Prix: ";
+        width: 20px;
+        height: 20px;
+        font-weight: bold; }
+    .tableAnnonces .titre_annonce {
+      font-size: 18px; }
+      .tableAnnonces .titre_annonce:before {
+        content: "Titre: ";
+        width: 20px;
+        height: 20px;
+        font-weight: bold; }
+    .tableAnnonces .pays:before {
+      content: "Pays: ";
       width: 20px;
       height: 20px;
       font-weight: bold; }
-
-  .pays:before {
-    content: "Pays: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .ville:before {
-    content: "Ville: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .adresse:before {
-    content: "Adresse: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .cp:before {
-    content: "Code postal: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .pseudo:before {
-    content: "Pseudo: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .titre:before {
-    content: "Cat├®gorie: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .date_enregistrement:before {
-    content: "Date: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .desc_courte:before {
-    content: "Description courte: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .desc_longue:before {
-    content: "Description longue: ";
-    width: 20px;
-    height: 20px;
-    font-weight: bold; }
-
-  .btn-annonces {
-    font-size: 20px;
-    text-align: center; }
-    .btn-annonces a {
-      color: #343a40;
-      margin: 0 15px; }
-      .btn-annonces a:hover {
-        color: orange; } }
+    .tableAnnonces .ville:before {
+      content: "Ville: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .adresse:before {
+      content: "Adresse: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .cp:before {
+      content: "Code postal: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .pseudo:before {
+      content: "Pseudo: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .titre:before {
+      content: "Cat├®gorie: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .date_enregistrement:before {
+      content: "Date: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .desc_courte:before {
+      content: "Description courte: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .desc_longue:before {
+      content: "Description longue: ";
+      width: 20px;
+      height: 20px;
+      font-weight: bold; }
+    .tableAnnonces .btn-annonces {
+      font-size: 20px;
+      text-align: center; }
+      .tableAnnonces .btn-annonces a {
+        color: #343a40;
+        margin: 0 15px; }
+        .tableAnnonces .btn-annonces a:hover {
+          color: orange; } }
 /* page annonce.php */
 .monAnnonce h1 .divider {
+  display: block !important;
   width: 100px;
   height: 4px;
   background-color: orange; }
@@ -435,6 +529,13 @@ body, html {
 
 .monAnnonce #collapseVoirLesAvis .listingNote {
   max-height: 310px;
+  overflow: auto; }
+
+.monAnnonce .gMap iframe {
+  width: 100%; }
+
+.monAnnonce .conteneurCarouselTexte .description .conteneurTexte #descriptionTexte {
+  max-height: 345px !important;
   overflow: auto; }
 
 .monAnnonce .conteneurCarouselTexte .description {
@@ -488,8 +589,8 @@ body, html {
   background-image: url("../images/contact.jpg");
   background-size: cover; }
   .container-fluid.contact .divider {
-    width: 130px;
-    height: 3px;
+    width: 100px;
+    height: 4px;
     background-color: orange;
     margin: 0 auto;
     margin-top: 5px; }
@@ -513,12 +614,32 @@ body, html {
     font-weight: bold;
     font-size: 22px; }
 
+/* statistique */
+.statistique {
+  display: flex;
+  justify-content: center; }
+  .statistique a {
+    color: #343a40;
+    text-decoration: none; }
+  .statistique li.active a {
+    color: orange; }
+
 /* profil */
 .profil {
   display: flex;
   justify-content: center; }
   .profil .btnProfil {
     min-width: 200px !important; }
+  .profil a {
+    color: #343a40;
+    text-decoration: none; }
+  .profil li.active a {
+    color: orange; }
+
+.cardAvis h2 {
+  font-size: 25px; }
+  .cardAvis h2 .moyenneAvis {
+    font-size: 14px; }
 
 .proForm .form-group {
   padding: 0;

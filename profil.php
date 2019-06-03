@@ -174,7 +174,7 @@ $requeteAffichage->bindParam(':id_membre', $_SESSION['utilisateur']['id_membre']
 $requeteAffichage->execute();
 
 
-$affichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
+$requeteAffichage = $requeteAffichage -> fetchAll(PDO::FETCH_ASSOC);
 
 
 include_once('inc/header.inc.php');
@@ -302,8 +302,7 @@ include_once('inc/nav.inc.php');
     // Ouverture de l'onglet sur les commentaires
     if (isset($_GET['action']) && $_GET['action'] == "mesAnnonces"){ ?>  
     <?php 
-                if($requeteAffichage->rowCount() > 0){
-                    foreach($affichage as $uneLigne){
+                    foreach($requeteAffichage as $uneLigne){
                     ?>
                     <div class="blocRequete no-gutters bg-light col-sm-8 ml-auto col-12 mb-4 shadow">
                         <div class="row">
@@ -343,9 +342,6 @@ include_once('inc/nav.inc.php');
                         </div>
                     </div>
                     <?php
-                    }
-                    }else{
-                        echo '<div class="alert alert-success mt-2" role="alert">Vous ne possedez aucune annonce pour le moment.</div>';
                     }
                     ?>
     <?php } ?>
