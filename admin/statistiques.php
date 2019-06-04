@@ -70,16 +70,16 @@ include_once('inc/nav.inc.php');
         <div class="row m-0 col-lg-10 p-1 mx-auto pt-lg-5">
             <div class="statistique col-12 col-lg-4 p-0 pb-2 pr-lg-2">
                 <ul class="list-group col-12 p-0">
-                    <li class="list-group-item bg-light <?php if( $_GET['action']=='lesMieuxNotes') {echo 'active bg-dark';} ?>">
+                    <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action']=='lesMieuxNotes') {echo 'active bg-dark';} ?>">
                         <a href="?action=lesMieuxNotes#1" class="d-block w-100">Les mieux notés</a>
                     </li>
-                    <li class="list-group-item bg-light <?php if( $_GET['action']=='lesPlusActifs'){echo 'active bg-dark';} ?>">
+                    <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action']=='lesPlusActifs'){echo 'active bg-dark';} ?>">
                         <a href="?action=lesPlusActifs#2" class="d-block w-100">Les plus actifs</a>
                     </li>
-                    <li class="list-group-item bg-light <?php if( $_GET['action']=='lesPlusAnciens') {echo 'active bg-dark';} ?>">
+                    <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action']=='lesPlusAnciens') {echo 'active bg-dark';} ?>">
                         <a href="?action=lesPlusAnciens#3" class="d-block w-100">Les plus anciennes annonces</a>
                     </li>
-                    <li class="list-group-item bg-light <?php if( $_GET['action']=='lesPlusPopulaire') {echo 'active bg-dark';} ?>">
+                    <li class="list-group-item bg-light <?php if(isset($_GET['action']) && $_GET['action']=='lesPlusPopulaire') {echo 'active bg-dark';} ?>">
                         <a href="?action=lesPlusPopulaire#4" class="d-block w-100">Catégories les plus populaires</a>
                     </li>
                 </ul>
