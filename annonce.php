@@ -380,7 +380,7 @@ include_once('inc/nav.inc.php');
             <?php 
             foreach($autresAnnonces as $cetteAutreAnnonce){
                 ?>
-                <figure class="col-12 col-md-3 mt-3 p-0">
+                <figure class="col-12 col-md-3 mt-3 p-0 mr-md-2 mr-lg-0">
                     <a href="?id_annonce=<?php echo $cetteAutreAnnonce["id_annonce"] ?>">
                         <div class="picture mb-sm-3 m-lg-3 img-thumbnail mx-auto">
                     <?php echo '<img class="d-block" src="' . $cetteAutreAnnonce['photo'] . '" alt="Liens vers une autre annonce" title="' . $cetteAutreAnnonce['description_courte'] . '">'?>

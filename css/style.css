@@ -109,6 +109,12 @@ header .container-fluid {
     display: none;
   }
 }
+@media screen and (min-width: 1024px) and (max-width: 1150px) {
+  .bgIndex .indexForm .col-lg-3 {
+    flex: 0 0 50%;
+    max-width: 50% !important;
+  }
+}
 
 .pageIndex {
   width: 100%;

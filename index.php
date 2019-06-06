@@ -94,9 +94,9 @@ include_once('inc/nav.inc.php');
         <div class="bgIndex d-flex align-item-center" style="background-image: url('images/indexbgc.jpg');">
             <form method="post" action="#" class="indexForm col-xs-12 col-lg-8 mx-auto d-flex flex-wrap justify-content-center align-content-center">
                 <h1 class="text-center">Bienvenue sur <span class="colorLetter">A</span>nnonceo</h1>
-                <div class="bgForm col-12">
-                    <div class="row">
-                        <div class="form-group col-6 col-sm-6 col-lg-3">
+                <div class="bgForm col-12 p-0">
+                    <div class="row m-0">
+                        <div class="form-group col-6 col-sm-6 col-lg-3 selectCat">
                             <select class="custom-select ajaxGlobale" id="categorie" name="categorie">
                                 <option value="toutes">Par catégories</option>
                                 <?php 
@@ -134,7 +134,7 @@ include_once('inc/nav.inc.php');
                                 </select>
                             </div>
                         </div>  -->
-                        <div class="form-group col-6 col-sm-6 col-lg-3">
+                        <div class="form-group col-6 col-sm-6 col-lg-3 selectTri">
                             <select class="ajaxGlobale custom-select" id="optionTrie" name="trie">
                                 <option value="parDateDesc">Les plus récentes</option>
                                 <option value="parDateAsc">Les plus anciennes</option>
@@ -169,12 +169,12 @@ include_once('inc/nav.inc.php');
         ****************************
         -->
             <nav class="col-lg-2 mt-3 filtrePrix">
-                <div class="form-group">
+                <div class="form-group ml-sm-5">
                     <label for="prixMinimum">Filtrer par prix</label>
-                    <input type="range" class="rangeMin ajaxGlobale custom-range col-6 col-md-12" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
+                    <input type="range" class="rangeMin ajaxGlobale custom-range col-6 col-md-6" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
                     <output class="" id="prixMin" name="resultMin"></output>
                 </div>
-                <div class="form-group">
+                <div class="form-group m-0">
                     <input type="hidden" class="ajaxGlobale rangeMax" id="prixMaximum" name="prixMax" value="5000" />
                     <output id="prixMax" class="" name="resultMax"></output>
                 </div>
@@ -206,7 +206,7 @@ include_once('inc/nav.inc.php');
                     <?php 
                     foreach($requeteAffichage as $uneLigne){
                     ?>
-                    <div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow">
+                    <div class="blocRequete no-gutters bg-light mx-auto col-12 mb-4 shadow">
                         <div class="row">
                             <div class="col-md-4 imgAnnonce">
                                 <a href="<?php echo URL; ?>annonce.php?id_annonce=<?php echo $uneLigne['id_annonce']; ?>">
