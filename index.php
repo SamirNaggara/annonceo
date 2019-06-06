@@ -169,7 +169,7 @@ include_once('inc/nav.inc.php');
         ****************************
         -->
             <nav class="col-lg-2 mt-3 filtrePrix">
-                <div class="form-group ml-sm-5">
+                <div class="form-group ml-sm-5 ml-lg-0">
                     <label for="prixMinimum">Filtrer par prix</label>
                     <input type="range" class="rangeMin ajaxGlobale custom-range col-6 col-md-6" id="prixMinimum" name="prixMin" min="0" max="5000" step="10" value="0" />
                     <output class="" id="prixMin" name="resultMin"></output>

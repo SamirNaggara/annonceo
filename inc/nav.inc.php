@@ -16,7 +16,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-md-flex justify-content-md-between text-center text-md-left" id="navbarsExampleDefault">
-                <ul class="navbar-nav col-sm-12 col-md-6 col-lg-7 p-0">
+                <ul class="navbar-nav col-sm-12 col-md-6 col-lg-6 p-0">
                     <li class="title text-white">
                         <a class="navbar-brand hover" href="<?php echo URL;?>index.php"><span class="colorLetter">A</span>nnonceo</a>
                     </li>
