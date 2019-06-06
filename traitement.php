@@ -180,7 +180,7 @@ $firstOfPage = ($current-1)*$perPage;
             if($laLigne['moyenneNote'] >= '0') {
                 $maMoyenne = 'Notes : '. round($laLigne['moyenneNote'],1).'/5';
             }
-            $tab['reponseRequete'] .= '<div class="blocRequete no-gutters bg-light col-sm-10 mx-auto col-12 mb-4 shadow">
+            $tab['reponseRequete'] .= '<div class="blocRequete no-gutters bg-light mx-auto col-12 mb-4 shadow">
                                             <div class="row">
                                                 <div class="col-md-4 imgAnnonce">
                                                     <a href="' . URL . 'annonce.php?id_annonce=' . $laLigne['id_annonce'] . '">
