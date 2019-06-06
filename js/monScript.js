@@ -1,7 +1,6 @@
 
 $(document).ready(function() {
 
-    
 
     // Début verif de tous les formulaires
     // initialisation de la variable de controle
@@ -331,7 +330,8 @@ $(document).ready(function() {
 
         $.post('traitement.php', param, function(reponse) {
             $('#contenerReponseRequete').html(reponse.reponseRequete);
-            $('contenerReponseRequete').fadeIn();
+            $('#contenerReponseRequete').fadeIn();
+            $('.titleAnnonces').html(reponse.test);
         }, 'json');
     });
     

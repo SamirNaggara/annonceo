@@ -45,6 +45,7 @@ for ($i=2; $i<count($lesVilles);$i++){
 
 $tab = array();
 $tab['reponseRequete'] = '';
+$tab['test'] = '';
 
 //Si chacun des champs POST existe, on fait le traitement de chaque parameter pour les préparer pour la requete, et ensuite on effectue la requete
 if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['region']) && isset($_POST['departement']) && isset($_POST['ville']) && isset($_POST['prixMin']) && isset($_POST['prixMax']) && isset($_POST['trie'])){
@@ -80,10 +81,18 @@ if (isset($_POST['rechercher']) && isset($_POST['categorie']) && isset($_POST['r
     
     //        Calcul de la chaine de caractere a renvoyer pour la ville
     if (!empty($_POST['ville'])){
-        $pourLaVille = cpEnFonctionDeVille('Paris', $lesVilles)[0];
-    }{
+        
+        $pourLaVille = cpEnFonctionDeVille($_POST['ville'], $lesVilles)[0];
+        if(strlen($pourLaVille)>5){
+            //Dans certaines ville, il y a plusieurs codes postals. Il faudrais les decouper, mais pour le moment cette solution permet de tout afficher si on se retrouve dans un de ces cas, plutot que de ne rien afficher du tout
+            $pourLaVille = '%';
+        }
+    }else{
         $pourLaVille = '%';
     }
+    $tab['test'] .= $_POST['ville'];
+    $tab['test'] .= $pourLaVille;
+    
     //Pour le champs prix max
     
     if ($_POST['prixMax'] != ''){
